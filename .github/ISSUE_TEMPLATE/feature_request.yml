@@ -1,0 +1,27 @@
+name: Feature request
+description: Propose a new capability or improvement
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Describe the implementation-science or analytic need.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Methodological boundary
+      options:
+        - label: This request does not assume or create a validated overall pCAT score.
+          required: true
+        - label: This request can be demonstrated without sensitive respondent data.
+          required: true

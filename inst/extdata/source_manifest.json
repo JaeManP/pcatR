@@ -1,0 +1,25 @@
+{
+  "package": "pcatR",
+  "version": "1.0.0",
+  "release_date": "2026-07-12",
+  "instrument_name": "Pragmatic Context Assessment Tool (pCAT)",
+  "instrument_items": 14,
+  "instrument_source": "10.1186/s43058-022-00380-5",
+  "updated_mapping_source": "10.1186/s43058-026-00956-5",
+  "instrument_page": "https://dissemination-implementation.org/assessment-instrument/pragmatic-context-assessment-tool-pcat/",
+  "instrument_pdf": "https://dissemination-implementation.org/wp-content/uploads/2025/05/pCAT-Tool.pdf",
+  "content_license": "CC BY 4.0",
+  "software_license": "MIT",
+  "independence_note": "Independent software implementation; not an official product or endorsement of the pCAT authors, CFIR Leadership Team, U.S. Department of Veterans Affairs, or instrument repository.",
+  "scoring_note": "No validated overall pCAT total score is calculated. The -2 to +2 display code is descriptive only.",
+  "updated_mapping_detail": "The 2026 article main text and Supplementary Table S3 were used. Item 10 retains a primary Materials & Equipment mapping and a secondary Funding mapping.",
+  "dictionary_files": [
+    "pcat_items.csv",
+    "pcat_cfir_mappings.csv",
+    "pcat_eric_candidates.csv"
+  ],
+  "template_files": [
+    "pcat_long_template.csv",
+    "pcat_wide_template.csv"
+  ]
+}

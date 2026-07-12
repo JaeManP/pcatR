@@ -1,0 +1,2 @@
+project_id,respondent_id,site_id,team_id,role,timepoint,assessment_date,item01_direction,item01_effect,item02_direction,item02_effect,item03_direction,item03_effect,item04_direction,item04_effect,item05_direction,item05_effect,item06_direction,item06_effect,item07_direction,item07_effect,item08_direction,item08_effect,item09_direction,item09_effect,item10_direction,item10_effect,item11_direction,item11_effect,item12_direction,item12_effect,item13_direction,item13_effect,item14_direction,item14_effect
+PROJECT_01,R001,SITE_01,,,planning,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

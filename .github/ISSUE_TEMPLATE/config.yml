@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage question
+    url: https://github.com/JaeManP/pcatR/discussions
+    about: Ask a de-identified usage or interpretation question.
+
+  - name: Private security report
+    url: https://github.com/JaeManP/pcatR/security/policy
+    about: Read the security policy and report vulnerabilities privately.

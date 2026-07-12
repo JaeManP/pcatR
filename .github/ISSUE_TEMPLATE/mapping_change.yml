@@ -1,0 +1,36 @@
+name: Instrument or mapping correction
+description: Propose a source-verified correction to item or CFIR metadata
+title: "[Source correction]: "
+labels: [documentation, methodology]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: pCAT item or construct
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current package content
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed correction
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Primary source DOI or stable URL
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Exact source location and rationale
+      description: Provide table, page, section, or supplementary-file location.
+    validations:
+      required: true

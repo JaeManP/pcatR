@@ -1,0 +1,82 @@
+---
+title: "Interpretation, privacy, and reporting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interpretation, privacy, and reporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(pcatR)
+```
+
+## Item-level interpretation
+
+`pcatR` classifies complete responses as strong barrier, weak barrier, neutral,
+weak facilitator, or strong facilitator. The `pcat_display_code` from -2 to +2
+supports plotting and within-item transition descriptions only. Do not sum it
+across items or describe it as a validated scale.
+
+## Agreement and polarization
+
+```{r}
+classified <- pcat_classify(pcat_example_data())
+summary <- pcat_summarise(
+  classified,
+  group_vars = c("site_id", "timepoint")
+)
+consensus <- pcat_consensus(summary)
+head(consensus[c(
+  "site_id", "timepoint", "item_id", "dominant_side",
+  "agreement_share", "polarized", "normalized_entropy", "consensus_label"
+)])
+```
+
+Consensus labels are descriptive decision aids. They depend on user-visible
+thresholds and should be interpreted with counts and response distributions.
+
+## Longitudinal comparison
+
+```{r}
+change <- pcat_change(
+  classified,
+  from = "planning",
+  to = "mid_implementation"
+)
+head(change[c(
+  "respondent_id", "item_id", "from_pcat_class5", "to_pcat_class5",
+  "delta_display_code", "transition"
+)])
+```
+
+These paired transitions describe ordered category movement. They are not
+causal effects and the display-code differences are not interval-scale change
+scores.
+
+## Privacy and suppression
+
+Use coded identifiers and review free-text comments for sensitive content.
+Respondent heatmaps can reveal individual patterns and should not be shared for
+small or identifiable teams. Summary suppression is available:
+
+```{r}
+suppressed <- pcat_summarise(
+  classified,
+  group_vars = c("site_id", "timepoint"),
+  suppress_below = 5
+)
+head(suppressed)
+```
+
+Suppression affects the returned summary table only. It does not transform or
+de-identify source data, classified responses, heatmaps, or profile PDFs.
+
+## Reporting checklist
+
+Report the implementation effort assessed, assessment timing, respondent roles,
+valid denominators, missing effects, grouping variables, consensus thresholds,
+suppression rule, mapping version, and software version. Describe action-plan
+strategies as locally reviewed candidates rather than algorithmically selected
+recommendations.

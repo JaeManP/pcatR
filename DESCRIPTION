@@ -1,0 +1,48 @@
+Package: pcatR
+Type: Package
+Title: Analyze and Visualize Pragmatic Context Assessment Tool Data
+Version: 1.0.0
+Authors@R: c(
+    person(
+      given = "Jae Man",
+      family = "Park",
+      email = "jaemanblp2@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: Provides a reproducible workflow for importing, validating,
+    classifying, summarizing, visualizing, and reporting responses to the
+    14-item Pragmatic Context Assessment Tool ('pCAT'). The package preserves
+    the instrument's two-part response structure, supports original and
+    updated Consolidated Framework for Implementation Research ('CFIR')
+    mappings, describes team agreement and disagreement, compares repeated
+    assessments, and creates implementation action-planning outputs. It does
+    not calculate or claim a validated total pCAT scale score.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: en-US
+Depends:
+    R (>= 4.1.0)
+Imports:
+    ggplot2 (>= 3.4.0),
+    grDevices,
+    grid,
+    stats,
+    utils
+Suggests:
+    covr,
+    knitr,
+    pkgdown,
+    rmarkdown,
+    shiny,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Config/Needs/check: rcmdcheck
+Config/Needs/coverage: covr
+Config/Needs/website: pkgdown
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+NeedsCompilation: no
+URL: https://github.com/JaeManP/pcatR, https://jaemanp.github.io/pcatR/
+BugReports: https://github.com/JaeManP/pcatR/issues

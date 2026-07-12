@@ -1,0 +1,34 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+.Rcheck/
+*.Rcheck
+*.tar.gz
+*.zip
+/docs/
+/Meta/
+.Renviron
+.Rprofile
+
+# ------------------------------------------------------------
+# Local/private research data
+# ------------------------------------------------------------
+data-private/
+private-data/
+local-data/
+confidential-data/
+analysis-outputs/
+scratch/
+tmp/
+
+# ------------------------------------------------------------
+# Credentials and authentication artifacts
+# ------------------------------------------------------------
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.yml
+.httr-oauth

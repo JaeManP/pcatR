@@ -1,0 +1,39 @@
+citHeader("To cite pcatR, cite the software and the original pCAT article. Cite the 2026 article when using updated CFIR mappings:")
+
+bibentry(
+  bibtype = "Manual",
+  title = "pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data",
+  author = person("Jae Man", "Park"),
+  year = "2026",
+  note = "R package version 1.0.0",
+  url = "https://github.com/JaeManP/pcatR"
+)
+
+bibentry(
+  bibtype = "Article",
+  title = "A pragmatic context assessment tool (pCAT): using a Think Aloud method to develop an assessment of contextual barriers to change",
+  author = c(
+    person("Claire H.", "Robinson"),
+    person("Laura J.", "Damschroder")
+  ),
+  journal = "Implementation Science Communications",
+  year = "2023",
+  volume = "4",
+  pages = "3",
+  doi = "10.1186/s43058-022-00380-5"
+)
+
+bibentry(
+  bibtype = "Article",
+  title = "Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study",
+  author = c(
+    person("Ariel M.", "Domlyn"),
+    person("Jessica", "Dodge"),
+    person("Paul N.", "Pfeiffer")
+  ),
+  journal = "Implementation Science Communications",
+  year = "2026",
+  volume = "7",
+  pages = "129",
+  doi = "10.1186/s43058-026-00956-5"
+)

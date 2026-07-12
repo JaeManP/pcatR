@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "Please cite the software and the original pCAT article. Cite the 2026 article when using updated CFIR mappings."
+title: "pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data"
+version: 1.0.0
+date-released: 2026-07-12
+type: software
+authors:
+  - family-names: Park
+    given-names: Jae Man
+    email: jaemanblp2@gmail.com
+repository-code: "https://github.com/JaeManP/pcatR"
+url: "https://jaemanp.github.io/pcatR/"
+license: MIT
+keywords:
+  - implementation science
+  - pCAT
+  - CFIR
+  - context assessment
+  - barriers and facilitators
+references:
+  - type: article
+    title: "A pragmatic context assessment tool (pCAT): using a Think Aloud method to develop an assessment of contextual barriers to change"
+    authors:
+      - family-names: Robinson
+        given-names: Claire H.
+      - family-names: Damschroder
+        given-names: Laura J.
+    journal: Implementation Science Communications
+    year: 2023
+    volume: 4
+    issue: 1
+    doi: 10.1186/s43058-022-00380-5
+  - type: article
+    title: "Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study"
+    authors:
+      - family-names: Domlyn
+        given-names: Ariel M.
+      - family-names: Dodge
+        given-names: Jessica
+      - family-names: Pfeiffer
+        given-names: Paul N.
+    journal: Implementation Science Communications
+    year: 2026
+    volume: 7
+    doi: 10.1186/s43058-026-00956-5

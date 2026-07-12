@@ -1,0 +1,62 @@
+url: https://jaemanp.github.io/pcatR/
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#246B3C"
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fa-github
+      aria-label: GitHub repository
+      href: https://github.com/JaeManP/pcatR
+articles:
+  - title: Start here
+    navbar: ~
+    contents:
+      - getting-started
+      - data-standards
+      - interpretation-reporting
+reference:
+  - title: End-to-end workflow
+    contents:
+      - pcatR-package
+      - pcat_analyse
+      - pcat_write_analysis
+      - pcat_user_guide
+      - pcat_self_test
+  - title: Instrument and mappings
+    contents:
+      - pcat_items
+      - pcat_construct_map
+      - pcat_response_options
+      - pcat_example_data
+      - pcat_strategy_candidates
+  - title: Data preparation
+    contents:
+      - pcat_read_csv
+      - pcat_standardize
+      - pcat_template
+      - pcat_write_template
+      - pcat_wide_to_long
+      - pcat_long_to_wide
+  - title: Validation and analysis
+    contents:
+      - pcat_validate
+      - pcat_validation_data
+      - pcat_validation_issues
+      - pcat_classify
+      - pcat_summarise
+      - pcat_consensus
+      - pcat_change
+      - pcat_action_plan
+  - title: Figures and interface
+    contents:
+      - plot_pcat_profile
+      - plot_pcat_heatmap
+      - plot_pcat_change
+      - pcat_save_profile_pdf
+      - pcat_palette
+      - pcat_app

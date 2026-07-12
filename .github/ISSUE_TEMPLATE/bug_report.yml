@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible software defect
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not upload respondent data, direct identifiers, credentials, or confidential comments."
+  - type: input
+    id: version
+    attributes:
+      label: pcatR version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reprex
+    attributes:
+      label: Minimal reproducible example
+      description: Use synthetic or de-identified data.
+      render: r
+    validations:
+      required: true
+  - type: textarea
+    id: session
+    attributes:
+      label: Session information
+      description: Paste sessionInfo() and pcat_self_test() output.
+      render: text
+    validations:
+      required: true

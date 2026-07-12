@@ -1,0 +1,38 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "pcatR",
+  "description": "Analyze and visualize Pragmatic Context Assessment Tool data without calculating a purported validated total score.",
+  "version": "1.0.0",
+  "datePublished": "2026-07-12",
+  "programmingLanguage": "R",
+  "codeRepository": "https://github.com/JaeManP/pcatR",
+  "issueTracker": "https://github.com/JaeManP/pcatR/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Jae Man",
+      "familyName": "Park",
+      "email": "jaemanblp2@gmail.com"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Jae Man",
+    "familyName": "Park",
+    "email": "jaemanblp2@gmail.com"
+  },
+  "keywords": [
+    "implementation science",
+    "pCAT",
+    "CFIR",
+    "context assessment",
+    "barriers",
+    "facilitators"
+  ],
+  "softwareRequirements": [
+    "R >= 4.1.0",
+    "ggplot2 >= 3.4.0"
+  ]
+}

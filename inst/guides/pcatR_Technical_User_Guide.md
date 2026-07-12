@@ -1,0 +1,848 @@
+# pcatR Technical User Guide
+
+**Software:** pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data  
+**Version:** 1.0.0  
+**Document version:** 1.0  
+**Release date:** July 12, 2026  
+**Author and maintainer:** Jae Man Park  
+**Repository:** https://github.com/JaeManP/pcatR  
+**Package website:** https://jaemanp.github.io/pcatR/
+
+---
+
+## Document control
+
+| Field | Specification |
+| --- | --- |
+| Intended audience | Implementation researchers, evaluators, quality-improvement teams, analysts, data managers, and facilitators using the 14-item pCAT |
+| Purpose | Define correct installation, data preparation, validation, analysis, interpretation, reporting, privacy, and reproducibility procedures |
+| Software status | Independent open-source implementation; not an official product of the pCAT authors, U.S. Department of Veterans Affairs, CFIR Leadership Team, or instrument repository |
+| Code license | MIT License |
+| Instrument and mapping content | Attributed source content under Creative Commons Attribution 4.0, as described in `LICENSE.note` |
+| Primary software language | R, version 4.1.0 or later |
+| Required package dependency | ggplot2 3.4.0 or later |
+| Optional dependencies | shiny, testthat, knitr, rmarkdown, covr, withr, pkgdown, and development tools |
+
+## Read this before using pcatR
+
+> **Critical methodological boundary:** The pCAT is an abbreviated pragmatic context assessment. The original development article states that each CFIR construct is represented by a single question and that the instrument did not follow a psychometric paradigm of development. `pcatR` therefore does not calculate, validate, or recommend an overall pCAT total score.
+
+The package creates a descriptive five-category classification for each item:
+
+| Category | Display code | Permitted use |
+| --- | ---: | --- |
+| Strong barrier | -2 | Item profiles and within-item transition displays |
+| Weak barrier | -1 | Item profiles and within-item transition displays |
+| Neutral | 0 | Item profiles and within-item transition displays |
+| Weak facilitator | +1 | Item profiles and within-item transition displays |
+| Strong facilitator | +2 | Item profiles and within-item transition displays |
+
+Do not sum or average these display codes across the 14 items and present the result as a validated scale. Any item-level median or mean display statistic requested from the software is descriptive only and must be labeled accordingly.
+
+The pCAT should be anchored to a specific planned or ongoing implementation or improvement effort. Respondents should not rate a vague, general organizational climate. The same contextual feature can be a barrier for one implementation effort and a facilitator for another.
+
+The package does not replace full CFIR assessment. A 2026 evaluation found the updated 14-construct pCAT mapping useful as a rapid starting point but incomplete when comprehensive determinant assessment was required. Use full or purpose-selected CFIR methods when rigor, comprehensiveness, or generalizability is the primary goal.
+
+### Pre-analysis checklist
+
+Before using results, confirm that:
+
+1. every respondent rated the same clearly defined implementation effort;
+2. item wording and response coding match the official 14-item instrument;
+3. neutral responses have blank effect values, or a legacy forced-response rule is documented;
+4. assessment keys uniquely identify respondent, occasion, and item;
+5. validation errors are resolved or explicitly justified;
+6. denominators, missingness, thresholds, and suppression rules are prespecified;
+7. response-level files and figures have undergone disclosure review; and
+8. the original pCAT article, updated mapping article when applicable, and `pcatR` software are cited.
+
+## Contents
+
+1. Scope and intended use  
+2. Instrument structure and source provenance  
+3. Installation and verification  
+4. Data governance and privacy  
+5. Data specification  
+6. Import and standardization  
+7. Validation rules  
+8. Classification rules  
+9. Item-level summaries and denominators  
+10. Agreement, disagreement, and polarization  
+11. Longitudinal comparison  
+12. Action planning and ERIC strategy prompts  
+13. Visualization and export  
+14. End-to-end workflow  
+15. Shiny application  
+16. Reproducibility and version control  
+17. Reporting guidance  
+18. Troubleshooting  
+19. Function reference  
+20. Document revision history  
+21. References and attribution
+
+# 1. Scope and intended use
+
+`pcatR` provides a reproducible workflow for:
+
+- importing standard long- or wide-format pCAT data;
+- mapping non-standard source columns to a stable schema;
+- validating identifiers, item numbers, response codes, duplicate keys, and completeness;
+- preserving the two-part direction and effect response structure;
+- classifying responses into five descriptive categories;
+- producing item-level barrier, neutral, and facilitator summaries with explicit denominators;
+- describing agreement, disagreement, and barrier-facilitator polarization;
+- comparing paired responses across two assessment occasions;
+- generating barrier-focused action-planning tables with source-derived ERIC strategy prompts;
+- producing publication-quality profiles and heatmaps; and
+- exporting an auditable analysis bundle with settings and session information.
+
+Appropriate uses include pre-implementation planning, mid-implementation reflection, team discussion, rapid context assessment, quality-improvement facilitation, and descriptive implementation research. Results should remain tied to the implementation effort, setting, respondent group, and assessment time point.
+
+The package is not designed to:
+
+- provide a validated total score or diagnostic threshold;
+- establish causal effects of implementation strategies;
+- replace qualitative inquiry or comprehensive determinant assessment;
+- automate implementation-strategy selection;
+- collect regulated data securely;
+- provide authentication, access control, encryption, or audit logging; or
+- establish psychometric reliability, validity, responsiveness, or measurement invariance.
+
+# 2. Instrument structure and source provenance
+
+## 2.1 Official response structure
+
+The official instrument asks respondents to indicate whether each statement represents a potential barrier, neutral condition, or potential facilitator and then, for a barrier or facilitator, indicate likely effect strength.
+
+| Component | Code | Official label | Interpretation |
+| --- | --- | --- | --- |
+| Direction | 1 | Disagree | Potential barrier |
+| Direction | 2 | Neutral | Neither barrier nor facilitator |
+| Direction | 3 | Agree | Potential facilitator |
+| Effect | 0 | Weak/no effect | Weak or no likely effect on implementation |
+| Effect | 1 | Strong effect | Strong likely effect on implementation |
+
+
+For neutral responses, `effect` should be blank because the effect question applies to a condition identified as a barrier or facilitator. By default, `pcatR` flags **any** non-missing effect paired with a neutral direction. The response is still classified as neutral so the source record remains analyzable, but the warning must be reviewed and the data-collection design documented. For a legacy form that forced an effect response, use `neutral_effect = "allow"` only after confirming the form behavior; use `neutral_effect = "set_missing"` when the forced value should be removed from the standardized analytic data.
+
+## 2.2 Item dictionary and CFIR mappings
+
+| Item | Item statement | Original CFIR mapping | Updated CFIR mapping |
+| --- | --- | --- | --- |
+| 1 | People here regularly seek to understand the needs of patients and make changes to better meet those needs. | Patient Needs & Resources | Culture: Recipient-Centeredness |
+| 2 | I have open lines of communication with everyone needed to make the change. | Networks & Communications | Communications |
+| 3 | I have access to data to help track changes in outcomes. | Reflecting & Evaluating | Reflecting & Evaluating |
+| 4 | The change is aligned with leadership goals. | Goals & Feedback | Mission Alignment |
+| 5 | The change is aligned with clinician values. | Compatibility | Innovation Deliverers: Capability |
+| 6 | The change is compatible with existing clinical processes. | Compatibility | Compatibility |
+| 7 | The structures and policies in place here enable us to make the change. | Structural Characteristics | Structural Characteristics: Work Infrastructure |
+| 8 | We have sufficient space to accommodate the change. | Available Resources | Available Resources: Space |
+| 9 | We have sufficient time dedicated to make the change. | Available Resources | Innovation Deliverers: Opportunity |
+| 10 | We have other needed resources to make the change (staff, money, supplies, etc.). | Available Resources | Available Resources: Materials & Equipment; Available Resources: Funding |
+| 11 | People here see the current situation as intolerable and that the change is needed. | Tension for Change | Tension for Change |
+| 12 | People here see the advantage of implementing this change versus an alternative change. | Relative Advantage | Innovation Relative Advantage |
+| 13 | Higher level leaders are committed, involved, and accountable for the planned improvement. | Leadership Engagement | High-Level Leaders: Motivation |
+| 14 | Leaders I work with most closely are committed, involved, and accountable for the planned improvement. | Leadership Engagement | Mid-Level Leaders: Motivation |
+
+
+The original 14 items represent 10 original CFIR constructs because Compatibility, Available Resources, and Leadership Engagement are represented by multiple items. The updated mapping assigns a primary updated CFIR construct to each item; item 10 also has a source-reported secondary Funding mapping available through `pcat_construct_map(include_secondary = TRUE)`.
+
+## 2.3 Provenance decision
+
+The online instrument repository currently lists Learning Climate among subscale metadata and only one Leadership Engagement item. The official two-page instrument and the original development article instead contain two Leadership Engagement items and no Learning Climate item. `pcatR` treats the official instrument attachment and peer-reviewed development article as authoritative for item wording and original mappings. The package retains source notes so mapping decisions are auditable.
+
+Use these functions to inspect provenance before analysis:
+
+```r
+pcat_items("both")
+pcat_construct_map("original")
+pcat_construct_map("2022", include_secondary = TRUE)
+pcat_response_options()
+```
+
+# 3. Installation and verification
+
+## 3.1 Install from GitHub
+
+```r
+install.packages("pak")
+pak::pak("JaeManP/pcatR")
+```
+
+Alternative:
+
+```r
+install.packages("remotes")
+remotes::install_github("JaeManP/pcatR")
+```
+
+## 3.2 Install from a source archive
+
+```r
+install.packages(
+  "pcatR_1.0.0.tar.gz",
+  repos = NULL,
+  type = "source"
+)
+```
+
+The package contains no compiled C, C++, or Fortran code. A normal installation from GitHub usually does not require compilation. Rtools is required for a complete Windows package-development and source-check workflow and may be requested by the installer depending on the R version, dependency state, or build command used.
+
+## 3.3 Verify installation
+
+```r
+library(pcatR)
+packageVersion("pcatR")
+pcat_self_test()
+```
+
+Expected version:
+
+```text
+[1] '1.0.0'
+```
+
+The self-test checks the 14-item dictionary, mappings, validation, classification, summaries, reshaping, longitudinal comparison, strategy lookup, action planning, and the end-to-end wrapper. Plot construction is also checked when `ggplot2` is available; `ggplot2` is a required dependency of an installed `pcatR` package.
+
+Open this guide from R:
+
+```r
+pcat_user_guide()
+```
+
+# 4. Data governance and privacy
+
+pCAT responses can reveal organizational problems, leadership perceptions, resource limitations, and professional opinions. Even when they are not protected health information, they may be sensitive employment or organizational data.
+
+Apply the following controls:
+
+- use coded respondent identifiers rather than names, emails, employee numbers, or login IDs;
+- store the re-identification key separately under institutional control;
+- avoid entering patient names, medical-record numbers, or case details in open-text comments;
+- suppress or aggregate small groups when disclosure risk exists;
+- follow the approved protocol, quality-improvement determination, data-use agreement, and institutional policy;
+- use encrypted storage and approved collaboration platforms when required; and
+- review outputs before sharing, especially comments and group-specific results.
+
+`pcatR` performs local analysis. It does not transmit data by itself. The optional Shiny application is not a secure survey system. Deploying it to a server introduces hosting, authentication, logging, and data-retention responsibilities that are outside the package.
+
+The `suppress_below` argument can replace numeric summary measures with missing values for groups below a user-defined respondent count. This is a disclosure-control aid, not a complete statistical disclosure-control system.
+
+# 5. Data specification
+
+## 5.1 Preferred long format
+
+Each row should represent one respondent, one assessment, and one pCAT item.
+
+| Column | Required | Type | Definition |
+| --- | --- | --- | --- |
+| `respondent_id` | Yes | Character | Coded respondent identifier |
+| `item_id` | Yes | Integer | pCAT item number 1 through 14 |
+| `direction` | Yes | Integer or recognized text | 1 barrier, 2 neutral, 3 facilitator |
+| `effect` | Yes as a column | Integer or recognized text | 0 weak/no effect, 1 strong effect; should be blank for neutral |
+| `project_id` | Recommended | Character | Implementation project identifier |
+| `site_id` | Recommended | Character | Site, facility, clinic, or organizational unit |
+| `team_id` | Optional | Character | Implementation team identifier |
+| `role` | Optional | Character | Respondent role or professional group |
+| `timepoint` | Recommended for repeated assessment | Character | Planning, mid-implementation, sustainment, or another defined occasion |
+| `assessment_date` | Recommended | Date or ISO character | Date of assessment |
+| `comment` | Optional | Character | De-identified contextual note |
+
+Create a template:
+
+```r
+pcat_write_template(
+  "pcat_long_template.csv",
+  format = "long",
+  n_respondents = 20,
+  include_item_text = TRUE,
+  overwrite = TRUE
+)
+```
+
+## 5.2 Standard wide format
+
+One row represents one assessment. Item response columns use two-digit item numbers:
+
+```text
+item01_direction, item01_effect, ..., item14_direction, item14_effect
+```
+
+Create a wide template:
+
+```r
+pcat_write_template(
+  "pcat_wide_template.csv",
+  format = "wide",
+  n_respondents = 20,
+  overwrite = TRUE
+)
+```
+
+Wide-to-long conversion rejects item numbers outside 1 through 14 and duplicate item-component columns.
+
+## 5.3 Assessment key
+
+By default, validation defines an assessment using the available columns among:
+
+```text
+project_id, site_id, team_id, timepoint, assessment_date, respondent_id
+```
+
+The item number is appended to identify one response row. Specify `key_cols` explicitly when the default does not uniquely represent an assessment. This is essential when a respondent completes more than one assessment with the same nominal time point.
+
+```r
+pcat_validate(
+  data,
+  key_cols = c("project_id", "site_id", "assessment_date", "respondent_id"),
+  require_complete = TRUE
+)
+```
+
+# 6. Import and standardization
+
+## 6.1 Standard CSV import
+
+```r
+data <- pcat_read_csv(
+  file.choose(),
+  layout = "auto"
+)
+```
+
+Auto-detection prioritizes standard long format when all four required long columns are present; otherwise it detects standard wide response names.
+
+## 6.2 Non-standard column names
+
+```r
+standard <- pcat_standardize(
+  raw_data,
+  respondent_id = "participant_code",
+  item_id = "question_number",
+  direction = "barrier_facilitator",
+  effect = "effect_strength",
+  project_id = "implementation_project",
+  site_id = "clinic",
+  role = "professional_role",
+  timepoint = "wave",
+  assessment_date = "survey_date",
+  comment = "notes"
+)
+```
+
+`pcat_standardize()` copies source fields to standard names. With `keep_original = TRUE`, source columns are retained for auditability. With `keep_original = FALSE`, source fields that differ from standard names are removed.
+
+## 6.3 Recognized text labels
+
+Direction parsing recognizes numeric codes and common labels such as `disagree`, `barrier`, `neutral`, `agree`, and `facilitator`. Effect parsing recognizes `weak/no effect`, `weak`, `no effect`, `strong`, and related variants. Unrecognized text is flagged rather than silently recoded.
+
+# 7. Validation rules
+
+Run validation before classification or analysis:
+
+```r
+validation <- pcat_validate(
+  data,
+  require_complete = TRUE,
+  neutral_effect = "flag",
+  action = "none"
+)
+
+print(validation)
+pcat_validation_issues(validation)
+```
+
+## 7.1 Row-level errors
+
+| Issue code | Meaning | Default severity |
+| --- | --- | --- |
+| `missing_respondent_id` | Respondent identifier is blank | Error |
+| `missing_item_id` | Item identifier is blank | Error |
+| `invalid_item_id` | Item identifier is not an integer 1 through 14 | Error |
+| `missing_direction` | Direction is blank | Error |
+| `invalid_direction` | Direction is not 1, 2, 3, or a recognized label | Error |
+| `invalid_effect` | Effect is not 0, 1, or a recognized label | Error |
+| `missing_effect` | Barrier or facilitator direction lacks effect | Error |
+| `effect_without_direction` | Effect supplied while direction is blank | Warning |
+| `neutral_with_effect` | Neutral paired with any non-missing effect | Warning |
+| `duplicate_key` | More than one row has the same assessment-item key | Error |
+
+## 7.2 Assessment-level error
+
+When `require_complete = TRUE`, each assessment must contain exactly one row for every item 1 through 14. Missing items, repeated items, or additional valid-item rows produce `incomplete_assessment`.
+
+## 7.3 Neutral effect options
+
+- `neutral_effect = "flag"`: retain the value and issue a warning for any non-missing effect paired with neutral. This is the default.
+- `neutral_effect = "allow"`: retain the value without a warning. Use only for a documented legacy form that required an effect response after neutral.
+- `neutral_effect = "set_missing"`: replace any effect paired with neutral by missing and issue a warning.
+
+## 7.4 Condition behavior
+
+- `action = "none"`: return findings without a warning or error.
+- `action = "warn"`: return findings and emit a warning when issues exist.
+- `action = "error"`: stop when the validation object is invalid.
+- `strict = TRUE`: treat warnings as invalid in the `valid` field.
+
+The reported error and warning counts are counts of findings, not necessarily counts of unique rows or assessments.
+
+## 7.5 Eligibility and traceability
+
+Classified output retains problematic rows. Rows with invalid or missing item identifiers, missing respondent identifiers, or duplicate assessment-item keys are marked `pcat_record_eligible = FALSE` and excluded from item summaries. Response-level invalidity and missingness remain visible through classification fields and denominator counts.
+
+# 8. Classification rules
+
+```r
+classified <- pcat_classify(validation)
+```
+
+| Direction | Effect | `pcat_class` | `pcat_display_code` |
+| ---: | ---: | --- | ---: |
+| 1 | 1 | `strong_barrier` | -2 |
+| 1 | 0 | `weak_barrier` | -1 |
+| 1 | Missing | `barrier_effect_missing` | Missing |
+| 2 | Missing, 0, or 1 | `neutral` | 0 |
+| 3 | 0 | `weak_facilitator` | +1 |
+| 3 | 1 | `strong_facilitator` | +2 |
+| 3 | Missing | `facilitator_effect_missing` | Missing |
+| Missing | Any | `missing` | Missing |
+| Invalid | Any | `invalid` | Missing |
+
+`pcat_class5` contains only the five complete analytic categories. This is the field used for the five-category profile. `pcat_side` retains barrier, neutral, or facilitator direction even when effect is missing. A non-missing effect paired with neutral does not change the neutral classification, but validation records `neutral_with_effect` unless the user explicitly selects `neutral_effect = "allow"`.
+
+# 9. Item-level summaries and denominators
+
+```r
+summary <- pcat_summarise(
+  classified,
+  group_vars = c("site_id", "timepoint"),
+  respondent_id = "respondent_id",
+  suppress_below = 5
+)
+```
+
+## 9.1 Explicit denominators
+
+Two denominators serve different purposes:
+
+1. `n_valid_direction`: eligible rows with a valid barrier, neutral, or facilitator direction. This denominator supports `pct_barrier`, `pct_neutral`, `pct_facilitator`, `pct_effect_missing`, and `pct_complete_class`.
+2. `n_complete_class`: eligible rows that can be assigned to one of the five complete categories. This denominator supports `pct_strong_barrier`, `pct_weak_barrier`, `pct_neutral_complete`, `pct_weak_facilitator`, `pct_strong_facilitator`, and `modal_class_share`.
+
+Never infer denominators from percentages alone. Report the relevant `n` with every percentage, especially when effect responses are missing.
+
+## 9.2 Core summary fields
+
+| Field | Definition |
+| --- | --- |
+| `n_rows_input` | All item rows in the analytic group |
+| `n_rows_eligible` | Rows eligible for summary |
+| `n_rows_excluded` | Rows excluded because of invalid keys or identifiers |
+| `n_respondents` | Unique eligible respondent identifiers |
+| `n_valid_direction` | Valid barrier, neutral, or facilitator directions |
+| `n_complete_class` | Complete five-category classifications |
+| `pct_barrier` | Barrier directions divided by valid directions |
+| `pct_neutral` | Neutral directions divided by valid directions |
+| `pct_facilitator` | Facilitator directions divided by valid directions |
+| `pct_effect_missing` | Barrier/facilitator responses missing effect divided by valid directions |
+| `pct_complete_class` | Complete classifications divided by valid directions |
+| `pct_strong_barrier` | Strong barriers divided by complete classifications |
+| `pct_weak_barrier` | Weak barriers divided by complete classifications |
+| `pct_neutral_complete` | Neutral responses divided by complete classifications |
+| `pct_weak_facilitator` | Weak facilitators divided by complete classifications |
+| `pct_strong_facilitator` | Strong facilitators divided by complete classifications |
+| `modal_class` | Most frequent complete category, or `tie` |
+| `modal_class_share` | Modal-category count divided by complete classifications |
+
+## 9.3 Display statistics
+
+`include_display_statistics = TRUE` adds item-level mean and median display codes. Because the categories are ordered but not established as an interval scale, these are exploratory descriptive summaries. Prefer category percentages, median category, and visual profiles for substantive reporting.
+
+# 10. Agreement, disagreement, and polarization
+
+```r
+consensus <- pcat_consensus(
+  summary,
+  agreement_threshold = 0.60,
+  polarization_min = 0.20,
+  minimum_n = 2
+)
+```
+
+The function adds:
+
+- `agreement_share`: largest of barrier, neutral, and facilitator direction shares;
+- `dominant_side`: barrier, neutral, facilitator, or tie;
+- `polarized`: both barrier and facilitator shares meet the configured minimum;
+- `normalized_entropy`: distributional dispersion across the three directions, from 0 for complete concentration to 1 for an even three-way distribution; and
+- `consensus_label`: insufficient data, polarized, consensus barrier, consensus neutral, consensus facilitator, or mixed.
+
+The default 60% agreement and 20% polarization rules are package conventions. They are not empirically established pCAT cut points. Prespecify and report any threshold used. Sensitivity analysis is recommended when decisions depend on a threshold.
+
+A polarized result is analytically important. It may indicate different roles, workflows, information access, or local experiences rather than measurement error. Review comments and stratified results before collapsing disagreement into a single summary.
+
+# 11. Longitudinal comparison
+
+The pCAT can be administered during planning and again during implementation. Pair respondents and items only when identifiers represent the same people and assessment units across time.
+
+```r
+change <- pcat_change(
+  classified,
+  timepoint = "timepoint",
+  from = "planning",
+  to = "mid_implementation",
+  id_cols = c("project_id", "site_id", "respondent_id", "item_id")
+)
+```
+
+Transition categories:
+
+| Transition | Definition |
+| --- | --- |
+| `toward_barrier` | Later category has a lower descriptive display code |
+| `no_code_change` | Earlier and later complete categories are identical in display code |
+| `toward_facilitation` | Later category has a higher descriptive display code |
+| `newly_observed` | No earlier record, later record present |
+| `followup_missing` | Earlier record present, no later record |
+| `not_comparable` | Pair exists but one or both responses lack a complete display code |
+
+`delta_display_code` ranges from -4 to +4. It describes ordered movement only. It is not a continuous change score, standardized effect, causal estimate, or evidence that implementation caused the change.
+
+When respondent anonymity prevents pairing, compare group-level item distributions instead and clearly describe the analysis as repeated cross-sectional.
+
+# 12. Action planning and ERIC strategy prompts
+
+```r
+action_plan <- pcat_action_plan(
+  summary,
+  group_vars = c("site_id", "timepoint"),
+  barrier_threshold = 0.50,
+  strong_barrier_threshold = 0.20,
+  include_strategy_candidates = TRUE,
+  include_approximate = FALSE
+)
+```
+
+An item enters the action plan when barrier prevalence or strong-barrier prevalence meets the configured threshold. The output may include multiple candidate strategies per item.
+
+The package intentionally leaves these fields blank:
+
+- `selected_strategy`;
+- `planned_action`;
+- `local_adaptation`;
+- `owner`;
+- `target_date`;
+- `status`; and
+- `action_notes`.
+
+Complete them through stakeholder deliberation. Consider implementation fit, feasibility, equity, staff burden, resources, readiness, sequencing, and unintended consequences.
+
+The candidate strategy table is source-derived and does not constitute automated treatment selection. `include_approximate = FALSE` excludes the non-identical Relative Priority to Relative Advantage linkage. Any approximate mapping should be disclosed.
+
+The default action-plan rule uses `pct_barrier` with `n_valid_direction` as its denominator and `pct_strong_barrier` with `n_complete_class` as its denominator. Review `pct_complete_class` and effect missingness before interpreting a strong-barrier threshold. A row with a missing strong-barrier percentage is never retained solely because the value is missing.
+
+# 13. Visualization and export
+
+## 13.1 Barrier-facilitator profile
+
+```r
+profile <- plot_pcat_profile(
+  classified,
+  group_vars = c("site_id", "timepoint"),
+  label = "cfir_original_construct",
+  facet_ncol = 2,
+  show_neutral = TRUE,
+  show_n = TRUE
+)
+
+print(profile)
+```
+
+Barriers appear to the left and facilitators to the right. Neutral labels show the neutral percentage and complete-response denominator. The bars use complete five-category responses as the denominator.
+
+For several groups or long labels, use one page per group:
+
+```r
+pcat_save_profile_pdf(
+  classified,
+  path = "pcat_profiles.pdf",
+  group_vars = c("site_id", "timepoint"),
+  label = "cfir_original_construct",
+  overwrite = TRUE
+)
+```
+
+## 13.2 Respondent heatmap
+
+```r
+plot_pcat_heatmap(
+  classified,
+  respondent_id = "respondent_id",
+  facet_vars = c("site_id", "timepoint")
+)
+```
+
+Use heatmaps cautiously when respondent identifiers are sensitive. Replace identifiers with display codes or suppress the figure before sharing.
+
+## 13.3 Change heatmap
+
+```r
+plot_pcat_change(
+  change,
+  respondent_id = "respondent_id",
+  facet_vars = "site_id",
+  display = "transition"
+)
+```
+
+The transition display is preferred because it avoids presenting ordinal differences as interval-scaled effects.
+
+## 13.4 Save a high-resolution figure
+
+```r
+ggplot2::ggsave(
+  "pcat_profile.png",
+  profile,
+  width = 16,
+  height = 12,
+  units = "in",
+  dpi = 300
+)
+```
+
+# 14. End-to-end workflow
+
+```r
+library(pcatR)
+
+# 1. Import a standard CSV.
+data <- pcat_read_csv(file.choose(), layout = "auto")
+
+# 2. Run the standard analysis.
+analysis <- pcat_analyse(
+  data,
+  group_vars = c("site_id", "timepoint"),
+  respondent_id = "respondent_id",
+  require_complete = TRUE,
+  neutral_effect = "flag",
+  validation_action = "warn",
+  suppress_below = 5,
+  agreement_threshold = 0.60,
+  polarization_min = 0.20,
+  minimum_n = 2,
+  barrier_threshold = 0.50,
+  strong_barrier_threshold = 0.20
+)
+
+# 3. Review validation before interpreting results.
+analysis$validation
+pcat_validation_issues(analysis$validation)
+
+# 4. Inspect outputs.
+analysis$summary
+analysis$consensus
+analysis$action_plan
+
+# 5. Export an auditable bundle.
+pcat_write_analysis(
+  analysis,
+  path = "pcat_results",
+  overwrite = TRUE,
+  include_classified = FALSE,
+  include_profile_pdf = TRUE
+)
+```
+
+The export includes:
+
+| File | Content |
+| --- | --- |
+| `00_manifest.csv` | Package version, timestamp, row counts, validation counts, grouping, completeness setting, and profile status |
+| `01_validation_issues.csv` | Row- and assessment-level findings |
+| `02_classified_responses.csv` | Optional standardized and classified response-level data; written only when `include_classified = TRUE` |
+| `03_item_summary.csv` | Item-level counts, percentages, denominators, and mappings |
+| `04_consensus_diagnostics.csv` | Agreement, polarization, entropy, and labels |
+| `05_action_plan.csv` | Barrier-focused planning worksheet, when requested |
+| `06_profile.pdf` | One profile page per group, when complete categories exist |
+| `07_analysis_settings.csv` | Analysis settings |
+| `08_session_info.txt` | R and package session information |
+| `README.txt` | Export inventory and methodological warning |
+
+Respondent-level classified data and profile figures are not protected by summary-table small-cell suppression. Set `include_classified = FALSE` for a shareable aggregate bundle unless response-level disclosure has been reviewed. If `overwrite = TRUE`, `pcat_write_analysis()` removes only known pcatR-generated files before writing the new export; unrelated files in the directory are left untouched.
+
+# 15. Shiny application
+
+Install the optional dependency and launch locally:
+
+```r
+install.packages("shiny")
+pcat_app()
+```
+
+The application supports CSV upload, layout selection, validation, group selection, profiles, item summaries, consensus diagnostics, action plans, and CSV downloads.
+
+Do not deploy the app with sensitive data until the hosting environment has appropriate authentication, authorization, encrypted transport, encrypted storage, logging, retention, backup, and incident-response controls. The package does not implement those controls.
+
+# 16. Reproducibility and version control
+
+Record the following in every analysis:
+
+```r
+packageVersion("pcatR")
+R.version.string
+sessionInfo()
+```
+
+Use the export manifest and settings files. Preserve the raw input, a read-only copy of the item dictionary and mappings used, the exact analysis script, and the package lockfile where applicable.
+
+For an R project, `renv` can preserve package versions:
+
+```r
+install.packages("renv")
+renv::init()
+renv::snapshot()
+```
+
+For software development, run:
+
+```r
+devtools::document()
+devtools::test(stop_on_failure = TRUE)
+devtools::check(error_on = "warning")
+```
+
+GitHub Actions supplied with the repository run multi-platform package checks, website deployment, and coverage calculation.
+
+# 17. Reporting guidance
+
+At minimum, state:
+
+1. the specific implementation or improvement effort considered;
+2. setting, sites, teams, respondent roles, and recruitment or administration process;
+3. assessment timing and whether data are paired or repeated cross-sectional;
+4. the official 14-item instrument and mapping version used;
+5. direction and effect coding;
+6. handling of any effect response supplied with a neutral direction;
+7. completeness requirement, validation findings, exclusions, and missingness;
+8. denominator used for each percentage;
+9. grouping, suppression, consensus, polarization, and action-plan thresholds;
+10. how qualitative comments or stakeholder deliberation informed interpretation;
+11. the software version and citations; and
+12. the limitation that pCAT is abbreviated and no validated total score was calculated.
+
+Suggested methods language:
+
+> We analyzed the 14-item Pragmatic Context Assessment Tool using pcatR version 1.0.0. Direction responses were classified as barrier, neutral, or facilitator; barrier and facilitator responses were further classified as weak/no effect or strong effect. We reported item-level distributions using valid direction and complete five-category denominators as appropriate. We did not calculate an overall pCAT score. Consensus and action-planning thresholds were prespecified as descriptive analytic conventions.
+
+Suggested limitation language:
+
+> The pCAT is an abbreviated pragmatic context assessment and does not comprehensively represent all CFIR determinants. Each construct is represented by a single item, and the instrument was not developed as a conventional psychometric scale. Findings are context-specific and should be integrated with stakeholder interpretation and, when comprehensiveness is required, broader determinant assessment.
+
+# 18. Troubleshooting
+
+## CSV file does not exist
+
+The path supplied to `pcat_read_csv()` must identify an actual file. Use:
+
+```r
+path <- file.choose()
+file.exists(path)
+data <- pcat_read_csv(path)
+```
+
+## Could not detect layout
+
+Check for either the four standard long fields or wide names such as `item01_direction`. Import with base R and use `pcat_standardize()` for non-standard names.
+
+## Missing-effect errors
+
+Barrier and facilitator directions require effect 0 or 1. Neutral responses should leave effect blank. If a legacy electronic form forced an effect response after neutral, document that design and select the appropriate `neutral_effect` handling rather than treating the forced value as substantive effect strength.
+
+## Duplicate key errors
+
+Confirm that `key_cols` identify one assessment. Include assessment date or wave when a respondent completes multiple assessments. Do not simply delete duplicates until the source record is reconciled.
+
+## Incomplete assessment errors
+
+Use `pcat_validation_issues(validation, level = "assessment")` to identify missing or repeated item IDs. Decide whether partial item-level analysis is appropriate and document the decision.
+
+## Profile plot is crowded
+
+Save at a larger size or use `pcat_save_profile_pdf()` for one group per page. Use `label = "item_id"` for compact multi-panel overviews and provide an item key.
+
+## Package will not install from GitHub
+
+Update R and installation tools, then run:
+
+```r
+install.packages("pak")
+pak::pkg_system_requirements("pcatR")
+pak::pak("JaeManP/pcatR")
+```
+
+For development problems, include `sessionInfo()`, the exact error, and a synthetic reproducible example.
+
+# 19. Function reference
+
+| Function | Primary purpose |
+| --- | --- |
+| `pcat_analyse()` | End-to-end validation, classification, summary, consensus, and action plan |
+| `pcat_write_analysis()` | Export an auditable analysis bundle |
+| `pcat_items()` | Item dictionary and primary mappings |
+| `pcat_construct_map()` | Long-form original and updated mapping table |
+| `pcat_response_options()` | Response coding dictionary |
+| `pcat_strategy_candidates()` | Source-derived strategy prompts |
+| `pcat_example_data()` | Synthetic complete example data |
+| `pcat_read_csv()` | Import standard long or wide CSV |
+| `pcat_standardize()` | Map non-standard columns to standard names |
+| `pcat_template()` | Create an in-memory entry template |
+| `pcat_write_template()` | Write a CSV entry template |
+| `pcat_wide_to_long()` | Convert standard wide data to long |
+| `pcat_long_to_wide()` | Convert long data to standard wide |
+| `pcat_validate()` | Validate rows, keys, codes, and completeness |
+| `pcat_validation_data()` | Extract standardized validation data |
+| `pcat_validation_issues()` | Extract validation findings |
+| `pcat_classify()` | Create direction, strength, five-category, and display fields |
+| `pcat_summarise()` | Item-level counts, percentages, denominators, and mappings |
+| `pcat_consensus()` | Agreement, polarization, entropy, and consensus labels |
+| `pcat_change()` | Paired item transitions across two occasions |
+| `pcat_action_plan()` | Barrier-focused planning worksheet and strategy prompts |
+| `plot_pcat_profile()` | Diverging item profile |
+| `plot_pcat_heatmap()` | Respondent-by-item classification heatmap |
+| `plot_pcat_change()` | Paired transition or descriptive delta heatmap |
+| `pcat_save_profile_pdf()` | Multi-page one-group-per-page profile PDF |
+| `pcat_palette()` | Default named colors |
+| `pcat_app()` | Optional local Shiny interface |
+| `pcat_user_guide()` | Locate or open this guide |
+| `pcat_self_test()` | Run built-in integrity and behavior checks |
+
+# 20. Document revision history
+
+| Document version | Date | Software version | Change |
+| --- | --- | --- | --- |
+| 1.0 | July 12, 2026 | 1.0.0 | Initial stable technical guide for the GitHub release |
+
+# 21. References and attribution
+
+Robinson CH, Damschroder LJ. A pragmatic context assessment tool (pCAT): using a Think Aloud method to develop an assessment of contextual barriers to change. *Implementation Science Communications*. 2023;4:3. doi:10.1186/s43058-022-00380-5.
+
+Domlyn AM, Dodge J, Pfeiffer PN, et al. Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study. *Implementation Science Communications*. 2026;7:129. doi:10.1186/s43058-026-00956-5.
+
+Official instrument attachment: Pragmatic Context Assessment Tool / Barrier Buster Tool, available through the Dissemination and Implementation Models in Health Research and Practice assessment-instrument repository.
+
+R Core Team. *Writing R Extensions*. R Foundation for Statistical Computing.
+
+## 21.1 Software citation
+
+```r
+citation("pcatR")
+```
+
+When reporting pCAT results, cite the original instrument article and the software. Cite the 2026 article when using or discussing the updated CFIR mappings.
+
+## 21.2 Independence statement
+
+`pcatR` is an independent software implementation. It is not an official product or endorsement of Claire H. Robinson, Laura J. Damschroder, the U.S. Department of Veterans Affairs, the CFIR Leadership Team, or the instrument repository.
+
+## 21.3 License statement
+
+The R source code is licensed under MIT. Exact instrument wording and source-derived mappings are attributed under CC BY 4.0. See `LICENSE` and `LICENSE.note` for details.

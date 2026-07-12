@@ -1,0 +1,85 @@
+---
+title: "Getting started with pcatR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with pcatR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 10, fig.height = 8)
+library(pcatR)
+```
+
+## Read-before-use boundary
+
+The pCAT has 14 items and two response components per item. `pcatR` preserves
+those components and derives item-level descriptive categories. It does not
+calculate an overall validated pCAT scale score. Open the complete technical
+guide with `pcat_user_guide()` before using operational or research data.
+
+## Inspect the instrument and mappings
+
+```{r}
+pcat_items("both")
+pcat_construct_map("2022", include_secondary = TRUE)
+pcat_response_options()
+```
+
+## Run the standard workflow
+
+```{r}
+dat <- pcat_example_data()
+analysis <- pcat_analyse(
+  dat,
+  group_vars = c("site_id", "timepoint"),
+  require_complete = TRUE,
+  validation_action = "none"
+)
+analysis
+```
+
+Always inspect validation findings, even when validation does not raise a
+condition.
+
+```{r}
+pcat_validation_issues(analysis$validation)
+head(analysis$summary)
+head(analysis$consensus)
+```
+
+## Visualize item patterns
+
+```{r, fig.height=10, fig.alt="Diverging pCAT item profiles comparing barrier and facilitator response shares at planning and mid-implementation."}
+plot_pcat_profile(
+  analysis$classified,
+  group_vars = "timepoint",
+  label = "cfir_original_construct"
+)
+```
+
+## Compare repeated assessments
+
+```{r}
+change <- pcat_change(
+  analysis$classified,
+  from = "planning",
+  to = "mid_implementation"
+)
+head(change)
+```
+
+## Export reproducible results
+
+```{r, eval=FALSE}
+pcat_write_analysis(
+  analysis,
+  path = "pcat_analysis_outputs",
+  overwrite = TRUE
+)
+```
+
+The export includes an analysis manifest, validation findings, classified
+responses, item summaries, consensus diagnostics, an action-plan worksheet,
+and an optional multi-page profile PDF.
