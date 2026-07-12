@@ -1,4 +1,9 @@
 url: https://jaemanp.github.io/pcatR/
+authors:
+  Lilac Li:
+    href: https://www.unk.edu/academics/management/lilac-li.php
+  Jae Man Park:
+    href: https://www.linkedin.com/in/jae-man-park/
 template:
   bootstrap: 5
   bslib:

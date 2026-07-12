@@ -12,16 +12,29 @@
   "author": [
     {
       "@type": "Person",
+      "givenName": "Lilac",
+      "familyName": "Li",
+      "email": "lix@unk.edu",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "University of Nebraska at Kearney"
+      },
+      "url": "https://www.unk.edu/academics/management/lilac-li.php"
+    },
+    {
+      "@type": "Person",
       "givenName": "Jae Man",
       "familyName": "Park",
-      "email": "jaemanblp2@gmail.com"
+      "email": "jaemanblp2@gmail.com",
+      "url": "https://www.linkedin.com/in/jae-man-park/"
     }
   ],
   "maintainer": {
     "@type": "Person",
     "givenName": "Jae Man",
     "familyName": "Park",
-    "email": "jaemanblp2@gmail.com"
+    "email": "jaemanblp2@gmail.com",
+    "url": "https://www.linkedin.com/in/jae-man-park/"
   },
   "keywords": [
     "implementation science",
