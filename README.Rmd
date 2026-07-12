@@ -46,7 +46,7 @@ remotes::install_github("JaeManP/pcatR")
 
 ```r
 install.packages(
-  "pcatR_1.0.0.tar.gz",
+  "pcatR_1.0.1.tar.gz",
   repos = NULL,
   type = "source"
 )
@@ -197,8 +197,8 @@ platform.
 ## Citation and attribution
 
 Package authors, in order, are [Lilac Li](https://www.unk.edu/academics/management/lilac-li.php)
-and [Jae Man Park](https://www.linkedin.com/in/jae-man-park/). Jae Man Park is
-the package maintainer.
+and Jae Man Park. Jae Man Park is the package maintainer. Author profile links
+are retained in the package metadata and website.
 
 Run:
 

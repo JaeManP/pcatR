@@ -1,16 +1,6 @@
 citHeader("To cite pcatR, cite the software and the original pCAT article. Cite the 2026 article when using updated CFIR mappings:")
 
-bibentry(
-  bibtype = "Manual",
-  title = "pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data",
-  author = c(
-    person("Lilac", "Li"),
-    person("Jae Man", "Park")
-  ),
-  year = "2026",
-  note = "R package version 1.0.0",
-  url = "https://github.com/JaeManP/pcatR"
-)
+citation(auto = meta)
 
 bibentry(
   bibtype = "Article",
@@ -32,7 +22,14 @@ bibentry(
   author = c(
     person("Ariel M.", "Domlyn"),
     person("Jessica", "Dodge"),
-    person("Paul N.", "Pfeiffer")
+    person("Paul N.", "Pfeiffer"),
+    person("Claire H.", "Robinson"),
+    person("Lacey", "Evans"),
+    person("Laura J.", "Damschroder"),
+    person("Madison A.", "Stewart"),
+    person("Brittani", "Garlick"),
+    person("Jeremy B.", "Sussman"),
+    person("Andrea L.", "Nevedal")
   ),
   journal = "Implementation Science Communications",
   year = "2026",

@@ -218,8 +218,8 @@ pcat_self_test <- function(verbose = TRUE) {
     },
     "packaged technical guide" = function() {
       pdf <- pcat_user_guide("pdf", open = FALSE)
-      markdown <- pcat_user_guide("markdown", open = FALSE)
-      stopifnot(file.exists(pdf), file.exists(markdown))
+      html <- pcat_user_guide("html", open = FALSE)
+      stopifnot(file.exists(pdf), file.exists(html))
     }
   )
 

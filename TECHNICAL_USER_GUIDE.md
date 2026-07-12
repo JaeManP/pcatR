@@ -1,8 +1,8 @@
 # pcatR Technical User Guide
 
 **Software:** pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data  
-**Version:** 1.0.0  
-**Document version:** 1.0  
+**Version:** 1.0.1<br>
+**Document version:** 1.1<br>
 **Release date:** July 12, 2026  
 **Authors:** [Lilac Li](https://www.unk.edu/academics/management/lilac-li.php); [Jae Man Park](https://www.linkedin.com/in/jae-man-park/)<br>
 **Maintainer:** Jae Man Park<br>
@@ -181,7 +181,7 @@ remotes::install_github("JaeManP/pcatR")
 
 ```r
 install.packages(
-  "pcatR_1.0.0.tar.gz",
+  "pcatR_1.0.1.tar.gz",
   repos = NULL,
   type = "source"
 )
@@ -200,7 +200,7 @@ pcat_self_test()
 Expected version:
 
 ```text
-[1] '1.0.0'
+[1] '1.0.1'
 ```
 
 The self-test checks the 14-item dictionary, mappings, validation, classification, summaries, reshaping, longitudinal comparison, strategy lookup, action planning, and the end-to-end wrapper. Plot construction is also checked when `ggplot2` is available; `ggplot2` is a required dependency of an installed `pcatR` package.
@@ -732,7 +732,7 @@ At minimum, state:
 
 Suggested methods language:
 
-> We analyzed the 14-item Pragmatic Context Assessment Tool using pcatR version 1.0.0. Direction responses were classified as barrier, neutral, or facilitator; barrier and facilitator responses were further classified as weak/no effect or strong effect. We reported item-level distributions using valid direction and complete five-category denominators as appropriate. We did not calculate an overall pCAT score. Consensus and action-planning thresholds were prespecified as descriptive analytic conventions.
+> We analyzed the 14-item Pragmatic Context Assessment Tool using pcatR version 1.0.1. Direction responses were classified as barrier, neutral, or facilitator; barrier and facilitator responses were further classified as weak/no effect or strong effect. We reported item-level distributions using valid direction and complete five-category denominators as appropriate. We did not calculate an overall pCAT score. Consensus and action-planning thresholds were prespecified as descriptive analytic conventions.
 
 Suggested limitation language:
 
@@ -820,13 +820,14 @@ For development problems, include `sessionInfo()`, the exact error, and a synthe
 
 | Document version | Date | Software version | Change |
 | --- | --- | --- | --- |
+| 1.1 | July 12, 2026 | 1.0.1 | Added CRAN-ready attribution, citation, and installed guide formats |
 | 1.0 | July 12, 2026 | 1.0.0 | Initial stable technical guide for the GitHub release |
 
 # 21. References and attribution
 
 Robinson CH, Damschroder LJ. A pragmatic context assessment tool (pCAT): using a Think Aloud method to develop an assessment of contextual barriers to change. *Implementation Science Communications*. 2023;4:3. doi:10.1186/s43058-022-00380-5.
 
-Domlyn AM, Dodge J, Pfeiffer PN, et al. Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study. *Implementation Science Communications*. 2026;7:129. doi:10.1186/s43058-026-00956-5.
+Domlyn AM, Dodge J, Pfeiffer PN, Robinson CH, Evans L, Damschroder LJ, Stewart MA, Garlick B, Sussman JB, Nevedal AL. Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study. *Implementation Science Communications*. 2026;7:129. doi:10.1186/s43058-026-00956-5.
 
 Official instrument attachment: Pragmatic Context Assessment Tool / Barrier Buster Tool, available through the Dissemination and Implementation Models in Health Research and Practice assessment-instrument repository.
 

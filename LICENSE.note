@@ -1,26 +1,52 @@
-The R source code in this package is licensed under the MIT License.
+The R source code in this package is licensed under the MIT License. See the
+file LICENSE.
 
-The exact pCAT item wording and related instrument metadata are reproduced and
-adapted from:
+Source-derived content
+----------------------
 
-Robinson CH, Damschroder LJ. A pragmatic context assessment tool (pCAT):
-using a Think Aloud method to develop an assessment of contextual barriers to
+The exact 14 pCAT item statements, original CFIR mappings, response structure,
+and source-table strategy prompts in these files are reproduced or adapted
+from Robinson and Damschroder (2023):
+
+* inst/extdata/pcat_items.csv
+* inst/extdata/pcat_cfir_mappings.csv (rows labelled "original")
+* inst/extdata/pcat_eric_candidates.csv
+* inst/extdata/pcat_long_template.csv and pcat_wide_template.csv, to the extent
+  that they reproduce item wording or response fields
+
+Robinson CH, Damschroder LJ. A pragmatic context assessment tool (pCAT): using
+a Think Aloud method to develop an assessment of contextual barriers to
 change. Implementation Science Communications. 2023;4:3.
 https://doi.org/10.1186/s43058-022-00380-5
 
-That article and its supplementary materials are available under the Creative
-Commons Attribution 4.0 International License (CC BY 4.0). The package
-attributes the original authors and source and identifies its derived fields,
-classification rules, summaries, and visualizations as adaptations.
+The article and its supplementary materials are licensed under the Creative
+Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
 
-The updated CFIR mappings are based on:
+Adaptations include transcription into machine-readable CSV files,
+standardized field and construct names, stable item identifiers, normalized
+response codes, and software-derived classification, summary, visualization,
+and reporting fields. The item statements were transcribed without intentional
+wording changes; CSV quoting and whitespace are formatting changes.
 
-Domlyn AM, Dodge J, Pfeiffer PN, et al. Evaluating the utility of an
-abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid
-qualitative analysis: a suicide prevention program case study. Implementation
-Science Communications. 2026;7:129.
+The updated CFIR mapping fields in inst/extdata/pcat_items.csv and the rows
+labelled "2022" in inst/extdata/pcat_cfir_mappings.csv are adapted from the
+article main text and Supplementary Table S3 of Domlyn et al. (2026):
+
+Domlyn AM, Dodge J, Pfeiffer PN, Robinson CH, Evans L, Damschroder LJ, Stewart
+MA, Garlick B, Sussman JB, Nevedal AL. Evaluating the utility of an abbreviated
+Consolidated Framework for Implementation Research (CFIR) for rapid qualitative
+analysis: a suicide prevention program case study. Implementation Science
+Communications. 2026;7:129.
 https://doi.org/10.1186/s43058-026-00956-5
 
+The source articles' CC BY 4.0 terms apply to the source-derived content. The
+MIT License applies to the package software and does not replace those terms.
+See inst/COPYRIGHTS for a concise installed-package notice.
+
+No endorsement
+--------------
+
 This software is an independent implementation. It is not an official product
-of the original pCAT authors, the U.S. Department of Veterans Affairs, the CFIR
-Leadership Team, or the instrument repository.
+of, and is not endorsed by, the original pCAT authors, the U.S. Department of
+Veterans Affairs, the CFIR Leadership Team, or the instrument repository.

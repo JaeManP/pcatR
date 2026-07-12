@@ -154,9 +154,9 @@ test_that("profile export warns when tabular suppression is active", {
 
 test_that("packaged technical guide can be located", {
   pdf_path <- pcat_user_guide("pdf", open = FALSE)
-  md_path <- pcat_user_guide("markdown", open = FALSE)
+  html_path <- pcat_user_guide("html", open = FALSE)
   expect_true(file.exists(pdf_path))
-  expect_true(file.exists(md_path))
+  expect_true(file.exists(html_path))
 })
 
 

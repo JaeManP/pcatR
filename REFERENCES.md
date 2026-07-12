@@ -2,7 +2,7 @@
 
 This file records the primary sources used for the instrument dictionary,
 CFIR mappings, response interpretation, and source-derived strategy prompts in
-`pcatR` 1.0.0.
+`pcatR` 1.0.1.
 
 ## Instrument development and original CFIR mapping
 
@@ -24,9 +24,10 @@ outputs as adaptations.
 
 ## Updated CFIR mapping
 
-Domlyn AM, Dodge J, Pfeiffer PN, et al. Evaluating the utility of an
-abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid
-qualitative analysis: a suicide prevention program case study.
+Domlyn AM, Dodge J, Pfeiffer PN, Robinson CH, Evans L, Damschroder LJ, Stewart
+MA, Garlick B, Sussman JB, Nevedal AL. Evaluating the utility of an abbreviated
+Consolidated Framework for Implementation Research (CFIR) for rapid qualitative
+analysis: a suicide prevention program case study.
 *Implementation Science Communications*. 2026;7:129.
 https://doi.org/10.1186/s43058-026-00956-5
 
