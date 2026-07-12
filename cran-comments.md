@@ -1,6 +1,8 @@
 ## Test environment
 
 - Local: macOS 26.1 (arm64), R 4.4.2
+- GitHub Actions: macOS R-release; Windows R-release; Ubuntu R-devel,
+  R-release, R-oldrel-1, and R 4.1
 
 ## R CMD check results
 
@@ -29,6 +31,8 @@ The notes were:
 - Installation from the source archive into a clean library succeeded. The
   example analysis produced 56 item-summary rows and 56 consensus rows from
   336 synthetic input rows, and all 25 package self-tests passed.
+- All GitHub Actions package-check jobs and the coverage job passed, including
+  the dedicated R 4.1 compatibility job.
 
-Win-builder and current GitHub Actions results will be added only after those
-external checks have actually completed.
+Win-builder R-release and R-devel checks have not yet been run; their results
+will be added only after those external checks have actually completed.

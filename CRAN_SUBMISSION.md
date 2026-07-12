@@ -21,7 +21,7 @@ GitHub `v1.0.0` release.
 - [x] `R CMD check --as-cran pcatR_1.0.1.tar.gz` reviewed with no errors or
       warnings and all notes explained.
 - [x] Archive contents inspected for excluded development and release files.
-- [ ] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
+- [x] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
       and R 4.1.
 - [ ] Win-builder R-devel and R-release results reviewed.
 - [ ] Maintainer obtains confirmation of the package name and source-content
