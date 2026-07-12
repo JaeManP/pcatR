@@ -1,0 +1,54 @@
+# Changelog
+
+## pcatR 1.0.0
+
+### Stable GitHub release
+
+- Added
+  [`pcat_analyse()`](https://jaemanp.github.io/pcatR/reference/pcat_analyse.md)
+  and a structured `pcat_analysis` result object.
+- Added
+  [`pcat_write_analysis()`](https://jaemanp.github.io/pcatR/reference/pcat_write_analysis.md)
+  for reproducible export of validation issues, classified responses,
+  item summaries, consensus diagnostics, action plans, an analysis
+  manifest, and an optional multi-page profile PDF.
+- Rebuilt visualization with `ggplot2`, shared legends, readable facet
+  labels, explicit neutral labels and denominators, and
+  device-independent output.
+- Improved profile defaults for multi-panel readability and expanded
+  absent item records explicitly in respondent and change heatmaps.
+- Added
+  [`pcat_save_profile_pdf()`](https://jaemanp.github.io/pcatR/reference/pcat_write_analysis.md)
+  to place one grouping combination per page.
+- Added original and updated CFIR mapping metadata, including item 10’s
+  secondary Funding mapping from the 2026 supplementary table.
+- Added user-defined small-cell suppression in
+  [`pcat_summarise()`](https://jaemanp.github.io/pcatR/reference/pcat_summarise.md).
+- Clarified denominators: directional percentages use valid direction
+  responses; five-category strength percentages use complete
+  direction/effect responses.
+- Added a packaged technical user guide accessible through
+  [`pcat_user_guide()`](https://jaemanp.github.io/pcatR/reference/pcat_user_guide.md).
+- Added GitHub Actions, pkgdown configuration, citation metadata, issue
+  and pull request templates, security/support/governance policies, and
+  release tools.
+- Added automated tests and
+  [`pcat_self_test()`](https://jaemanp.github.io/pcatR/reference/pcat_self_test.md).
+- Added privacy-aware export controls, analysis settings/session
+  provenance, and deterministic cleanup of stale package-generated
+  output files.
+- Preserved the methodological boundary that item display codes must not
+  be summed into a purported validated total pCAT score.
+
+## pcatR 0.1.2
+
+- Corrected restoration of graphics parameters in early base-graphics
+  plots.
+
+## pcatR 0.1.1
+
+- Corrected early development-test and installation issues.
+
+## pcatR 0.1.0
+
+- Initial development release.

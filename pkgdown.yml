@@ -1,0 +1,11 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  data-standards: data-standards.html
+  getting-started: getting-started.html
+  interpretation-reporting: interpretation-reporting.html
+last_built: 2026-07-12T19:58Z
+urls:
+  reference: https://jaemanp.github.io/pcatR/reference
+  article: https://jaemanp.github.io/pcatR/articles
