@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/JaeManP/pcatR/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/JaeManP/pcatR/blob/v1.0.0/inst/CITATION)
 
 Park J (2026). *pcatR: Analyze and Visualize Pragmatic Context
 Assessment Tool Data*. R package version 1.0.0,
