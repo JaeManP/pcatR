@@ -5,7 +5,10 @@ Tool Data
 **Version:** 1.0.0  
 **Document version:** 1.0  
 **Release date:** July 12, 2026  
-**Author and maintainer:** Jae Man Park  
+**Authors:** [Lilac
+Li](https://www.unk.edu/academics/management/lilac-li.php); [Jae Man
+Park](https://www.linkedin.com/in/jae-man-park/)  
+**Maintainer:** Jae Man Park  
 **Repository:** <https://github.com/JaeManP/pcatR>  
 **Package website:** <https://jaemanp.github.io/pcatR/>
 

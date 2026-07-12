@@ -209,6 +209,11 @@ survey-collection platform.
 
 ## Citation and attribution
 
+Package authors, in order, are [Lilac
+Li](https://www.unk.edu/academics/management/lilac-li.php) and [Jae Man
+Park](https://www.linkedin.com/in/jae-man-park/). Jae Man Park is the
+package maintainer.
+
 Run:
 
 ``` r

@@ -2,20 +2,26 @@
 
 ## Authors
 
-- **Jae Man Park**. Author, maintainer.
+- **[Lilac Li](https://www.unk.edu/academics/management/lilac-li.php)**.
+  Author.  
+  https://www.unk.edu/academics/management/lilac-li.php
+
+- **[Jae Man Park](https://www.linkedin.com/in/jae-man-park/)**. Author,
+  maintainer.  
+  https://www.linkedin.com/in/jae-man-park/
 
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/JaeManP/pcatR/blob/v1.0.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/JaeManP/pcatR/blob/main/inst/CITATION)
 
-Park J (2026). *pcatR: Analyze and Visualize Pragmatic Context
+Li L, Park J (2026). *pcatR: Analyze and Visualize Pragmatic Context
 Assessment Tool Data*. R package version 1.0.0,
 <https://github.com/JaeManP/pcatR>.
 
     @Manual{,
       title = {pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data},
-      author = {Jae Man Park},
+      author = {Lilac Li and Jae Man Park},
       year = {2026},
       note = {R package version 1.0.0},
       url = {https://github.com/JaeManP/pcatR},
