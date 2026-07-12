@@ -3,7 +3,10 @@ citHeader("To cite pcatR, cite the software and the original pCAT article. Cite 
 bibentry(
   bibtype = "Manual",
   title = "pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data",
-  author = person("Jae Man", "Park"),
+  author = c(
+    person("Lilac", "Li"),
+    person("Jae Man", "Park")
+  ),
   year = "2026",
   note = "R package version 1.0.0",
   url = "https://github.com/JaeManP/pcatR"

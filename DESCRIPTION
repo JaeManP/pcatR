@@ -4,10 +4,22 @@ Title: Analyze and Visualize Pragmatic Context Assessment Tool Data
 Version: 1.0.0
 Authors@R: c(
     person(
+      given = "Lilac",
+      family = "Li",
+      email = "lix@unk.edu",
+      role = "aut",
+      comment = c(
+        URL = "https://www.unk.edu/academics/management/lilac-li.php"
+      )
+    ),
+    person(
       given = "Jae Man",
       family = "Park",
       email = "jaemanblp2@gmail.com",
-      role = c("aut", "cre")
+      role = c("aut", "cre"),
+      comment = c(
+        URL = "https://www.linkedin.com/in/jae-man-park/"
+      )
     )
   )
 Description: Provides a reproducible workflow for importing, validating,

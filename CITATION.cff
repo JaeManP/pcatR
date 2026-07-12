@@ -5,9 +5,15 @@ version: 1.0.0
 date-released: 2026-07-12
 type: software
 authors:
+  - family-names: Li
+    given-names: Lilac
+    email: lix@unk.edu
+    affiliation: University of Nebraska at Kearney
+    website: "https://www.unk.edu/academics/management/lilac-li.php"
   - family-names: Park
     given-names: Jae Man
     email: jaemanblp2@gmail.com
+    website: "https://www.linkedin.com/in/jae-man-park/"
 repository-code: "https://github.com/JaeManP/pcatR"
 url: "https://jaemanp.github.io/pcatR/"
 license: MIT
