@@ -9,9 +9,13 @@ not claim that version 1.0.1 has been released or accepted by CRAN.
 ## Candidate identification
 
 - Pull request: `JaeManP/pcatR#2`
-- Reviewed package-source commit: pending final source freeze
+- Candidate package-source head:
+  `3a919edb77b50ba7634737c61a5755a7b3e09119`
 - Source archive: `pcatR_1.0.1.tar.gz`
-- Final SHA-256: pending final source freeze
+- Candidate SHA-256:
+  `f5d907a6733b5b3d271cc5a97dc5fcc20b884b7338d548be6f91897eaf4db8df`
+- Final frozen-submission SHA-256: pending copyright confirmation and source
+  freeze
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
 
@@ -39,15 +43,17 @@ not claim that version 1.0.1 has been released or accepted by CRAN.
 
 ## Automated current-R archive checks
 
-The PR workflow now builds one exact `pcatR_1.0.1.tar.gz` archive under current
-R-release, publishes it as a workflow artifact, and checks that same downloaded
-archive under current R-release and R-devel with the full PDF manual enabled.
-Run identifiers and verbatim results will be recorded after the final source
-commit completes.
+GitHub Actions run `29215546944` built one exact candidate
+`pcatR_1.0.1.tar.gz` archive under R 4.6.1, published it as a workflow artifact,
+and checked that same downloaded archive under R 4.6.1 and R-devel
+(2026-06-21 r90185) with the full PDF manual enabled. Each check completed with
+0 errors, 0 warnings, and 2 notes: new submission and unavailable HTML Tidy on
+the Ubuntu runner. Both PDF manuals built successfully.
 
 The standard repository matrix also checks Windows R-release, macOS R-release,
-Ubuntu R-release, R-devel, R-oldrel-1, and R 4.1. The coverage and PR-only
-pkgdown jobs must also pass on the final source commit.
+Ubuntu R-release, R-devel, R-oldrel-1, and R 4.1. All matrix jobs passed in run
+`29215546944`; test coverage passed in run `29215546943`; and the PR-only
+pkgdown build passed in run `29215546939`.
 
 ## Outstanding external gates
 

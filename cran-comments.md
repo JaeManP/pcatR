@@ -3,6 +3,8 @@
 - Local: macOS 26.1 (arm64), R 4.4.2
 - GitHub Actions: macOS R-release; Windows R-release; Ubuntu R-devel,
   R-release, R-oldrel-1, and R 4.1
+- Exact candidate archive: Ubuntu 24.04.4, R 4.6.1 and R-devel
+  (2026-06-21 r90185), with the full PDF manual enabled
 
 ## R CMD check results
 
@@ -35,7 +37,15 @@ The notes were:
 - A clean local pkgdown build completed without warnings and its home,
   reference, article, citation, author, license, attribution, and release pages
   were inspected.
+- GitHub Actions run `29215546944` built one candidate source archive under R
+  4.6.1 and checked that same downloaded archive under R 4.6.1 and R-devel.
+  Both exact-archive checks completed with 0 errors, 0 warnings, and 2 notes:
+  new submission and missing HTML Tidy on the Ubuntu runner. Both PDF manuals
+  built successfully. Candidate SHA-256:
+  `f5d907a6733b5b3d271cc5a97dc5fcc20b884b7338d548be6f91897eaf4db8df`.
+- PR pkgdown run `29215546939` and test-coverage run `29215546943` completed
+  successfully.
 
-The revised candidate has not yet completed its new GitHub exact-archive or
-Win-builder R-release/R-devel checks. Their results will be added only after
-those external checks have actually completed.
+Win-builder R-release and R-devel checks remain pending. The candidate hash
+above will be replaced after the copyright-holder arrangement is confirmed and
+the package source is frozen.

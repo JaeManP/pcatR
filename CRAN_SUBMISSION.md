@@ -24,9 +24,9 @@ GitHub `v1.0.0` release.
 - [x] `R CMD check --as-cran pcatR_1.0.1.tar.gz` reviewed with no errors or
       warnings and all notes explained.
 - [x] Archive contents inspected for excluded development and release files.
-- [ ] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
+- [x] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
       and R 4.1.
-- [ ] The exact uploaded source archive passes full-manual `--as-cran` checks
+- [x] The exact uploaded source archive passes full-manual `--as-cran` checks
       under current R-release and R-devel.
 - [x] A clean local pkgdown build was inspected for its home, reference,
       article, citation, author, license, attribution, and release pages.
@@ -42,6 +42,23 @@ GitHub `v1.0.0` release.
 
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
+
+## GitHub candidate evidence recorded July 12, 2026
+
+- Candidate source head: `3a919edb77b50ba7634737c61a5755a7b3e09119`
+- R-CMD-check run: `29215546944`
+- pkgdown run: `29215546939`
+- test-coverage run: `29215546943`
+- Candidate source archive SHA-256:
+  `f5d907a6733b5b3d271cc5a97dc5fcc20b884b7338d548be6f91897eaf4db8df`
+- Exact-archive R 4.6.1 check: 0 errors, 0 warnings, 2 notes.
+- Exact-archive R-devel check (2026-06-21 r90185): 0 errors, 0 warnings,
+  2 notes.
+
+The notes identify the new submission and the GitHub Ubuntu runner's missing
+HTML Tidy executable. Both checks built the PDF manual successfully. This hash
+is a candidate hash, not the final frozen-submission hash: selecting the legal
+copyright-holder arrangement will change package-source files.
 
 ## Registry check recorded July 12, 2026
 
