@@ -43,22 +43,22 @@ GitHub `v1.0.0` release.
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
-## Prior GitHub candidate evidence recorded July 12, 2026
+## Joint-copyright candidate evidence recorded July 12, 2026
 
-- Candidate source head: `3a919edb77b50ba7634737c61a5755a7b3e09119`
-- R-CMD-check run: `29215546944`
-- pkgdown run: `29215546939`
-- test-coverage run: `29215546943`
+- Candidate source head: `6df71271b26993661026e30acef3e8054e3f202b`
+- R-CMD-check run: `29217151743`
+- pkgdown run: `29217151728`
+- test-coverage run: `29217151745`
 - Candidate source archive SHA-256:
-  `f5d907a6733b5b3d271cc5a97dc5fcc20b884b7338d548be6f91897eaf4db8df`
+  `6c0fe507a24e08d598528fff5d8c59f9c7b25e6d321a08207c706f94f79a0446`
 - Exact-archive R 4.6.1 check: 0 errors, 0 warnings, 2 notes.
 - Exact-archive R-devel check (2026-06-21 r90185): 0 errors, 0 warnings,
   2 notes.
 
 The notes identify the new submission and the GitHub Ubuntu runner's missing
-HTML Tidy executable. Both checks built the PDF manual successfully. The joint
-copyright-holder metadata supersedes this candidate archive; a revised hash
-and exact-archive result will be recorded after the updated source checks pass.
+HTML Tidy executable. Both checks built the PDF manual successfully. The
+downloaded archive was inspected and contains both authors' `cph` roles plus
+the joint MIT copyright-holder statement.
 
 ## Registry check recorded July 12, 2026
 

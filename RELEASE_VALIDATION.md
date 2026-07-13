@@ -9,9 +9,11 @@ released or accepted by CRAN.
 ## Candidate identification
 
 - Pull request: `JaeManP/pcatR#2`
-- Candidate package-source head: pending revised joint-copyright source check
+- Candidate package-source head:
+  `6df71271b26993661026e30acef3e8054e3f202b`
 - Source archive: `pcatR_1.0.1.tar.gz`
-- Candidate SHA-256: pending revised joint-copyright source check
+- Candidate SHA-256:
+  `6c0fe507a24e08d598528fff5d8c59f9c7b25e6d321a08207c706f94f79a0446`
 - Final frozen-submission SHA-256: pending source freeze
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
@@ -40,7 +42,7 @@ released or accepted by CRAN.
 
 ## Automated current-R archive checks
 
-GitHub Actions run `29215546944` built one exact candidate
+GitHub Actions run `29217151743` built one exact joint-copyright candidate
 `pcatR_1.0.1.tar.gz` archive under R 4.6.1, published it as a workflow artifact,
 and checked that same downloaded archive under R 4.6.1 and R-devel
 (2026-06-21 r90185) with the full PDF manual enabled. Each check completed with
@@ -49,8 +51,8 @@ the Ubuntu runner. Both PDF manuals built successfully.
 
 The standard repository matrix also checks Windows R-release, macOS R-release,
 Ubuntu R-release, R-devel, R-oldrel-1, and R 4.1. All matrix jobs passed in run
-`29215546944`; test coverage passed in run `29215546943`; and the PR-only
-pkgdown build passed in run `29215546939`.
+`29217151743`; test coverage passed in run `29217151745`; and the PR-only
+pkgdown build passed in run `29217151728`.
 
 ## Outstanding external gates
 
