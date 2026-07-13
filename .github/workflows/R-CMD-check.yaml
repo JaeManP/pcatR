@@ -117,6 +117,9 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - name: Install the PDF manual index tool
+        run: tlmgr install makeindex
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: check
