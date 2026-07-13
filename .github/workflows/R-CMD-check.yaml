@@ -78,7 +78,7 @@ jobs:
           sha256sum pcatR_1.0.1.tar.gz
 
       - name: Upload exact source archive
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pcatR-1.0.1-source
           path: pcatR_1.0.1.tar.gz
@@ -102,7 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pcatR-1.0.1-source
           path: dist
@@ -122,14 +122,27 @@ jobs:
           needs: check
 
       - name: Check the downloaded archive with CRAN settings
+        id: cran-check
+        continue-on-error: true
         run: R CMD check --as-cran dist/pcatR_1.0.1.tar.gz
+
+      - name: Diagnose a failed PDF manual build
+        if: steps.cran-check.outcome == 'failure'
+        continue-on-error: true
+        working-directory: pcatR.Rcheck
+        run: texi2dvi --pdf --batch pcatR-manual.tex
 
       - name: Upload check logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cran-check-${{ matrix.config.r }}
           path: |
             pcatR.Rcheck/00check.log
             pcatR.Rcheck/00install.out
+            pcatR.Rcheck/pcatR-manual.*
           if-no-files-found: warn
+
+      - name: Confirm the CRAN check passed
+        if: always()
+        run: test "${{ steps.cran-check.outcome }}" = "success"
