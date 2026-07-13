@@ -1,0 +1,49 @@
+pcatR software
+==============
+
+Copyright (c) 2026 Lilac Li and Jae Man Park.
+
+The package software is distributed under the MIT License. See LICENSE.
+
+pCAT source-derived content
+===========================
+
+The 14 pCAT item statements, original CFIR mappings, response structure, and
+source-table strategy prompts are reproduced or adapted from:
+
+Robinson CH, Damschroder LJ (2023). A pragmatic context assessment tool
+(pCAT): using a Think Aloud method to develop an assessment of contextual
+barriers to change. Implementation Science Communications 4:3.
+https://doi.org/10.1186/s43058-022-00380-5
+
+The updated CFIR mappings are adapted from:
+
+Domlyn AM, Dodge J, Pfeiffer PN, Robinson CH, Evans L, Damschroder LJ, Stewart
+MA, Garlick B, Sussman JB, Nevedal AL (2026). Evaluating the utility of an
+abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid
+qualitative analysis: a suicide prevention program case study. Implementation
+Science Communications 7:129.
+https://doi.org/10.1186/s43058-026-00956-5
+
+These source articles and their supplementary materials are available under
+the Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Adaptations include machine-readable transcription, normalized field and
+construct names, stable identifiers and response codes, and software-derived
+classification, summary, visualization, and reporting fields.
+
+Affected source-derived files include:
+
+  inst/extdata/pcat_items.csv
+  inst/extdata/pcat_cfir_mappings.csv
+  inst/extdata/pcat_eric_candidates.csv
+  inst/extdata/pcat_long_template.csv
+  inst/extdata/pcat_wide_template.csv
+
+The source-package file LICENSE.note provides additional provenance and
+adaptation details.
+
+pcatR is an independent implementation and is not an official product or
+endorsement of the source authors, the U.S. Department of Veterans Affairs,
+the CFIR Leadership Team, or the instrument repository.

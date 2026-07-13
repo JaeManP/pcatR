@@ -8,6 +8,11 @@ devtools::document()
 devtools::test(stop_on_failure = TRUE)
 pcat_self_test()
 devtools::check(error_on = "warning")
-rcmdcheck::rcmdcheck(args = c("--as-cran", "--no-manual"), error_on = "warning")
+archive <- devtools::build(path = tempdir(), quiet = FALSE)
+rcmdcheck::rcmdcheck(
+  path = archive,
+  args = "--as-cran",
+  error_on = "warning"
+)
 pkgdown::build_site(new_process = TRUE)
 message("Automated release checks completed. Finish the manual RELEASE_CHECKLIST.md review.")

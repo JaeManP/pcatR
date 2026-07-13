@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>pcatR Technical User Guide</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">@page {
+size: Letter;
+margin: 0.55in 0.62in 0.7in;
+@bottom-left {
+content: "pcatR Technical User Guide";
+color: #64748b;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 7.5pt;
+}
+@bottom-right {
+content: "Page " counter(page);
+color: #64748b;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 7.5pt;
+}
+}
+html {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 9.3pt;
+line-height: 1.28;
+color: #1f2933;
+}
+body {
+margin: 0;
+max-width: none;
+}
+h1, h2, h3, h4 {
+color: #174f2d;
+break-after: avoid-page;
+page-break-after: avoid;
+}
+h1 {
+font-size: 24pt;
+margin: 0 0 0.18in;
+}
+h2 {
+font-size: 16pt;
+margin: 0.24in 0 0.09in;
+border-bottom: 1px solid #3b78b4;
+padding-bottom: 0.04in;
+}
+h3 {
+font-size: 12.3pt;
+margin: 0.16in 0 0.06in;
+}
+h4 {
+font-size: 10.5pt;
+margin: 0.12in 0 0.04in;
+}
+p {
+margin: 0.05in 0 0.08in;
+orphans: 3;
+widows: 3;
+}
+ul, ol {
+margin: 0.04in 0 0.08in 0.24in;
+padding-left: 0.16in;
+}
+li {
+margin: 0.015in 0;
+}
+a {
+color: #1265a8;
+text-decoration: none;
+}
+hr {
+border: 0;
+border-top: 1px solid #b9c7bd;
+margin: 0.15in 0;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+table-layout: fixed;
+font-size: 7.25pt;
+margin: 0.07in 0 0.12in;
+}
+thead {
+display: table-header-group;
+}
+tr {
+break-inside: avoid-page;
+page-break-inside: avoid;
+}
+th {
+background: #174f2d;
+color: white;
+font-weight: 700;
+text-align: left;
+}
+th, td {
+border: 0.5px solid #c8d0cc;
+padding: 3px 4px;
+vertical-align: top;
+overflow-wrap: anywhere;
+}
+tbody tr:nth-child(even) td {
+background: #f4f7f5;
+}
+code {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+font-size: 0.93em;
+overflow-wrap: anywhere;
+}
+pre {
+background: #f1f3f5;
+border-left: 3px solid #9aa8a0;
+padding: 6px 8px;
+white-space: pre-wrap;
+overflow-wrap: anywhere;
+break-inside: avoid-page;
+page-break-inside: avoid;
+}
+pre code {
+font-size: 7.2pt;
+}
+blockquote {
+margin: 0.08in 0;
+padding: 0.04in 0.12in;
+border-left: 3px solid #2f855a;
+background: #eef7f1;
+}
+img, svg {
+max-width: 100%;
+height: auto;
+}
+strong {
+color: #173f28;
+}
+@media print {
+a {
+color: #1265a8;
+}
+}
+</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="pcatr-technical-user-guide">pcatR Technical User Guide</h1>
+<p><strong>Software:</strong> pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data<br />
+<strong>Version:</strong> 1.0.1<br> <strong>Document version:</strong> 1.2<br> <strong>Document status:</strong> CRAN submission candidate<br> <strong>Prepared:</strong> July 12, 2026<br> <strong>Authors:</strong> <a href="https://www.unk.edu/academics/management/lilac-li.php">Lilac Li</a>; <a href="https://www.linkedin.com/in/jae-man-park/">Jae Man Park</a><br> <strong>Maintainer:</strong> Jae Man Park<br> <strong>Repository:</strong> https://github.com/JaeManP/pcatR<br />
+<strong>Package website:</strong> https://jaemanp.github.io/pcatR/</p>
+<hr />
+<h2 id="document-control">Document control</h2>
+<table>
+<colgroup>
+<col style="width: 50%"></col>
+<col style="width: 50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Intended audience</td>
+<td>Implementation researchers, evaluators, quality-improvement teams, analysts, data managers, and facilitators using the 14-item pCAT</td>
+</tr>
+<tr class="even">
+<td>Purpose</td>
+<td>Define correct installation, data preparation, validation, analysis, interpretation, reporting, privacy, and reproducibility procedures</td>
+</tr>
+<tr class="odd">
+<td>Software status</td>
+<td>Independent open-source implementation; not an official product of the pCAT authors, U.S. Department of Veterans Affairs, CFIR Leadership Team, or instrument repository</td>
+</tr>
+<tr class="even">
+<td>Code license</td>
+<td>MIT License</td>
+</tr>
+<tr class="odd">
+<td>Instrument and mapping content</td>
+<td>Attributed source content under Creative Commons Attribution 4.0, as described in <code>LICENSE.note</code></td>
+</tr>
+<tr class="even">
+<td>Primary software language</td>
+<td>R, version 4.1.0 or later</td>
+</tr>
+<tr class="odd">
+<td>Required package dependency</td>
+<td>ggplot2 3.4.0 or later</td>
+</tr>
+<tr class="even">
+<td>Optional dependencies</td>
+<td>shiny, testthat, knitr, rmarkdown, covr, pkgdown, and development tools</td>
+</tr>
+</tbody>
+</table>
+<h2 id="read-this-before-using-pcatr">Read this before using pcatR</h2>
+<blockquote>
+<p><strong>Critical methodological boundary:</strong> The pCAT is an abbreviated pragmatic context assessment. The original development article states that each CFIR construct is represented by a single question and that the instrument did not follow a psychometric paradigm of development. <code>pcatR</code> therefore does not calculate, validate, or recommend an overall pCAT total score.</p>
+</blockquote>
+<p>The package creates a descriptive five-category classification for each item:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th style="text-align: right;">Display code</th>
+<th>Permitted use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Strong barrier</td>
+<td style="text-align: right;">-2</td>
+<td>Item profiles and within-item transition displays</td>
+</tr>
+<tr class="even">
+<td>Weak barrier</td>
+<td style="text-align: right;">-1</td>
+<td>Item profiles and within-item transition displays</td>
+</tr>
+<tr class="odd">
+<td>Neutral</td>
+<td style="text-align: right;">0</td>
+<td>Item profiles and within-item transition displays</td>
+</tr>
+<tr class="even">
+<td>Weak facilitator</td>
+<td style="text-align: right;">+1</td>
+<td>Item profiles and within-item transition displays</td>
+</tr>
+<tr class="odd">
+<td>Strong facilitator</td>
+<td style="text-align: right;">+2</td>
+<td>Item profiles and within-item transition displays</td>
+</tr>
+</tbody>
+</table>
+<p>Do not sum or average these display codes across the 14 items and present the result as a validated scale. Any item-level median or mean display statistic requested from the software is descriptive only and must be labeled accordingly.</p>
+<p>The pCAT should be anchored to a specific planned or ongoing implementation or improvement effort. Respondents should not rate a vague, general organizational climate. The same contextual feature can be a barrier for one implementation effort and a facilitator for another.</p>
+<p>The package does not replace full CFIR assessment. A 2026 evaluation found the updated 14-construct pCAT mapping useful as a rapid starting point but incomplete when comprehensive determinant assessment was required. Use full or purpose-selected CFIR methods when rigor, comprehensiveness, or generalizability is the primary goal.</p>
+<h3 id="pre-analysis-checklist">Pre-analysis checklist</h3>
+<p>Before using results, confirm that:</p>
+<ol type="1">
+<li>every respondent rated the same clearly defined implementation effort;</li>
+<li>item wording and response coding match the official 14-item instrument;</li>
+<li>neutral responses have blank effect values, or a legacy forced-response rule is documented;</li>
+<li>assessment keys uniquely identify respondent, occasion, and item;</li>
+<li>validation errors are resolved or explicitly justified;</li>
+<li>denominators, missingness, thresholds, and suppression rules are prespecified;</li>
+<li>response-level files and figures have undergone disclosure review; and</li>
+<li>the original pCAT article, updated mapping article when applicable, and <code>pcatR</code> software are cited.</li>
+</ol>
+<h2 id="contents">Contents</h2>
+<ol type="1">
+<li>Scope and intended use<br />
+</li>
+<li>Instrument structure and source provenance<br />
+</li>
+<li>Installation and verification<br />
+</li>
+<li>Data governance and privacy<br />
+</li>
+<li>Data specification<br />
+</li>
+<li>Import and standardization<br />
+</li>
+<li>Validation rules<br />
+</li>
+<li>Classification rules<br />
+</li>
+<li>Item-level summaries and denominators<br />
+</li>
+<li>Agreement, disagreement, and polarization<br />
+</li>
+<li>Longitudinal comparison<br />
+</li>
+<li>Action planning and ERIC strategy prompts<br />
+</li>
+<li>Visualization and export<br />
+</li>
+<li>End-to-end workflow<br />
+</li>
+<li>Shiny application<br />
+</li>
+<li>Reproducibility and version control<br />
+</li>
+<li>Reporting guidance<br />
+</li>
+<li>Troubleshooting<br />
+</li>
+<li>Function reference<br />
+</li>
+<li>Document revision history<br />
+</li>
+<li>References and attribution</li>
+</ol>
+<h1 id="scope-and-intended-use">1. Scope and intended use</h1>
+<p><code>pcatR</code> provides a reproducible workflow for:</p>
+<ul>
+<li>importing standard long- or wide-format pCAT data;</li>
+<li>mapping non-standard source columns to a stable schema;</li>
+<li>validating identifiers, item numbers, response codes, duplicate keys, and completeness;</li>
+<li>preserving the two-part direction and effect response structure;</li>
+<li>classifying responses into five descriptive categories;</li>
+<li>producing item-level barrier, neutral, and facilitator summaries with explicit denominators;</li>
+<li>describing agreement, disagreement, and barrier-facilitator polarization;</li>
+<li>comparing paired responses across two assessment occasions;</li>
+<li>generating barrier-focused action-planning tables with source-derived ERIC strategy prompts;</li>
+<li>producing publication-quality profiles and heatmaps; and</li>
+<li>exporting an auditable analysis bundle with settings and session information.</li>
+</ul>
+<p>Appropriate uses include pre-implementation planning, mid-implementation reflection, team discussion, rapid context assessment, quality-improvement facilitation, and descriptive implementation research. Results should remain tied to the implementation effort, setting, respondent group, and assessment time point.</p>
+<p>The package is not designed to:</p>
+<ul>
+<li>provide a validated total score or diagnostic threshold;</li>
+<li>establish causal effects of implementation strategies;</li>
+<li>replace qualitative inquiry or comprehensive determinant assessment;</li>
+<li>automate implementation-strategy selection;</li>
+<li>collect regulated data securely;</li>
+<li>provide authentication, access control, encryption, or audit logging; or</li>
+<li>establish psychometric reliability, validity, responsiveness, or measurement invariance.</li>
+</ul>
+<h1 id="instrument-structure-and-source-provenance">2. Instrument structure and source provenance</h1>
+<h2 id="official-response-structure">2.1 Official response structure</h2>
+<p>The official instrument asks respondents to indicate whether each statement represents a potential barrier, neutral condition, or potential facilitator and then, for a barrier or facilitator, indicate likely effect strength.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Code</th>
+<th>Official label</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Direction</td>
+<td>1</td>
+<td>Disagree</td>
+<td>Potential barrier</td>
+</tr>
+<tr class="even">
+<td>Direction</td>
+<td>2</td>
+<td>Neutral</td>
+<td>Neither barrier nor facilitator</td>
+</tr>
+<tr class="odd">
+<td>Direction</td>
+<td>3</td>
+<td>Agree</td>
+<td>Potential facilitator</td>
+</tr>
+<tr class="even">
+<td>Effect</td>
+<td>0</td>
+<td>Weak/no effect</td>
+<td>Weak or no likely effect on implementation</td>
+</tr>
+<tr class="odd">
+<td>Effect</td>
+<td>1</td>
+<td>Strong effect</td>
+<td>Strong likely effect on implementation</td>
+</tr>
+</tbody>
+</table>
+<p>For neutral responses, <code>effect</code> should be blank because the effect question applies to a condition identified as a barrier or facilitator. By default, <code>pcatR</code> flags <strong>any</strong> non-missing effect paired with a neutral direction. The response is still classified as neutral so the source record remains analyzable, but the warning must be reviewed and the data-collection design documented. For a legacy form that forced an effect response, use <code>neutral_effect = &quot;allow&quot;</code> only after confirming the form behavior; use <code>neutral_effect = &quot;set_missing&quot;</code> when the forced value should be removed from the standardized analytic data.</p>
+<h2 id="item-dictionary-and-cfir-mappings">2.2 Item dictionary and CFIR mappings</h2>
+<table>
+<colgroup>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Item statement</th>
+<th>Original CFIR mapping</th>
+<th>Updated CFIR mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>People here regularly seek to understand the needs of patients and make changes to better meet those needs.</td>
+<td>Patient Needs &amp; Resources</td>
+<td>Culture: Recipient-Centeredness</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>I have open lines of communication with everyone needed to make the change.</td>
+<td>Networks &amp; Communications</td>
+<td>Communications</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>I have access to data to help track changes in outcomes.</td>
+<td>Reflecting &amp; Evaluating</td>
+<td>Reflecting &amp; Evaluating</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>The change is aligned with leadership goals.</td>
+<td>Goals &amp; Feedback</td>
+<td>Mission Alignment</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>The change is aligned with clinician values.</td>
+<td>Compatibility</td>
+<td>Innovation Deliverers: Capability</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>The change is compatible with existing clinical processes.</td>
+<td>Compatibility</td>
+<td>Compatibility</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>The structures and policies in place here enable us to make the change.</td>
+<td>Structural Characteristics</td>
+<td>Structural Characteristics: Work Infrastructure</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>We have sufficient space to accommodate the change.</td>
+<td>Available Resources</td>
+<td>Available Resources: Space</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>We have sufficient time dedicated to make the change.</td>
+<td>Available Resources</td>
+<td>Innovation Deliverers: Opportunity</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>We have other needed resources to make the change (staff, money, supplies, etc.).</td>
+<td>Available Resources</td>
+<td>Available Resources: Materials &amp; Equipment; Available Resources: Funding</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>People here see the current situation as intolerable and that the change is needed.</td>
+<td>Tension for Change</td>
+<td>Tension for Change</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>People here see the advantage of implementing this change versus an alternative change.</td>
+<td>Relative Advantage</td>
+<td>Innovation Relative Advantage</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Higher level leaders are committed, involved, and accountable for the planned improvement.</td>
+<td>Leadership Engagement</td>
+<td>High-Level Leaders: Motivation</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Leaders I work with most closely are committed, involved, and accountable for the planned improvement.</td>
+<td>Leadership Engagement</td>
+<td>Mid-Level Leaders: Motivation</td>
+</tr>
+</tbody>
+</table>
+<p>The original 14 items represent 10 original CFIR constructs because Compatibility, Available Resources, and Leadership Engagement are represented by multiple items. The updated mapping assigns a primary updated CFIR construct to each item; item 10 also has a source-reported secondary Funding mapping available through <code>pcat_construct_map(include_secondary = TRUE)</code>.</p>
+<h2 id="provenance-decision">2.3 Provenance decision</h2>
+<p>The online instrument repository currently lists Learning Climate among subscale metadata and only one Leadership Engagement item. The official two-page instrument and the original development article instead contain two Leadership Engagement items and no Learning Climate item. <code>pcatR</code> treats the official instrument attachment and peer-reviewed development article as authoritative for item wording and original mappings. The package retains source notes so mapping decisions are auditable.</p>
+<p>Use these functions to inspect provenance before analysis:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">pcat_items</span>(<span class="st">&quot;both&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">pcat_construct_map</span>(<span class="st">&quot;original&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">pcat_construct_map</span>(<span class="st">&quot;2022&quot;</span>, <span class="dt">include_secondary =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">pcat_response_options</span>()</span></code></pre></div>
+<h1 id="installation-and-verification">3. Installation and verification</h1>
+<h2 id="install-from-github">3.1 Install from GitHub</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;pak&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>pak<span class="op">::</span><span class="kw">pak</span>(<span class="st">&quot;JaeManP/pcatR&quot;</span>)</span></code></pre></div>
+<p>Alternative:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;JaeManP/pcatR&quot;</span>)</span></code></pre></div>
+<h2 id="install-from-a-source-archive">3.2 Install from a source archive</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">install.packages</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">&quot;pcatR_1.0.1.tar.gz&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">repos =</span> <span class="ot">NULL</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">type =</span> <span class="st">&quot;source&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span></code></pre></div>
+<p>The package contains no compiled C, C++, or Fortran code. A normal installation from GitHub usually does not require compilation. Rtools is required for a complete Windows package-development and source-check workflow and may be requested by the installer depending on the R version, dependency state, or build command used.</p>
+<h2 id="verify-installation">3.3 Verify installation</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">library</span>(pcatR)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">packageVersion</span>(<span class="st">&quot;pcatR&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">pcat_self_test</span>()</span></code></pre></div>
+<p>Expected version:</p>
+<pre class="text"><code>[1] &#39;1.0.1&#39;</code></pre>
+<p>The self-test checks the 14-item dictionary, mappings, validation, classification, summaries, reshaping, longitudinal comparison, strategy lookup, action planning, and the end-to-end wrapper. Plot construction is also checked when <code>ggplot2</code> is available; <code>ggplot2</code> is a required dependency of an installed <code>pcatR</code> package.</p>
+<p>Open this guide from R:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">pcat_user_guide</span>()</span></code></pre></div>
+<h1 id="data-governance-and-privacy">4. Data governance and privacy</h1>
+<p>pCAT responses can reveal organizational problems, leadership perceptions, resource limitations, and professional opinions. Even when they are not protected health information, they may be sensitive employment or organizational data.</p>
+<p>Apply the following controls:</p>
+<ul>
+<li>use coded respondent identifiers rather than names, emails, employee numbers, or login IDs;</li>
+<li>store the re-identification key separately under institutional control;</li>
+<li>avoid entering patient names, medical-record numbers, or case details in open-text comments;</li>
+<li>suppress or aggregate small groups when disclosure risk exists;</li>
+<li>follow the approved protocol, quality-improvement determination, data-use agreement, and institutional policy;</li>
+<li>use encrypted storage and approved collaboration platforms when required; and</li>
+<li>review outputs before sharing, especially comments and group-specific results.</li>
+</ul>
+<p><code>pcatR</code> performs local analysis. It does not transmit data by itself. The optional Shiny application is not a secure survey system. Deploying it to a server introduces hosting, authentication, logging, and data-retention responsibilities that are outside the package.</p>
+<p>The <code>suppress_below</code> argument can replace numeric summary measures with missing values for groups below a user-defined respondent count. This is a disclosure-control aid, not a complete statistical disclosure-control system.</p>
+<h1 id="data-specification">5. Data specification</h1>
+<h2 id="preferred-long-format">5.1 Preferred long format</h2>
+<p>Each row should represent one respondent, one assessment, and one pCAT item.</p>
+<table>
+<colgroup>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Required</th>
+<th>Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>respondent_id</code></td>
+<td>Yes</td>
+<td>Character</td>
+<td>Coded respondent identifier</td>
+</tr>
+<tr class="even">
+<td><code>item_id</code></td>
+<td>Yes</td>
+<td>Integer</td>
+<td>pCAT item number 1 through 14</td>
+</tr>
+<tr class="odd">
+<td><code>direction</code></td>
+<td>Yes</td>
+<td>Integer or recognized text</td>
+<td>1 barrier, 2 neutral, 3 facilitator</td>
+</tr>
+<tr class="even">
+<td><code>effect</code></td>
+<td>Yes as a column</td>
+<td>Integer or recognized text</td>
+<td>0 weak/no effect, 1 strong effect; should be blank for neutral</td>
+</tr>
+<tr class="odd">
+<td><code>project_id</code></td>
+<td>Recommended</td>
+<td>Character</td>
+<td>Implementation project identifier</td>
+</tr>
+<tr class="even">
+<td><code>site_id</code></td>
+<td>Recommended</td>
+<td>Character</td>
+<td>Site, facility, clinic, or organizational unit</td>
+</tr>
+<tr class="odd">
+<td><code>team_id</code></td>
+<td>Optional</td>
+<td>Character</td>
+<td>Implementation team identifier</td>
+</tr>
+<tr class="even">
+<td><code>role</code></td>
+<td>Optional</td>
+<td>Character</td>
+<td>Respondent role or professional group</td>
+</tr>
+<tr class="odd">
+<td><code>timepoint</code></td>
+<td>Recommended for repeated assessment</td>
+<td>Character</td>
+<td>Planning, mid-implementation, sustainment, or another defined occasion</td>
+</tr>
+<tr class="even">
+<td><code>assessment_date</code></td>
+<td>Recommended</td>
+<td>Date or ISO character</td>
+<td>Date of assessment</td>
+</tr>
+<tr class="odd">
+<td><code>comment</code></td>
+<td>Optional</td>
+<td>Character</td>
+<td>De-identified contextual note</td>
+</tr>
+</tbody>
+</table>
+<p>Create a template:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">pcat_write_template</span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="st">&quot;pcat_long_template.csv&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">format =</span> <span class="st">&quot;long&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="dt">n_respondents =</span> <span class="dv">20</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="dt">include_item_text =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="dt">overwrite =</span> <span class="ot">TRUE</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>)</span></code></pre></div>
+<h2 id="standard-wide-format">5.2 Standard wide format</h2>
+<p>One row represents one assessment. Item response columns use two-digit item numbers:</p>
+<pre class="text"><code>item01_direction, item01_effect, ..., item14_direction, item14_effect</code></pre>
+<p>Create a wide template:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">pcat_write_template</span>(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="st">&quot;pcat_wide_template.csv&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="dt">format =</span> <span class="st">&quot;wide&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">n_respondents =</span> <span class="dv">20</span>,</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="dt">overwrite =</span> <span class="ot">TRUE</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>)</span></code></pre></div>
+<p>Wide-to-long conversion rejects item numbers outside 1 through 14 and duplicate item-component columns.</p>
+<h2 id="assessment-key">5.3 Assessment key</h2>
+<p>By default, validation defines an assessment using the available columns among:</p>
+<pre class="text"><code>project_id, site_id, team_id, timepoint, assessment_date, respondent_id</code></pre>
+<p>The item number is appended to identify one response row. Specify <code>key_cols</code> explicitly when the default does not uniquely represent an assessment. This is essential when a respondent completes more than one assessment with the same nominal time point.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">pcat_validate</span>(</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  data,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="dt">key_cols =</span> <span class="kw">c</span>(<span class="st">&quot;project_id&quot;</span>, <span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;assessment_date&quot;</span>, <span class="st">&quot;respondent_id&quot;</span>),</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="dt">require_complete =</span> <span class="ot">TRUE</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>)</span></code></pre></div>
+<h1 id="import-and-standardization">6. Import and standardization</h1>
+<h2 id="standard-csv-import">6.1 Standard CSV import</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>data &lt;-<span class="st"> </span><span class="kw">pcat_read_csv</span>(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="kw">file.choose</span>(),</span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">layout =</span> <span class="st">&quot;auto&quot;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>)</span></code></pre></div>
+<p>Auto-detection prioritizes standard long format when all four required long columns are present; otherwise it detects standard wide response names.</p>
+<h2 id="non-standard-column-names">6.2 Non-standard column names</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>standard &lt;-<span class="st"> </span><span class="kw">pcat_standardize</span>(</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  raw_data,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">respondent_id =</span> <span class="st">&quot;participant_code&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="dt">item_id =</span> <span class="st">&quot;question_number&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="dt">direction =</span> <span class="st">&quot;barrier_facilitator&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="dt">effect =</span> <span class="st">&quot;effect_strength&quot;</span>,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="dt">project_id =</span> <span class="st">&quot;implementation_project&quot;</span>,</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="dt">site_id =</span> <span class="st">&quot;clinic&quot;</span>,</span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="dt">role =</span> <span class="st">&quot;professional_role&quot;</span>,</span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="dt">timepoint =</span> <span class="st">&quot;wave&quot;</span>,</span>
+<span id="cb14-11"><a href="#cb14-11"></a>  <span class="dt">assessment_date =</span> <span class="st">&quot;survey_date&quot;</span>,</span>
+<span id="cb14-12"><a href="#cb14-12"></a>  <span class="dt">comment =</span> <span class="st">&quot;notes&quot;</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>)</span></code></pre></div>
+<p><code>pcat_standardize()</code> copies source fields to standard names. With <code>keep_original = TRUE</code>, source columns are retained for auditability. With <code>keep_original = FALSE</code>, source fields that differ from standard names are removed.</p>
+<h2 id="recognized-text-labels">6.3 Recognized text labels</h2>
+<p>Direction parsing recognizes numeric codes and common labels such as <code>disagree</code>, <code>barrier</code>, <code>neutral</code>, <code>agree</code>, and <code>facilitator</code>. Effect parsing recognizes <code>weak/no effect</code>, <code>weak</code>, <code>no effect</code>, <code>strong</code>, and related variants. Unrecognized text is flagged rather than silently recoded.</p>
+<h1 id="validation-rules">7. Validation rules</h1>
+<p>Run validation before classification or analysis:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>validation &lt;-<span class="st"> </span><span class="kw">pcat_validate</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  data,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">require_complete =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="dt">neutral_effect =</span> <span class="st">&quot;flag&quot;</span>,</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="dt">action =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>)</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="kw">print</span>(validation)</span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="kw">pcat_validation_issues</span>(validation)</span></code></pre></div>
+<h2 id="row-level-errors">7.1 Row-level errors</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Issue code</th>
+<th>Meaning</th>
+<th>Default severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>missing_respondent_id</code></td>
+<td>Respondent identifier is blank</td>
+<td>Error</td>
+</tr>
+<tr class="even">
+<td><code>missing_item_id</code></td>
+<td>Item identifier is blank</td>
+<td>Error</td>
+</tr>
+<tr class="odd">
+<td><code>invalid_item_id</code></td>
+<td>Item identifier is not an integer 1 through 14</td>
+<td>Error</td>
+</tr>
+<tr class="even">
+<td><code>missing_direction</code></td>
+<td>Direction is blank</td>
+<td>Error</td>
+</tr>
+<tr class="odd">
+<td><code>invalid_direction</code></td>
+<td>Direction is not 1, 2, 3, or a recognized label</td>
+<td>Error</td>
+</tr>
+<tr class="even">
+<td><code>invalid_effect</code></td>
+<td>Effect is not 0, 1, or a recognized label</td>
+<td>Error</td>
+</tr>
+<tr class="odd">
+<td><code>missing_effect</code></td>
+<td>Barrier or facilitator direction lacks effect</td>
+<td>Error</td>
+</tr>
+<tr class="even">
+<td><code>effect_without_direction</code></td>
+<td>Effect supplied while direction is blank</td>
+<td>Warning</td>
+</tr>
+<tr class="odd">
+<td><code>neutral_with_effect</code></td>
+<td>Neutral paired with any non-missing effect</td>
+<td>Warning</td>
+</tr>
+<tr class="even">
+<td><code>duplicate_key</code></td>
+<td>More than one row has the same assessment-item key</td>
+<td>Error</td>
+</tr>
+</tbody>
+</table>
+<h2 id="assessment-level-error">7.2 Assessment-level error</h2>
+<p>When <code>require_complete = TRUE</code>, each assessment must contain exactly one row for every item 1 through 14. Missing items, repeated items, or additional valid-item rows produce <code>incomplete_assessment</code>.</p>
+<h2 id="neutral-effect-options">7.3 Neutral effect options</h2>
+<ul>
+<li><code>neutral_effect = &quot;flag&quot;</code>: retain the value and issue a warning for any non-missing effect paired with neutral. This is the default.</li>
+<li><code>neutral_effect = &quot;allow&quot;</code>: retain the value without a warning. Use only for a documented legacy form that required an effect response after neutral.</li>
+<li><code>neutral_effect = &quot;set_missing&quot;</code>: replace any effect paired with neutral by missing and issue a warning.</li>
+</ul>
+<h2 id="condition-behavior">7.4 Condition behavior</h2>
+<ul>
+<li><code>action = &quot;none&quot;</code>: return findings without a warning or error.</li>
+<li><code>action = &quot;warn&quot;</code>: return findings and emit a warning when issues exist.</li>
+<li><code>action = &quot;error&quot;</code>: stop when the validation object is invalid.</li>
+<li><code>strict = TRUE</code>: treat warnings as invalid in the <code>valid</code> field.</li>
+</ul>
+<p>The reported error and warning counts are counts of findings, not necessarily counts of unique rows or assessments.</p>
+<h2 id="eligibility-and-traceability">7.5 Eligibility and traceability</h2>
+<p>Classified output retains problematic rows. Rows with invalid or missing item identifiers, missing respondent identifiers, or duplicate assessment-item keys are marked <code>pcat_record_eligible = FALSE</code> and excluded from item summaries. Response-level invalidity and missingness remain visible through classification fields and denominator counts.</p>
+<h1 id="classification-rules">8. Classification rules</h1>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>classified &lt;-<span class="st"> </span><span class="kw">pcat_classify</span>(validation)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Direction</th>
+<th style="text-align: right;">Effect</th>
+<th><code>pcat_class</code></th>
+<th style="text-align: right;"><code>pcat_display_code</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td><code>strong_barrier</code></td>
+<td style="text-align: right;">-2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td><code>weak_barrier</code></td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">Missing</td>
+<td><code>barrier_effect_missing</code></td>
+<td style="text-align: right;">Missing</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">Missing, 0, or 1</td>
+<td><code>neutral</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td><code>weak_facilitator</code></td>
+<td style="text-align: right;">+1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td><code>strong_facilitator</code></td>
+<td style="text-align: right;">+2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">Missing</td>
+<td><code>facilitator_effect_missing</code></td>
+<td style="text-align: right;">Missing</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Missing</td>
+<td style="text-align: right;">Any</td>
+<td><code>missing</code></td>
+<td style="text-align: right;">Missing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Invalid</td>
+<td style="text-align: right;">Any</td>
+<td><code>invalid</code></td>
+<td style="text-align: right;">Missing</td>
+</tr>
+</tbody>
+</table>
+<p><code>pcat_class5</code> contains only the five complete analytic categories. This is the field used for the five-category profile. <code>pcat_side</code> retains barrier, neutral, or facilitator direction even when effect is missing. A non-missing effect paired with neutral does not change the neutral classification, but validation records <code>neutral_with_effect</code> unless the user explicitly selects <code>neutral_effect = &quot;allow&quot;</code>.</p>
+<h1 id="item-level-summaries-and-denominators">9. Item-level summaries and denominators</h1>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>summary &lt;-<span class="st"> </span><span class="kw">pcat_summarise</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  classified,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="dt">group_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="dt">respondent_id =</span> <span class="st">&quot;respondent_id&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="dt">suppress_below =</span> <span class="dv">5</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>)</span></code></pre></div>
+<h2 id="explicit-denominators">9.1 Explicit denominators</h2>
+<p>Two denominators serve different purposes:</p>
+<ol type="1">
+<li><code>n_valid_direction</code>: eligible rows with a valid barrier, neutral, or facilitator direction. This denominator supports <code>pct_barrier</code>, <code>pct_neutral</code>, <code>pct_facilitator</code>, <code>pct_effect_missing</code>, and <code>pct_complete_class</code>.</li>
+<li><code>n_complete_class</code>: eligible rows that can be assigned to one of the five complete categories. This denominator supports <code>pct_strong_barrier</code>, <code>pct_weak_barrier</code>, <code>pct_neutral_complete</code>, <code>pct_weak_facilitator</code>, <code>pct_strong_facilitator</code>, and <code>modal_class_share</code>.</li>
+</ol>
+<p>Never infer denominators from percentages alone. Report the relevant <code>n</code> with every percentage, especially when effect responses are missing.</p>
+<h2 id="core-summary-fields">9.2 Core summary fields</h2>
+<table>
+<colgroup>
+<col style="width: 50%"></col>
+<col style="width: 50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>n_rows_input</code></td>
+<td>All item rows in the analytic group</td>
+</tr>
+<tr class="even">
+<td><code>n_rows_eligible</code></td>
+<td>Rows eligible for summary</td>
+</tr>
+<tr class="odd">
+<td><code>n_rows_excluded</code></td>
+<td>Rows excluded because of invalid keys or identifiers</td>
+</tr>
+<tr class="even">
+<td><code>n_respondents</code></td>
+<td>Unique eligible respondent identifiers</td>
+</tr>
+<tr class="odd">
+<td><code>n_valid_direction</code></td>
+<td>Valid barrier, neutral, or facilitator directions</td>
+</tr>
+<tr class="even">
+<td><code>n_complete_class</code></td>
+<td>Complete five-category classifications</td>
+</tr>
+<tr class="odd">
+<td><code>pct_barrier</code></td>
+<td>Barrier directions divided by valid directions</td>
+</tr>
+<tr class="even">
+<td><code>pct_neutral</code></td>
+<td>Neutral directions divided by valid directions</td>
+</tr>
+<tr class="odd">
+<td><code>pct_facilitator</code></td>
+<td>Facilitator directions divided by valid directions</td>
+</tr>
+<tr class="even">
+<td><code>pct_effect_missing</code></td>
+<td>Barrier/facilitator responses missing effect divided by valid directions</td>
+</tr>
+<tr class="odd">
+<td><code>pct_complete_class</code></td>
+<td>Complete classifications divided by valid directions</td>
+</tr>
+<tr class="even">
+<td><code>pct_strong_barrier</code></td>
+<td>Strong barriers divided by complete classifications</td>
+</tr>
+<tr class="odd">
+<td><code>pct_weak_barrier</code></td>
+<td>Weak barriers divided by complete classifications</td>
+</tr>
+<tr class="even">
+<td><code>pct_neutral_complete</code></td>
+<td>Neutral responses divided by complete classifications</td>
+</tr>
+<tr class="odd">
+<td><code>pct_weak_facilitator</code></td>
+<td>Weak facilitators divided by complete classifications</td>
+</tr>
+<tr class="even">
+<td><code>pct_strong_facilitator</code></td>
+<td>Strong facilitators divided by complete classifications</td>
+</tr>
+<tr class="odd">
+<td><code>modal_class</code></td>
+<td>Most frequent complete category, or <code>tie</code></td>
+</tr>
+<tr class="even">
+<td><code>modal_class_share</code></td>
+<td>Modal-category count divided by complete classifications</td>
+</tr>
+</tbody>
+</table>
+<h2 id="display-statistics">9.3 Display statistics</h2>
+<p><code>include_display_statistics = TRUE</code> adds item-level mean and median display codes. Because the categories are ordered but not established as an interval scale, these are exploratory descriptive summaries. Prefer category percentages, median category, and visual profiles for substantive reporting.</p>
+<h1 id="agreement-disagreement-and-polarization">10. Agreement, disagreement, and polarization</h1>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>consensus &lt;-<span class="st"> </span><span class="kw">pcat_consensus</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  summary,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="dt">agreement_threshold =</span> <span class="fl">0.60</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="dt">polarization_min =</span> <span class="fl">0.20</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="dt">minimum_n =</span> <span class="dv">2</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>)</span></code></pre></div>
+<p>The function adds:</p>
+<ul>
+<li><code>agreement_share</code>: largest of barrier, neutral, and facilitator direction shares;</li>
+<li><code>dominant_side</code>: barrier, neutral, facilitator, or tie;</li>
+<li><code>polarized</code>: both barrier and facilitator shares meet the configured minimum;</li>
+<li><code>normalized_entropy</code>: distributional dispersion across the three directions, from 0 for complete concentration to 1 for an even three-way distribution; and</li>
+<li><code>consensus_label</code>: insufficient data, polarized, consensus barrier, consensus neutral, consensus facilitator, or mixed.</li>
+</ul>
+<p>The default 60% agreement and 20% polarization rules are package conventions. They are not empirically established pCAT cut points. Prespecify and report any threshold used. Sensitivity analysis is recommended when decisions depend on a threshold.</p>
+<p>A polarized result is analytically important. It may indicate different roles, workflows, information access, or local experiences rather than measurement error. Review comments and stratified results before collapsing disagreement into a single summary.</p>
+<h1 id="longitudinal-comparison">11. Longitudinal comparison</h1>
+<p>The pCAT can be administered during planning and again during implementation. Pair respondents and items only when identifiers represent the same people and assessment units across time.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>change &lt;-<span class="st"> </span><span class="kw">pcat_change</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  classified,</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="dt">timepoint =</span> <span class="st">&quot;timepoint&quot;</span>,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="dt">from =</span> <span class="st">&quot;planning&quot;</span>,</span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="dt">to =</span> <span class="st">&quot;mid_implementation&quot;</span>,</span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="dt">id_cols =</span> <span class="kw">c</span>(<span class="st">&quot;project_id&quot;</span>, <span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;respondent_id&quot;</span>, <span class="st">&quot;item_id&quot;</span>)</span>
+<span id="cb19-7"><a href="#cb19-7"></a>)</span></code></pre></div>
+<p>Transition categories:</p>
+<table>
+<colgroup>
+<col style="width: 50%"></col>
+<col style="width: 50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Transition</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>toward_barrier</code></td>
+<td>Later category has a lower descriptive display code</td>
+</tr>
+<tr class="even">
+<td><code>no_code_change</code></td>
+<td>Earlier and later complete categories are identical in display code</td>
+</tr>
+<tr class="odd">
+<td><code>toward_facilitation</code></td>
+<td>Later category has a higher descriptive display code</td>
+</tr>
+<tr class="even">
+<td><code>newly_observed</code></td>
+<td>No earlier record, later record present</td>
+</tr>
+<tr class="odd">
+<td><code>followup_missing</code></td>
+<td>Earlier record present, no later record</td>
+</tr>
+<tr class="even">
+<td><code>not_comparable</code></td>
+<td>Pair exists but one or both responses lack a complete display code</td>
+</tr>
+</tbody>
+</table>
+<p><code>delta_display_code</code> ranges from -4 to +4. It describes ordered movement only. It is not a continuous change score, standardized effect, causal estimate, or evidence that implementation caused the change.</p>
+<p>When respondent anonymity prevents pairing, compare group-level item distributions instead and clearly describe the analysis as repeated cross-sectional.</p>
+<h1 id="action-planning-and-eric-strategy-prompts">12. Action planning and ERIC strategy prompts</h1>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>action_plan &lt;-<span class="st"> </span><span class="kw">pcat_action_plan</span>(</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  summary,</span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="dt">group_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>),</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="dt">barrier_threshold =</span> <span class="fl">0.50</span>,</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="dt">strong_barrier_threshold =</span> <span class="fl">0.20</span>,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="dt">include_strategy_candidates =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  <span class="dt">include_approximate =</span> <span class="ot">FALSE</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>)</span></code></pre></div>
+<p>An item enters the action plan when barrier prevalence or strong-barrier prevalence meets the configured threshold. The output may include multiple candidate strategies per item.</p>
+<p>The package intentionally leaves these fields blank:</p>
+<ul>
+<li><code>selected_strategy</code>;</li>
+<li><code>planned_action</code>;</li>
+<li><code>local_adaptation</code>;</li>
+<li><code>owner</code>;</li>
+<li><code>target_date</code>;</li>
+<li><code>status</code>; and</li>
+<li><code>action_notes</code>.</li>
+</ul>
+<p>Complete them through stakeholder deliberation. Consider implementation fit, feasibility, equity, staff burden, resources, readiness, sequencing, and unintended consequences.</p>
+<p>The candidate strategy table is source-derived and does not constitute automated treatment selection. <code>include_approximate = FALSE</code> excludes the non-identical Relative Priority to Relative Advantage linkage. Any approximate mapping should be disclosed.</p>
+<p>The default action-plan rule uses <code>pct_barrier</code> with <code>n_valid_direction</code> as its denominator and <code>pct_strong_barrier</code> with <code>n_complete_class</code> as its denominator. Review <code>pct_complete_class</code> and effect missingness before interpreting a strong-barrier threshold. A row with a missing strong-barrier percentage is never retained solely because the value is missing.</p>
+<h1 id="visualization-and-export">13. Visualization and export</h1>
+<h2 id="barrier-facilitator-profile">13.1 Barrier-facilitator profile</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>profile &lt;-<span class="st"> </span><span class="kw">plot_pcat_profile</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  classified,</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="dt">group_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>),</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="dt">label =</span> <span class="st">&quot;cfir_original_construct&quot;</span>,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="dt">facet_ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="dt">show_neutral =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb21-7"><a href="#cb21-7"></a>  <span class="dt">show_n =</span> <span class="ot">TRUE</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>)</span>
+<span id="cb21-9"><a href="#cb21-9"></a></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="kw">print</span>(profile)</span></code></pre></div>
+<p>Barriers appear to the left and facilitators to the right. Neutral labels show the neutral percentage and complete-response denominator. The bars use complete five-category responses as the denominator.</p>
+<p>For several groups or long labels, use one page per group:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">pcat_save_profile_pdf</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  classified,</span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="dt">path =</span> <span class="st">&quot;pcat_profiles.pdf&quot;</span>,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="dt">group_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>),</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="dt">label =</span> <span class="st">&quot;cfir_original_construct&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="dt">overwrite =</span> <span class="ot">TRUE</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>)</span></code></pre></div>
+<h2 id="respondent-heatmap">13.2 Respondent heatmap</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">plot_pcat_heatmap</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  classified,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="dt">respondent_id =</span> <span class="st">&quot;respondent_id&quot;</span>,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="dt">facet_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>)</span>
+<span id="cb23-5"><a href="#cb23-5"></a>)</span></code></pre></div>
+<p>Use heatmaps cautiously when respondent identifiers are sensitive. Replace identifiers with display codes or suppress the figure before sharing.</p>
+<h2 id="change-heatmap">13.3 Change heatmap</h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">plot_pcat_change</span>(</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  change,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="dt">respondent_id =</span> <span class="st">&quot;respondent_id&quot;</span>,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="dt">facet_vars =</span> <span class="st">&quot;site_id&quot;</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="dt">display =</span> <span class="st">&quot;transition&quot;</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>)</span></code></pre></div>
+<p>The transition display is preferred because it avoids presenting ordinal differences as interval-scaled effects.</p>
+<h2 id="save-a-high-resolution-figure">13.4 Save a high-resolution figure</h2>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>ggplot2<span class="op">::</span><span class="kw">ggsave</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="st">&quot;pcat_profile.png&quot;</span>,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  profile,</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="dt">width =</span> <span class="dv">16</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="dt">height =</span> <span class="dv">12</span>,</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a>)</span></code></pre></div>
+<h1 id="end-to-end-workflow">14. End-to-end workflow</h1>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">library</span>(pcatR)</span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co"># 1. Import a standard CSV.</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>data &lt;-<span class="st"> </span><span class="kw">pcat_read_csv</span>(<span class="kw">file.choose</span>(), <span class="dt">layout =</span> <span class="st">&quot;auto&quot;</span>)</span>
+<span id="cb26-5"><a href="#cb26-5"></a></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co"># 2. Run the standard analysis.</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>analysis &lt;-<span class="st"> </span><span class="kw">pcat_analyse</span>(</span>
+<span id="cb26-8"><a href="#cb26-8"></a>  data,</span>
+<span id="cb26-9"><a href="#cb26-9"></a>  <span class="dt">group_vars =</span> <span class="kw">c</span>(<span class="st">&quot;site_id&quot;</span>, <span class="st">&quot;timepoint&quot;</span>),</span>
+<span id="cb26-10"><a href="#cb26-10"></a>  <span class="dt">respondent_id =</span> <span class="st">&quot;respondent_id&quot;</span>,</span>
+<span id="cb26-11"><a href="#cb26-11"></a>  <span class="dt">require_complete =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb26-12"><a href="#cb26-12"></a>  <span class="dt">neutral_effect =</span> <span class="st">&quot;flag&quot;</span>,</span>
+<span id="cb26-13"><a href="#cb26-13"></a>  <span class="dt">validation_action =</span> <span class="st">&quot;warn&quot;</span>,</span>
+<span id="cb26-14"><a href="#cb26-14"></a>  <span class="dt">suppress_below =</span> <span class="dv">5</span>,</span>
+<span id="cb26-15"><a href="#cb26-15"></a>  <span class="dt">agreement_threshold =</span> <span class="fl">0.60</span>,</span>
+<span id="cb26-16"><a href="#cb26-16"></a>  <span class="dt">polarization_min =</span> <span class="fl">0.20</span>,</span>
+<span id="cb26-17"><a href="#cb26-17"></a>  <span class="dt">minimum_n =</span> <span class="dv">2</span>,</span>
+<span id="cb26-18"><a href="#cb26-18"></a>  <span class="dt">barrier_threshold =</span> <span class="fl">0.50</span>,</span>
+<span id="cb26-19"><a href="#cb26-19"></a>  <span class="dt">strong_barrier_threshold =</span> <span class="fl">0.20</span></span>
+<span id="cb26-20"><a href="#cb26-20"></a>)</span>
+<span id="cb26-21"><a href="#cb26-21"></a></span>
+<span id="cb26-22"><a href="#cb26-22"></a><span class="co"># 3. Review validation before interpreting results.</span></span>
+<span id="cb26-23"><a href="#cb26-23"></a>analysis<span class="op">$</span>validation</span>
+<span id="cb26-24"><a href="#cb26-24"></a><span class="kw">pcat_validation_issues</span>(analysis<span class="op">$</span>validation)</span>
+<span id="cb26-25"><a href="#cb26-25"></a></span>
+<span id="cb26-26"><a href="#cb26-26"></a><span class="co"># 4. Inspect outputs.</span></span>
+<span id="cb26-27"><a href="#cb26-27"></a>analysis<span class="op">$</span>summary</span>
+<span id="cb26-28"><a href="#cb26-28"></a>analysis<span class="op">$</span>consensus</span>
+<span id="cb26-29"><a href="#cb26-29"></a>analysis<span class="op">$</span>action_plan</span>
+<span id="cb26-30"><a href="#cb26-30"></a></span>
+<span id="cb26-31"><a href="#cb26-31"></a><span class="co"># 5. Export an auditable bundle.</span></span>
+<span id="cb26-32"><a href="#cb26-32"></a><span class="kw">pcat_write_analysis</span>(</span>
+<span id="cb26-33"><a href="#cb26-33"></a>  analysis,</span>
+<span id="cb26-34"><a href="#cb26-34"></a>  <span class="dt">path =</span> <span class="st">&quot;pcat_results&quot;</span>,</span>
+<span id="cb26-35"><a href="#cb26-35"></a>  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb26-36"><a href="#cb26-36"></a>  <span class="dt">include_classified =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb26-37"><a href="#cb26-37"></a>  <span class="dt">include_profile_pdf =</span> <span class="ot">TRUE</span></span>
+<span id="cb26-38"><a href="#cb26-38"></a>)</span></code></pre></div>
+<p>The export includes:</p>
+<table>
+<colgroup>
+<col style="width: 50%"></col>
+<col style="width: 50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>00_manifest.csv</code></td>
+<td>Package version, timestamp, row counts, validation counts, grouping, completeness setting, and profile status</td>
+</tr>
+<tr class="even">
+<td><code>01_validation_issues.csv</code></td>
+<td>Row- and assessment-level findings</td>
+</tr>
+<tr class="odd">
+<td><code>02_classified_responses.csv</code></td>
+<td>Optional standardized and classified response-level data; written only when <code>include_classified = TRUE</code></td>
+</tr>
+<tr class="even">
+<td><code>03_item_summary.csv</code></td>
+<td>Item-level counts, percentages, denominators, and mappings</td>
+</tr>
+<tr class="odd">
+<td><code>04_consensus_diagnostics.csv</code></td>
+<td>Agreement, polarization, entropy, and labels</td>
+</tr>
+<tr class="even">
+<td><code>05_action_plan.csv</code></td>
+<td>Barrier-focused planning worksheet, when requested</td>
+</tr>
+<tr class="odd">
+<td><code>06_profile.pdf</code></td>
+<td>One profile page per group, when complete categories exist</td>
+</tr>
+<tr class="even">
+<td><code>07_analysis_settings.csv</code></td>
+<td>Analysis settings</td>
+</tr>
+<tr class="odd">
+<td><code>08_session_info.txt</code></td>
+<td>R and package session information</td>
+</tr>
+<tr class="even">
+<td><code>README.txt</code></td>
+<td>Export inventory and methodological warning</td>
+</tr>
+</tbody>
+</table>
+<p>Respondent-level classified data and profile figures are not protected by summary-table small-cell suppression. Set <code>include_classified = FALSE</code> for a shareable aggregate bundle unless response-level disclosure has been reviewed. If <code>overwrite = TRUE</code>, <code>pcat_write_analysis()</code> removes only known pcatR-generated files before writing the new export; unrelated files in the directory are left untouched.</p>
+<h1 id="shiny-application">15. Shiny application</h1>
+<p>Install the optional dependency and launch locally:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;shiny&quot;</span>)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="kw">pcat_app</span>()</span></code></pre></div>
+<p>The application supports CSV upload, layout selection, validation, group selection, profiles, item summaries, consensus diagnostics, action plans, and CSV downloads.</p>
+<p>Do not deploy the app with sensitive data until the hosting environment has appropriate authentication, authorization, encrypted transport, encrypted storage, logging, retention, backup, and incident-response controls. The package does not implement those controls.</p>
+<h1 id="reproducibility-and-version-control">16. Reproducibility and version control</h1>
+<p>Record the following in every analysis:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">packageVersion</span>(<span class="st">&quot;pcatR&quot;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2"></a>R.version.string</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<p>Use the export manifest and settings files. Preserve the raw input, a read-only copy of the item dictionary and mappings used, the exact analysis script, and the package lockfile where applicable.</p>
+<p>For an R project, <code>renv</code> can preserve package versions:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;renv&quot;</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>renv<span class="op">::</span><span class="kw">init</span>()</span>
+<span id="cb29-3"><a href="#cb29-3"></a>renv<span class="op">::</span><span class="kw">snapshot</span>()</span></code></pre></div>
+<p>For software development, run:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>devtools<span class="op">::</span><span class="kw">document</span>()</span>
+<span id="cb30-2"><a href="#cb30-2"></a>devtools<span class="op">::</span><span class="kw">test</span>(<span class="dt">stop_on_failure =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>devtools<span class="op">::</span><span class="kw">check</span>(<span class="dt">error_on =</span> <span class="st">&quot;warning&quot;</span>)</span></code></pre></div>
+<p>GitHub Actions supplied with the repository run multi-platform package checks, website deployment, and coverage calculation.</p>
+<h1 id="reporting-guidance">17. Reporting guidance</h1>
+<p>At minimum, state:</p>
+<ol type="1">
+<li>the specific implementation or improvement effort considered;</li>
+<li>setting, sites, teams, respondent roles, and recruitment or administration process;</li>
+<li>assessment timing and whether data are paired or repeated cross-sectional;</li>
+<li>the official 14-item instrument and mapping version used;</li>
+<li>direction and effect coding;</li>
+<li>handling of any effect response supplied with a neutral direction;</li>
+<li>completeness requirement, validation findings, exclusions, and missingness;</li>
+<li>denominator used for each percentage;</li>
+<li>grouping, suppression, consensus, polarization, and action-plan thresholds;</li>
+<li>how qualitative comments or stakeholder deliberation informed interpretation;</li>
+<li>the software version and citations; and</li>
+<li>the limitation that pCAT is abbreviated and no validated total score was calculated.</li>
+</ol>
+<p>Suggested methods language:</p>
+<blockquote>
+<p>We analyzed the 14-item Pragmatic Context Assessment Tool using pcatR version 1.0.1. Direction responses were classified as barrier, neutral, or facilitator; barrier and facilitator responses were further classified as weak/no effect or strong effect. We reported item-level distributions using valid direction and complete five-category denominators as appropriate. We did not calculate an overall pCAT score. Consensus and action-planning thresholds were prespecified as descriptive analytic conventions.</p>
+</blockquote>
+<p>Suggested limitation language:</p>
+<blockquote>
+<p>The pCAT is an abbreviated pragmatic context assessment and does not comprehensively represent all CFIR determinants. Each construct is represented by a single item, and the instrument was not developed as a conventional psychometric scale. Findings are context-specific and should be integrated with stakeholder interpretation and, when comprehensiveness is required, broader determinant assessment.</p>
+</blockquote>
+<h1 id="troubleshooting">18. Troubleshooting</h1>
+<h2 id="csv-file-does-not-exist">CSV file does not exist</h2>
+<p>The path supplied to <code>pcat_read_csv()</code> must identify an actual file. Use:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>path &lt;-<span class="st"> </span><span class="kw">file.choose</span>()</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">file.exists</span>(path)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>data &lt;-<span class="st"> </span><span class="kw">pcat_read_csv</span>(path)</span></code></pre></div>
+<h2 id="could-not-detect-layout">Could not detect layout</h2>
+<p>Check for either the four standard long fields or wide names such as <code>item01_direction</code>. Import with base R and use <code>pcat_standardize()</code> for non-standard names.</p>
+<h2 id="missing-effect-errors">Missing-effect errors</h2>
+<p>Barrier and facilitator directions require effect 0 or 1. Neutral responses should leave effect blank. If a legacy electronic form forced an effect response after neutral, document that design and select the appropriate <code>neutral_effect</code> handling rather than treating the forced value as substantive effect strength.</p>
+<h2 id="duplicate-key-errors">Duplicate key errors</h2>
+<p>Confirm that <code>key_cols</code> identify one assessment. Include assessment date or wave when a respondent completes multiple assessments. Do not simply delete duplicates until the source record is reconciled.</p>
+<h2 id="incomplete-assessment-errors">Incomplete assessment errors</h2>
+<p>Use <code>pcat_validation_issues(validation, level = &quot;assessment&quot;)</code> to identify missing or repeated item IDs. Decide whether partial item-level analysis is appropriate and document the decision.</p>
+<h2 id="profile-plot-is-crowded">Profile plot is crowded</h2>
+<p>Save at a larger size or use <code>pcat_save_profile_pdf()</code> for one group per page. Use <code>label = &quot;item_id&quot;</code> for compact multi-panel overviews and provide an item key.</p>
+<h2 id="package-will-not-install-from-github">Package will not install from GitHub</h2>
+<p>Update R and installation tools, then run:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;pak&quot;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>pak<span class="op">::</span><span class="kw">pkg_system_requirements</span>(<span class="st">&quot;pcatR&quot;</span>)</span>
+<span id="cb32-3"><a href="#cb32-3"></a>pak<span class="op">::</span><span class="kw">pak</span>(<span class="st">&quot;JaeManP/pcatR&quot;</span>)</span></code></pre></div>
+<p>For development problems, include <code>sessionInfo()</code>, the exact error, and a synthetic reproducible example.</p>
+<h1 id="function-reference">19. Function reference</h1>
+<table>
+<colgroup>
+<col style="width: 50%"></col>
+<col style="width: 50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Primary purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pcat_analyse()</code></td>
+<td>End-to-end validation, classification, summary, consensus, and action plan</td>
+</tr>
+<tr class="even">
+<td><code>pcat_write_analysis()</code></td>
+<td>Export an auditable analysis bundle</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_items()</code></td>
+<td>Item dictionary and primary mappings</td>
+</tr>
+<tr class="even">
+<td><code>pcat_construct_map()</code></td>
+<td>Long-form original and updated mapping table</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_response_options()</code></td>
+<td>Response coding dictionary</td>
+</tr>
+<tr class="even">
+<td><code>pcat_strategy_candidates()</code></td>
+<td>Source-derived strategy prompts</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_example_data()</code></td>
+<td>Synthetic complete example data</td>
+</tr>
+<tr class="even">
+<td><code>pcat_read_csv()</code></td>
+<td>Import standard long or wide CSV</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_standardize()</code></td>
+<td>Map non-standard columns to standard names</td>
+</tr>
+<tr class="even">
+<td><code>pcat_template()</code></td>
+<td>Create an in-memory entry template</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_write_template()</code></td>
+<td>Write a CSV entry template</td>
+</tr>
+<tr class="even">
+<td><code>pcat_wide_to_long()</code></td>
+<td>Convert standard wide data to long</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_long_to_wide()</code></td>
+<td>Convert long data to standard wide</td>
+</tr>
+<tr class="even">
+<td><code>pcat_validate()</code></td>
+<td>Validate rows, keys, codes, and completeness</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_validation_data()</code></td>
+<td>Extract standardized validation data</td>
+</tr>
+<tr class="even">
+<td><code>pcat_validation_issues()</code></td>
+<td>Extract validation findings</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_classify()</code></td>
+<td>Create direction, strength, five-category, and display fields</td>
+</tr>
+<tr class="even">
+<td><code>pcat_summarise()</code></td>
+<td>Item-level counts, percentages, denominators, and mappings</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_consensus()</code></td>
+<td>Agreement, polarization, entropy, and consensus labels</td>
+</tr>
+<tr class="even">
+<td><code>pcat_change()</code></td>
+<td>Paired item transitions across two occasions</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_action_plan()</code></td>
+<td>Barrier-focused planning worksheet and strategy prompts</td>
+</tr>
+<tr class="even">
+<td><code>plot_pcat_profile()</code></td>
+<td>Diverging item profile</td>
+</tr>
+<tr class="odd">
+<td><code>plot_pcat_heatmap()</code></td>
+<td>Respondent-by-item classification heatmap</td>
+</tr>
+<tr class="even">
+<td><code>plot_pcat_change()</code></td>
+<td>Paired transition or descriptive delta heatmap</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_save_profile_pdf()</code></td>
+<td>Multi-page one-group-per-page profile PDF</td>
+</tr>
+<tr class="even">
+<td><code>pcat_palette()</code></td>
+<td>Default named colors</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_app()</code></td>
+<td>Optional local Shiny interface</td>
+</tr>
+<tr class="even">
+<td><code>pcat_user_guide()</code></td>
+<td>Locate or open this guide</td>
+</tr>
+<tr class="odd">
+<td><code>pcat_self_test()</code></td>
+<td>Run built-in integrity and behavior checks</td>
+</tr>
+</tbody>
+</table>
+<h1 id="document-revision-history">20. Document revision history</h1>
+<table>
+<colgroup>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+<col style="width: 25%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Document version</th>
+<th>Date</th>
+<th>Software version</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.2</td>
+<td>July 12, 2026</td>
+<td>1.0.1</td>
+<td>Added installed editable source and submission-candidate metadata</td>
+</tr>
+<tr class="even">
+<td>1.1</td>
+<td>July 12, 2026</td>
+<td>1.0.1</td>
+<td>Added CRAN-ready attribution, citation, and installed guide formats</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+<td>July 12, 2026</td>
+<td>1.0.0</td>
+<td>Initial stable technical guide for the GitHub release</td>
+</tr>
+</tbody>
+</table>
+<h1 id="references-and-attribution">21. References and attribution</h1>
+<p>Robinson CH, Damschroder LJ. A pragmatic context assessment tool (pCAT): using a Think Aloud method to develop an assessment of contextual barriers to change. <em>Implementation Science Communications</em>. 2023;4:3. doi:10.1186/s43058-022-00380-5.</p>
+<p>Domlyn AM, Dodge J, Pfeiffer PN, Robinson CH, Evans L, Damschroder LJ, Stewart MA, Garlick B, Sussman JB, Nevedal AL. Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study. <em>Implementation Science Communications</em>. 2026;7:129. doi:10.1186/s43058-026-00956-5.</p>
+<p>Official instrument attachment: Pragmatic Context Assessment Tool / Barrier Buster Tool, available through the Dissemination and Implementation Models in Health Research and Practice assessment-instrument repository.</p>
+<p>R Core Team. <em>Writing R Extensions</em>. R Foundation for Statistical Computing.</p>
+<h2 id="software-citation">21.1 Software citation</h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">citation</span>(<span class="st">&quot;pcatR&quot;</span>)</span></code></pre></div>
+<p>When reporting pCAT results, cite the original instrument article and the software. Cite the 2026 article when using or discussing the updated CFIR mappings.</p>
+<h2 id="independence-statement">21.2 Independence statement</h2>
+<p><code>pcatR</code> is an independent software implementation. It is not an official product or endorsement of Claire H. Robinson, Laura J. Damschroder, the U.S. Department of Veterans Affairs, the CFIR Leadership Team, or the instrument repository.</p>
+<h2 id="license-statement">21.3 License statement</h2>
+<p>The R source code is licensed under MIT. Exact instrument wording and source-derived mappings are attributed under CC BY 4.0. See <code>LICENSE</code> and <code>LICENSE.note</code> for details.</p>
+</body>
+</html>

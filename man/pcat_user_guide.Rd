@@ -2,10 +2,10 @@
 \alias{pcat_user_guide}
 \title{Locate or open the pcatR technical user guide}
 \usage{
-pcat_user_guide(format = c("pdf", "markdown"), open = interactive())
+pcat_user_guide(format = c("pdf", "html"), open = interactive())
 }
 \arguments{
-\item{format}{Guide format: PDF or Markdown.}
+\item{format}{Guide format: PDF or HTML.}
 \item{open}{Logical; open the guide with the operating system's default
 application.}
 }
@@ -20,6 +20,6 @@ classification logic, privacy cautions, and reporting expectations.
 pcat_user_guide()
 }
 
-path <- pcat_user_guide("markdown", open = FALSE)
+path <- pcat_user_guide("html", open = FALSE)
 path
 }

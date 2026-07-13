@@ -1,7 +1,8 @@
 {
   "package": "pcatR",
-  "version": "1.0.0",
-  "release_date": "2026-07-12",
+  "version": "1.0.1",
+  "status": "CRAN submission candidate",
+  "prepared_date": "2026-07-12",
   "instrument_name": "Pragmatic Context Assessment Tool (pCAT)",
   "instrument_items": 14,
   "instrument_source": "10.1186/s43058-022-00380-5",

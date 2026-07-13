@@ -16,7 +16,7 @@ From a terminal opened in the extracted `pcatR` directory:
 ```bash
 git init
 git add .
-git commit -m "Release pcatR 1.0.0"
+git commit -m "Prepare pcatR 1.0.1 for CRAN"
 git branch -M main
 git remote add origin https://github.com/JaeManP/pcatR.git
 git push -u origin main
@@ -46,21 +46,24 @@ expected site address is:
 https://jaemanp.github.io/pcatR/
 ```
 
-## 5. Tag and publish version 1.0.0
+## 5. After CRAN acceptance, tag and publish version 1.0.1
+
+Do not move or replace the existing `v1.0.0` tag. Create the new tag only from
+the reviewed 1.0.1 release commit after the CRAN submission outcome is known.
 
 ```bash
-git tag -a v1.0.0 -m "pcatR 1.0.0"
-git push origin v1.0.0
+git tag -a v1.0.1 -m "pcatR 1.0.1"
+git push origin v1.0.1
 ```
 
-Create a GitHub Release from tag `v1.0.0`. Attach:
+Create a GitHub Release from tag `v1.0.1`. Attach:
 
-- `pcatR_1.0.0.tar.gz`;
-- `pcatR_Technical_User_Guide_v1.0.0.pdf`;
-- `pcatR_Technical_User_Guide_v1.0.0.docx`; and
-- `pcatR_1.0.0_SHA256SUMS.txt`.
+- `pcatR_1.0.1.tar.gz`;
+- `pcatR_Technical_User_Guide_v1.0.1.pdf`;
+- `pcatR_Technical_User_Guide_v1.0.1.html`; and
+- `pcatR_1.0.1.sha256`.
 
-Use the version 1.0.0 section of `NEWS.md` as the release summary. The root
+Use the version 1.0.1 section of `NEWS.md` as the release summary. The root
 `CITATION.cff` enables GitHub's repository citation interface.
 
 ## 6. Verify installation from GitHub

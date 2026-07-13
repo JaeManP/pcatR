@@ -1,17 +1,17 @@
 #' Locate or open the pcatR technical user guide
 #'
-#' @param format Guide format: `"pdf"` or `"markdown"`.
+#' @param format Guide format: `"pdf"` or `"html"`.
 #' @param open Open the guide with the system's default application.
 #' @return The normalized guide path, invisibly.
 #' @export
 pcat_user_guide <- function(
-    format = c("pdf", "markdown"),
+    format = c("pdf", "html"),
     open = interactive()) {
   format <- match.arg(format)
   filename <- if (identical(format, "pdf")) {
     "pcatR_Technical_User_Guide.pdf"
   } else {
-    "pcatR_Technical_User_Guide.md"
+    "pcatR_Technical_User_Guide.html"
   }
 
   path <- system.file("guides", filename, package = "pcatR")

@@ -1,13 +1,13 @@
 Package: pcatR
 Type: Package
 Title: Analyze and Visualize Pragmatic Context Assessment Tool Data
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person(
       given = "Lilac",
       family = "Li",
       email = "lix@unk.edu",
-      role = "aut",
+      role = c("aut", "cph"),
       comment = c(
         URL = "https://www.unk.edu/academics/management/lilac-li.php"
       )
@@ -16,7 +16,7 @@ Authors@R: c(
       given = "Jae Man",
       family = "Park",
       email = "jaemanblp2@gmail.com",
-      role = c("aut", "cre"),
+      role = c("aut", "cre", "cph"),
       comment = c(
         URL = "https://www.linkedin.com/in/jae-man-park/"
       )
@@ -29,7 +29,10 @@ Description: Provides a reproducible workflow for importing, validating,
     updated Consolidated Framework for Implementation Research ('CFIR')
     mappings, describes team agreement and disagreement, compares repeated
     assessments, and creates implementation action-planning outputs. It does
-    not calculate or claim a validated total pCAT scale score.
+    not calculate or claim a validated total pCAT scale score. The instrument
+    is described by Robinson and Damschroder (2023)
+    <doi:10.1186/s43058-022-00380-5>; updated 'CFIR' mappings are from Domlyn
+    et al. (2026) <doi:10.1186/s43058-026-00956-5>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-US
