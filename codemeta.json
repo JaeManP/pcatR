@@ -4,7 +4,6 @@
   "name": "pcatR",
   "description": "Analyze and visualize Pragmatic Context Assessment Tool data without calculating a purported validated total score.",
   "version": "1.0.1",
-  "datePublished": "2026-07-12",
   "programmingLanguage": "R",
   "codeRepository": "https://github.com/JaeManP/pcatR",
   "issueTracker": "https://github.com/JaeManP/pcatR/issues",

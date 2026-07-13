@@ -155,8 +155,19 @@ test_that("profile export warns when tabular suppression is active", {
 test_that("packaged technical guide can be located", {
   pdf_path <- pcat_user_guide("pdf", open = FALSE)
   html_path <- pcat_user_guide("html", open = FALSE)
+  source_path <- system.file(
+    "guides", "source", "pcatR_Technical_User_Guide.Rmd",
+    package = "pcatR"
+  )
   expect_true(file.exists(pdf_path))
   expect_true(file.exists(html_path))
+  expect_true(file.exists(source_path))
+  html <- paste(readLines(html_path, warn = FALSE), collapse = "\n")
+  expect_match(
+    html,
+    '<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">',
+    fixed = TRUE
+  )
 })
 
 

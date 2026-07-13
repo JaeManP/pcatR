@@ -26,13 +26,16 @@ The notes were:
 - `spelling::spell_check_package()` reported no spelling errors.
 - `urlchecker::url_check()` reported all package URLs correct.
 - The source archive contains the installed PDF and HTML technical guides,
+  their editable R Markdown/CSS source and rendering instructions,
   `inst/COPYRIGHTS`, and `inst/WORDLIST`; development and submission files are
   excluded.
 - Installation from the source archive into a clean library succeeded. The
   example analysis produced 56 item-summary rows and 56 consensus rows from
   336 synthetic input rows, and all 25 package self-tests passed.
-- All GitHub Actions package-check jobs and the coverage job passed, including
-  the dedicated R 4.1 compatibility job.
+- A clean local pkgdown build completed without warnings and its home,
+  reference, article, citation, author, license, attribution, and release pages
+  were inspected.
 
-Win-builder R-release and R-devel checks have not yet been run; their results
-will be added only after those external checks have actually completed.
+The revised candidate has not yet completed its new GitHub exact-archive or
+Win-builder R-release/R-devel checks. Their results will be added only after
+those external checks have actually completed.

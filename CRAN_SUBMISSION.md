@@ -11,7 +11,10 @@ GitHub `v1.0.0` release.
   installed `inst/COPYRIGHTS`.
 - Package citation is generated from DESCRIPTION metadata; both source articles
   have complete author lists.
-- Installed technical guides are PDF and HTML, not Markdown source.
+- Installed technical guides include PDF and self-contained HTML plus editable
+  R Markdown source, CSS, and rendering instructions.
+- Unreleased-version metadata identifies the guide as a CRAN submission
+  candidate rather than assigning version 1.0.1 a release date.
 - The documented minimum R version is exercised by an R 4.1 CI job.
 
 ## Required evidence before submission
@@ -21,8 +24,16 @@ GitHub `v1.0.0` release.
 - [x] `R CMD check --as-cran pcatR_1.0.1.tar.gz` reviewed with no errors or
       warnings and all notes explained.
 - [x] Archive contents inspected for excluded development and release files.
-- [x] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
+- [ ] GitHub Actions pass on Windows, macOS, Linux, R devel, release, oldrel,
       and R 4.1.
+- [ ] The exact uploaded source archive passes full-manual `--as-cran` checks
+      under current R-release and R-devel.
+- [x] A clean local pkgdown build was inspected for its home, reference,
+      article, citation, author, license, attribution, and release pages.
+- [ ] The software copyright-holder arrangement is confirmed in writing and
+      `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS` agree.
+- [ ] Lilac Li confirms her authorship, Jae Man Park's maintainer role, the
+      licensing arrangement, public distribution, and CRAN submission.
 - [ ] Win-builder R-devel and R-release results reviewed.
 - [ ] Maintainer obtains confirmation of the package name and source-content
       treatment from the original instrument authors before submission.

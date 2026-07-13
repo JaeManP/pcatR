@@ -1,6 +1,12 @@
 citHeader("To cite pcatR, cite the software and the original pCAT article. Cite the 2026 article when using updated CFIR mappings:")
 
-citation(auto = meta)
+citation_meta <- meta
+if (is.null(citation_meta$Date) && is.null(citation_meta$Packaged)) {
+  # Supply a citation year for development-site builds without asserting that
+  # the unreleased package candidate has a release date in DESCRIPTION.
+  citation_meta$Date <- "2026-01-01"
+}
+citation(auto = citation_meta)
 
 bibentry(
   bibtype = "Article",

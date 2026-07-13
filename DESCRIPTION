@@ -2,7 +2,6 @@ Package: pcatR
 Type: Package
 Title: Analyze and Visualize Pragmatic Context Assessment Tool Data
 Version: 1.0.1
-Date: 2026-07-12
 Authors@R: c(
     person(
       given = "Lilac",

@@ -1,5 +1,9 @@
 # pcatR release checklist
 
+This file is a reusable blank review template. Version-specific completion
+status and evidence are maintained in `CRAN_SUBMISSION.md` and
+`RELEASE_VALIDATION.md`.
+
 ## Source and methods
 
 - [ ] Confirm exact 14-item wording against the attributed source.

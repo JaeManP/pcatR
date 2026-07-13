@@ -219,7 +219,23 @@ pcat_self_test <- function(verbose = TRUE) {
     "packaged technical guide" = function() {
       pdf <- pcat_user_guide("pdf", open = FALSE)
       html <- pcat_user_guide("html", open = FALSE)
-      stopifnot(file.exists(pdf), file.exists(html))
+      source <- system.file(
+        "guides", "source", "pcatR_Technical_User_Guide.Rmd",
+        package = "pcatR"
+      )
+      if (!nzchar(source) || !file.exists(source)) {
+        for (root in .pcat_project_candidates()) {
+          candidate <- file.path(
+            root, "inst", "guides", "source",
+            "pcatR_Technical_User_Guide.Rmd"
+          )
+          if (file.exists(candidate)) {
+            source <- candidate
+            break
+          }
+        }
+      }
+      stopifnot(file.exists(pdf), file.exists(html), file.exists(source))
     }
   )
 

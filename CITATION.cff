@@ -2,7 +2,6 @@ cff-version: 1.2.0
 message: "Please cite the software and the original pCAT article. Cite the 2026 article when using updated CFIR mappings."
 title: "pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data"
 version: 1.0.1
-date-released: 2026-07-12
 type: software
 authors:
   - family-names: Li

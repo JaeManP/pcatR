@@ -60,7 +60,7 @@ Create a GitHub Release from tag `v1.0.1`. Attach:
 
 - `pcatR_1.0.1.tar.gz`;
 - `pcatR_Technical_User_Guide_v1.0.1.pdf`;
-- `pcatR_Technical_User_Guide_v1.0.1.docx`; and
+- `pcatR_Technical_User_Guide_v1.0.1.html`; and
 - `pcatR_1.0.1_SHA256SUMS.txt`.
 
 Use the version 1.0.1 section of `NEWS.md` as the release summary. The root

@@ -26,7 +26,7 @@ not as a conventional multi-item psychometric scale. Accordingly, `pcatR`:
 - should not replace a fuller contextual assessment when comprehensive CFIR
   determinant evaluation is required.
 
-Read the [Technical User Guide](https://github.com/JaeManP/pcatR/blob/main/TECHNICAL_USER_GUIDE.md) before analyzing study
+Read the Technical User Guide before analyzing study
 or operational data. After installation, open the packaged guide with:
 
 ```r
@@ -229,6 +229,5 @@ pkgdown::build_site()
 See [CONTRIBUTING.md](https://github.com/JaeManP/pcatR/blob/main/CONTRIBUTING.md), [GOVERNANCE.md](https://github.com/JaeManP/pcatR/blob/main/GOVERNANCE.md), and
 [SECURITY.md](https://github.com/JaeManP/pcatR/blob/main/SECURITY.md) before contributing.
 
-Before publishing, follow [PUBLISHING.md](https://github.com/JaeManP/pcatR/blob/main/PUBLISHING.md), complete [RELEASE_CHECKLIST.md](https://github.com/JaeManP/pcatR/blob/main/RELEASE_CHECKLIST.md), and require all GitHub Actions jobs to pass. The completed artifact-environment
-checks and the remaining CI publication gate are documented in
+Before publishing, follow [PUBLISHING.md](https://github.com/JaeManP/pcatR/blob/main/PUBLISHING.md), use [RELEASE_CHECKLIST.md](https://github.com/JaeManP/pcatR/blob/main/RELEASE_CHECKLIST.md) as the reusable review template, and require all GitHub Actions jobs to pass. The completed release-candidate checks and remaining external gates are documented in
 [RELEASE_VALIDATION.md](RELEASE_VALIDATION.md).

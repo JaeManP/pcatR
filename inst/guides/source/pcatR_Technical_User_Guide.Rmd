@@ -1,9 +1,22 @@
+---
+pagetitle: "pcatR Technical User Guide"
+lang: en-US
+output:
+  html_document:
+    self_contained: true
+    css: pcatR-guide.css
+    toc: false
+  pdf_document:
+    toc: false
+---
+
 # pcatR Technical User Guide
 
 **Software:** pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data  
 **Version:** 1.0.1<br>
-**Document version:** 1.1<br>
-**Release date:** July 12, 2026  
+**Document version:** 1.2<br>
+**Document status:** CRAN submission candidate<br>
+**Prepared:** July 12, 2026<br>
 **Authors:** [Lilac Li](https://www.unk.edu/academics/management/lilac-li.php); [Jae Man Park](https://www.linkedin.com/in/jae-man-park/)<br>
 **Maintainer:** Jae Man Park<br>
 **Repository:** https://github.com/JaeManP/pcatR  
@@ -22,7 +35,7 @@
 | Instrument and mapping content | Attributed source content under Creative Commons Attribution 4.0, as described in `LICENSE.note` |
 | Primary software language | R, version 4.1.0 or later |
 | Required package dependency | ggplot2 3.4.0 or later |
-| Optional dependencies | shiny, testthat, knitr, rmarkdown, covr, withr, pkgdown, and development tools |
+| Optional dependencies | shiny, testthat, knitr, rmarkdown, covr, pkgdown, and development tools |
 
 ## Read this before using pcatR
 
@@ -820,6 +833,7 @@ For development problems, include `sessionInfo()`, the exact error, and a synthe
 
 | Document version | Date | Software version | Change |
 | --- | --- | --- | --- |
+| 1.2 | July 12, 2026 | 1.0.1 | Added installed editable source and submission-candidate metadata |
 | 1.1 | July 12, 2026 | 1.0.1 | Added CRAN-ready attribution, citation, and installed guide formats |
 | 1.0 | July 12, 2026 | 1.0.0 | Initial stable technical guide for the GitHub release |
 

@@ -5,7 +5,6 @@
 ^\.editorconfig$
 ^_pkgdown\.yml$
 ^README\.Rmd$
-^TECHNICAL_USER_GUIDE\.md$
 ^RELEASE_CHECKLIST\.md$
 ^PUBLISHING\.md$
 ^ROADMAP\.md$
