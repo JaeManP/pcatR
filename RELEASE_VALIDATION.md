@@ -9,11 +9,9 @@ released or accepted by CRAN.
 ## Candidate identification
 
 - Pull request: `JaeManP/pcatR#2`
-- Candidate package-source head:
-  `6df71271b26993661026e30acef3e8054e3f202b`
+- Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
-- Candidate SHA-256:
-  `6c0fe507a24e08d598528fff5d8c59f9c7b25e6d321a08207c706f94f79a0446`
+- Candidate SHA-256: pending final source freeze
 - Final frozen-submission SHA-256: pending source freeze
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
@@ -42,22 +40,22 @@ released or accepted by CRAN.
 
 ## Automated current-R archive checks
 
-GitHub Actions run `29217151743` built one exact joint-copyright candidate
-`pcatR_1.0.1.tar.gz` archive under R 4.6.1, published it as a workflow artifact,
-and checked that same downloaded archive under R 4.6.1 and R-devel
-(2026-06-21 r90185) with the full PDF manual enabled. Each check completed with
-0 errors, 0 warnings, and 2 notes: new submission and unavailable HTML Tidy on
-the Ubuntu runner. Both PDF manuals built successfully.
+Pre-freeze GitHub Actions runs have built exact candidate archives under
+R-release and checked the same downloaded bytes under R-release and R-devel
+with the full PDF manual enabled. Candidate checks completed with 0 errors, 0
+warnings, and the documented new-submission and unavailable-HTML-Tidy notes.
 
-The standard repository matrix also checks Windows R-release, macOS R-release,
-Ubuntu R-release, R-devel, R-oldrel-1, and R 4.1. All matrix jobs passed in run
-`29217151743`; test coverage passed in run `29217151745`; and the PR-only
-pkgdown build passed in run `29217151728`.
+The workflow stores `pcatR_1.0.1.sha256` beside the archive and verifies that
+checksum before each exact-archive check. The standard matrix also checks
+Windows R-release, macOS R-release, Ubuntu R-release, R-devel, R-oldrel-1, and
+R 4.1; coverage and PR-only pkgdown builds are separate required checks. Final
+run IDs and the final checksum remain pending the source freeze.
 
 ## Outstanding external gates
 
-- Retain Lilac Li's written approval of authorship, maintainer designation,
-  licensing, public distribution, and CRAN submission.
+- Retain Lilac Li's written approval of her authorship and copyright-holder
+  role, Jae Man Park's maintainer role, licensing, public distribution, and
+  CRAN submission.
 - Retain the original instrument authors' package-name confirmation.
 - Run the exact frozen archive through Win-builder R-release and R-devel.
 - Replace provisional entries above with the frozen commit, archive SHA-256,

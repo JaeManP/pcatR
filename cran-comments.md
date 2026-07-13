@@ -37,17 +37,13 @@ The notes were:
 - A clean local pkgdown build completed without warnings and its home,
   reference, article, citation, author, license, attribution, and release pages
   were inspected.
-- GitHub Actions run `29217151743` built one joint-copyright candidate source
-  archive under R 4.6.1 and checked that same downloaded archive under R 4.6.1
-  and R-devel.
-  Both exact-archive checks completed with 0 errors, 0 warnings, and 2 notes:
-  new submission and missing HTML Tidy on the Ubuntu runner. Both PDF manuals
-  built successfully. Candidate SHA-256:
-  `6c0fe507a24e08d598528fff5d8c59f9c7b25e6d321a08207c706f94f79a0446`.
-- PR pkgdown run `29217151728` and test-coverage run `29217151745` completed
-  successfully.
+- Pre-freeze GitHub candidate workflows checked the same downloaded source
+  archive under R 4.6.1 and R-devel with full PDF manuals. Both checks
+  completed with 0 errors, 0 warnings, and 2 notes: new submission and missing
+  HTML Tidy on the Ubuntu runner.
+- PR pkgdown and test-coverage checks completed successfully.
 
-The downloaded archive contains both authors' `cph` roles and the joint MIT
+Candidate archives contain both authors' `cph` roles and the joint MIT
 copyright-holder statement. Win-builder R-release and R-devel checks remain
-pending; the final hash will be recorded only after the package source is
-frozen.
+pending. Final run IDs and the final hash will be recorded only after the
+package source is frozen and one archive is selected for external validation.

@@ -30,11 +30,14 @@ GitHub `v1.0.0` release.
       under current R-release and R-devel.
 - [x] A clean local pkgdown build was inspected for its home, reference,
       article, citation, author, license, attribution, and release pages.
-- [x] The joint software copyright-holder arrangement is confirmed and
-      `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS` agree.
-- [ ] Lilac Li confirms her authorship, Jae Man Park's maintainer role, the
-      licensing arrangement, public distribution, and CRAN submission.
+- [x] Joint software copyright ownership is implemented consistently in
+      `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS`.
+- [ ] Retain Lilac Li's written approval of her authorship and copyright-holder
+      role, Jae Man Park's maintainer role, the MIT and CC BY 4.0 licensing
+      treatment, public distribution, and submission to CRAN.
 - [ ] Win-builder R-devel and R-release results reviewed.
+- [ ] Freeze one final source archive and retain its generated `.sha256` file;
+      send those exact archive bytes to Win-builder and CRAN without rebuilding.
 - [ ] Maintainer obtains confirmation of the package name and source-content
       treatment from the original instrument authors before submission.
 - [ ] Maintainer submits only the source archive through CRAN's submission form
@@ -43,22 +46,15 @@ GitHub `v1.0.0` release.
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
-## Joint-copyright candidate evidence recorded July 12, 2026
+## Pre-freeze automated evidence
 
-- Candidate source head: `6df71271b26993661026e30acef3e8054e3f202b`
-- R-CMD-check run: `29217151743`
-- pkgdown run: `29217151728`
-- test-coverage run: `29217151745`
-- Candidate source archive SHA-256:
-  `6c0fe507a24e08d598528fff5d8c59f9c7b25e6d321a08207c706f94f79a0446`
-- Exact-archive R 4.6.1 check: 0 errors, 0 warnings, 2 notes.
-- Exact-archive R-devel check (2026-06-21 r90185): 0 errors, 0 warnings,
-  2 notes.
+Candidate workflows have successfully checked exact uploaded archives under
+current R-release and R-devel with full PDF manuals. The workflow now stores a
+generated `.sha256` file beside each archive and verifies it before both checks.
 
-The notes identify the new submission and the GitHub Ubuntu runner's missing
-HTML Tidy executable. Both checks built the PDF manual successfully. The
-downloaded archive was inspected and contains both authors' `cph` roles plus
-the joint MIT copyright-holder statement.
+The final source head, run IDs, and SHA-256 are deliberately pending. Record
+them only after the external approvals are retained, the source is frozen, and
+one exact archive is selected for Win-builder and CRAN submission.
 
 ## Registry check recorded July 12, 2026
 

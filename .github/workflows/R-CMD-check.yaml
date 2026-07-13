@@ -75,13 +75,15 @@ jobs:
         run: |
           R CMD build .
           test -f pcatR_1.0.1.tar.gz
-          sha256sum pcatR_1.0.1.tar.gz
+          sha256sum pcatR_1.0.1.tar.gz | tee pcatR_1.0.1.sha256
 
       - name: Upload exact source archive
         uses: actions/upload-artifact@v7
         with:
           name: pcatR-1.0.1-source
-          path: pcatR_1.0.1.tar.gz
+          path: |
+            pcatR_1.0.1.tar.gz
+            pcatR_1.0.1.sha256
           if-no-files-found: error
 
   cran-check:
@@ -106,6 +108,10 @@ jobs:
         with:
           name: pcatR-1.0.1-source
           path: dist
+
+      - name: Verify the downloaded archive checksum
+        working-directory: dist
+        run: sha256sum --check pcatR_1.0.1.sha256
 
       - uses: r-lib/actions/setup-pandoc@v2
 
