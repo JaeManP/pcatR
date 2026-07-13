@@ -1,4 +1,4 @@
 # License
 
     YEAR: 2026
-    COPYRIGHT HOLDER: Jae Man Park
+    COPYRIGHT HOLDER: Lilac Li and Jae Man Park

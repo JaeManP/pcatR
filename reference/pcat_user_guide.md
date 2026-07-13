@@ -8,14 +8,14 @@ expectations.
 ## Usage
 
 ``` r
-pcat_user_guide(format = c("pdf", "markdown"), open = interactive())
+pcat_user_guide(format = c("pdf", "html"), open = interactive())
 ```
 
 ## Arguments
 
 - format:
 
-  Guide format: PDF or Markdown.
+  Guide format: PDF or HTML.
 
 - open:
 
@@ -33,7 +33,7 @@ if (FALSE) { # \dontrun{
 pcat_user_guide()
 } # }
 
-path <- pcat_user_guide("markdown", open = FALSE)
+path <- pcat_user_guide("html", open = FALSE)
 path
-#> [1] "/home/runner/work/_temp/Library/pcatR/guides/pcatR_Technical_User_Guide.md"
+#> [1] "/home/runner/work/_temp/Library/pcatR/guides/pcatR_Technical_User_Guide.html"
 ```

@@ -1,5 +1,9 @@
 # pcatR release checklist
 
+This file is a reusable blank review template. Version-specific
+completion status and evidence are maintained in `CRAN_SUBMISSION.md`
+and `RELEASE_VALIDATION.md`.
+
 ## Source and methods
 
 Confirm exact 14-item wording against the attributed source.
@@ -24,19 +28,37 @@ Run `devtools::test()`.
 
 Run `devtools::check()` with 0 errors and 0 warnings; review all notes.
 
-Run `rcmdcheck::rcmdcheck(args = c("--as-cran"))`.
+Run spelling and URL checks and review every finding.
+
+Run `R CMD build` and confirm the archive is exactly
+`pcatR_1.0.1.tar.gz`.
+
+Run `R CMD check --as-cran pcatR_1.0.1.tar.gz`.
+
+Inspect the source archive for development-only and release-only files.
 
 Build the pkgdown site and inspect every article/reference page.
 
 Test installation from the generated `.tar.gz` in a clean R library.
 
-Verify Windows, macOS, and Linux CI jobs.
+Verify Windows, macOS, Linux, and the minimum supported R 4.1 CI jobs.
 
 ## Release
 
 Merge through a reviewed pull request.
 
-Tag `v1.0.0` and create a GitHub Release.
+Obtain confirmation of the package name and source-content treatment
+from the original instrument authors.
+
+Review Win-builder R-devel and R-release results.
+
+Recheck the `pcatR` name on CRAN and Bioconductor.
+
+Submit only `pcatR_1.0.1.tar.gz` through CRAN’s submission form.
+
+Confirm CRAN’s email and respond to reviewer requests.
+
+After acceptance, tag `v1.0.1` and create a GitHub Release.
 
 Attach the source archive, technical guide PDF, and checksums.
 

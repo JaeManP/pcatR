@@ -3,11 +3,11 @@
 ## Authors
 
 - **[Lilac Li](https://www.unk.edu/academics/management/lilac-li.php)**.
-  Author.  
+  Author, copyright holder.  
   https://www.unk.edu/academics/management/lilac-li.php
 
 - **[Jae Man Park](https://www.linkedin.com/in/jae-man-park/)**. Author,
-  maintainer.  
+  maintainer, copyright holder.  
   https://www.linkedin.com/in/jae-man-park/
 
 ## Citation
@@ -16,14 +16,14 @@ Source:
 [`inst/CITATION`](https://github.com/JaeManP/pcatR/blob/main/inst/CITATION)
 
 Li L, Park J (2026). *pcatR: Analyze and Visualize Pragmatic Context
-Assessment Tool Data*. R package version 1.0.0,
+Assessment Tool Data*. R package version 1.0.1,
 <https://github.com/JaeManP/pcatR>.
 
     @Manual{,
       title = {pcatR: Analyze and Visualize Pragmatic Context Assessment Tool Data},
       author = {Lilac Li and Jae Man Park},
       year = {2026},
-      note = {R package version 1.0.0},
+      note = {R package version 1.0.1},
       url = {https://github.com/JaeManP/pcatR},
     }
 
@@ -43,15 +43,17 @@ contextual barriers to change.” *Implementation Science Communications*,
       doi = {10.1186/s43058-022-00380-5},
     }
 
-Domlyn A, Dodge J, Pfeiffer P (2026). “Evaluating the utility of an
-abbreviated Consolidated Framework for Implementation Research (CFIR)
-for rapid qualitative analysis: a suicide prevention program case
-study.” *Implementation Science Communications*, **7**, 129.
+Domlyn A, Dodge J, Pfeiffer P, Robinson C, Evans L, Damschroder L,
+Stewart M, Garlick B, Sussman J, Nevedal A (2026). “Evaluating the
+utility of an abbreviated Consolidated Framework for Implementation
+Research (CFIR) for rapid qualitative analysis: a suicide prevention
+program case study.” *Implementation Science Communications*, **7**,
+129.
 [doi:10.1186/s43058-026-00956-5](https://doi.org/10.1186/s43058-026-00956-5).
 
     @Article{,
       title = {Evaluating the utility of an abbreviated Consolidated Framework for Implementation Research (CFIR) for rapid qualitative analysis: a suicide prevention program case study},
-      author = {Ariel M. Domlyn and Jessica Dodge and Paul N. Pfeiffer},
+      author = {Ariel M. Domlyn and Jessica Dodge and Paul N. Pfeiffer and Claire H. Robinson and Lacey Evans and Laura J. Damschroder and Madison A. Stewart and Brittani Garlick and Jeremy B. Sussman and Andrea L. Nevedal},
       journal = {Implementation Science Communications},
       year = {2026},
       volume = {7},

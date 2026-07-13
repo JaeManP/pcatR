@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">pcatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@
 
 <div id="pcatr-release-checklist" class="section level1">
 
+<p>This file is a reusable blank review template. Version-specific completion status and evidence are maintained in <code>CRAN_SUBMISSION.md</code> and <code>RELEASE_VALIDATION.md</code>.</p>
 <div class="section level2">
 <h2 id="source-and-methods">Source and methods<a class="anchor" aria-label="anchor" href="#source-and-methods"></a></h2>
 <ul class="task-list"><li><label><input type="checkbox">Confirm exact 14-item wording against the attributed source.</label></li>
@@ -54,15 +55,23 @@
 <li><label><input type="checkbox">Run <code>devtools::document()</code> and inspect NAMESPACE/man changes.</label></li>
 <li><label><input type="checkbox">Run <code>devtools::test()</code>.</label></li>
 <li><label><input type="checkbox">Run <code>devtools::check()</code> with 0 errors and 0 warnings; review all notes.</label></li>
-<li><label><input type="checkbox">Run <code>rcmdcheck::rcmdcheck(args = c("--as-cran"))</code>.</label></li>
+<li><label><input type="checkbox">Run spelling and URL checks and review every finding.</label></li>
+<li><label><input type="checkbox">Run <code>R CMD build</code> and confirm the archive is exactly <code>pcatR_1.0.1.tar.gz</code>.</label></li>
+<li><label><input type="checkbox">Run <code>R CMD check --as-cran pcatR_1.0.1.tar.gz</code>.</label></li>
+<li><label><input type="checkbox">Inspect the source archive for development-only and release-only files.</label></li>
 <li><label><input type="checkbox">Build the pkgdown site and inspect every article/reference page.</label></li>
 <li><label><input type="checkbox">Test installation from the generated <code>.tar.gz</code> in a clean R library.</label></li>
-<li><label><input type="checkbox">Verify Windows, macOS, and Linux CI jobs.</label></li>
+<li><label><input type="checkbox">Verify Windows, macOS, Linux, and the minimum supported R 4.1 CI jobs.</label></li>
 </ul></div>
 <div class="section level2">
 <h2 id="release">Release<a class="anchor" aria-label="anchor" href="#release"></a></h2>
 <ul class="task-list"><li><label><input type="checkbox">Merge through a reviewed pull request.</label></li>
-<li><label><input type="checkbox">Tag <code>v1.0.0</code> and create a GitHub Release.</label></li>
+<li><label><input type="checkbox">Obtain confirmation of the package name and source-content treatment from the original instrument authors.</label></li>
+<li><label><input type="checkbox">Review Win-builder R-devel and R-release results.</label></li>
+<li><label><input type="checkbox">Recheck the <code>pcatR</code> name on CRAN and Bioconductor.</label></li>
+<li><label><input type="checkbox">Submit only <code>pcatR_1.0.1.tar.gz</code> through CRAN’s submission form.</label></li>
+<li><label><input type="checkbox">Confirm CRAN’s email and respond to reviewer requests.</label></li>
+<li><label><input type="checkbox">After acceptance, tag <code>v1.0.1</code> and create a GitHub Release.</label></li>
 <li><label><input type="checkbox">Attach the source archive, technical guide PDF, and checksums.</label></li>
 <li><label><input type="checkbox">Confirm GitHub renders <code>CITATION.cff</code> and the repository license.</label></li>
 <li><label><input type="checkbox">Archive a release snapshot in a long-term repository when appropriate.</label></li>

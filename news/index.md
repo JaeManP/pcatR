@@ -1,5 +1,20 @@
 # Changelog
 
+## pcatR 1.0.1
+
+### CRAN preparation release
+
+- Added complete source attribution and copyright notices for bundled
+  source-derived instrument content.
+- Made the software citation derive its version and authors from package
+  metadata and completed the author list for the 2026 updated-CFIR
+  article.
+- Added an installed HTML technical guide alongside the PDF guide.
+- Added a dedicated R 4.1 continuous-integration check for the
+  documented minimum R version.
+- Updated release metadata and submission checks for an initial CRAN
+  review.
+
 ## pcatR 1.0.0
 
 ### Stable GitHub release
