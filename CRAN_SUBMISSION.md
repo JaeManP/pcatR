@@ -30,7 +30,7 @@ GitHub `v1.0.0` release.
       under current R-release and R-devel.
 - [x] A clean local pkgdown build was inspected for its home, reference,
       article, citation, author, license, attribution, and release pages.
-- [ ] The software copyright-holder arrangement is confirmed in writing and
+- [x] The joint software copyright-holder arrangement is confirmed and
       `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS` agree.
 - [ ] Lilac Li confirms her authorship, Jae Man Park's maintainer role, the
       licensing arrangement, public distribution, and CRAN submission.
@@ -43,7 +43,7 @@ GitHub `v1.0.0` release.
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
-## GitHub candidate evidence recorded July 12, 2026
+## Prior GitHub candidate evidence recorded July 12, 2026
 
 - Candidate source head: `3a919edb77b50ba7634737c61a5755a7b3e09119`
 - R-CMD-check run: `29215546944`
@@ -56,9 +56,9 @@ reserve it. Recheck CRAN and Bioconductor immediately before submission.
   2 notes.
 
 The notes identify the new submission and the GitHub Ubuntu runner's missing
-HTML Tidy executable. Both checks built the PDF manual successfully. This hash
-is a candidate hash, not the final frozen-submission hash: selecting the legal
-copyright-holder arrangement will change package-source files.
+HTML Tidy executable. Both checks built the PDF manual successfully. The joint
+copyright-holder metadata supersedes this candidate archive; a revised hash
+and exact-archive result will be recorded after the updated source checks pass.
 
 ## Registry check recorded July 12, 2026
 

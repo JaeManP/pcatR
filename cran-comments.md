@@ -46,6 +46,7 @@ The notes were:
 - PR pkgdown run `29215546939` and test-coverage run `29215546943` completed
   successfully.
 
-Win-builder R-release and R-devel checks remain pending. The candidate hash
-above will be replaced after the copyright-holder arrangement is confirmed and
-the package source is frozen.
+The joint copyright-holder metadata supersedes the candidate hash above. A
+revised exact-archive result and hash will be recorded after the updated source
+checks pass. Win-builder R-release and R-devel checks remain pending; the final
+hash will be recorded only after the package source is frozen.

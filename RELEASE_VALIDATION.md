@@ -2,20 +2,17 @@
 
 Prepared: July 12, 2026
 
-Status: provisional until the copyright arrangement is confirmed, the final
-source commit is frozen, and Win-builder checks are complete. This record does
-not claim that version 1.0.1 has been released or accepted by CRAN.
+Status: provisional until the final source commit is frozen and Win-builder
+checks are complete. This record does not claim that version 1.0.1 has been
+released or accepted by CRAN.
 
 ## Candidate identification
 
 - Pull request: `JaeManP/pcatR#2`
-- Candidate package-source head:
-  `3a919edb77b50ba7634737c61a5755a7b3e09119`
+- Candidate package-source head: pending revised joint-copyright source check
 - Source archive: `pcatR_1.0.1.tar.gz`
-- Candidate SHA-256:
-  `f5d907a6733b5b3d271cc5a97dc5fcc20b884b7338d548be6f91897eaf4db8df`
-- Final frozen-submission SHA-256: pending copyright confirmation and source
-  freeze
+- Candidate SHA-256: pending revised joint-copyright source check
+- Final frozen-submission SHA-256: pending source freeze
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
 
@@ -57,8 +54,6 @@ pkgdown build passed in run `29215546939`.
 
 ## Outstanding external gates
 
-- Confirm whether Jae Man Park alone or Lilac Li and Jae Man Park jointly hold
-  software copyright, then align the `cph` role and all license notices.
 - Retain Lilac Li's written approval of authorship, maintainer designation,
   licensing, public distribution, and CRAN submission.
 - Retain the original instrument authors' package-name confirmation.
