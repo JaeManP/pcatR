@@ -121,6 +121,12 @@ jobs:
         with:
           needs: check
 
+      - name: Configure R manual TeX macros
+        run: |
+          R_TEXMF="$(R RHOME)/share/texmf/tex/latex"
+          test -f "$R_TEXMF/Rd.sty"
+          echo "TEXINPUTS=$R_TEXMF//:" >> "$GITHUB_ENV"
+
       - name: Check the downloaded archive with CRAN settings
         id: cran-check
         continue-on-error: true
