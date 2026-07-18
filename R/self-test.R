@@ -57,10 +57,12 @@ pcat_self_test <- function(verbose = TRUE) {
       )
       value <- pcat_validate(data, action = "none")
       issues <- pcat_validation_issues(value, "row")
+      classified <- pcat_classify(value)
       stopifnot(!value$valid)
       stopifnot(all(c(
         "invalid_item_id", "invalid_direction", "invalid_effect", "duplicate_key"
       ) %in% issues$issue_code))
+      stopifnot(all(classified$pcat_strength == "invalid"))
     },
     "neutral-effect warning" = function() {
       data <- data.frame(

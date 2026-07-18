@@ -40,14 +40,25 @@ pcat_classify <- function(
   out$pcat_side[!is.na(out$direction) & out$direction == 2L & !direction_invalid] <- "neutral"
   out$pcat_side[!is.na(out$direction) & out$direction == 3L & !direction_invalid] <- "facilitator"
 
+  valid_response <- !direction_invalid & !effect_invalid
   out$pcat_strength <- rep("invalid", nrow(out))
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction == 2L] <- "not_applicable"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & is.na(out$effect)] <- "missing"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & !is.na(out$effect) & out$effect == 0L] <- "weak_or_no_effect"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & !is.na(out$effect) & out$effect == 1L] <- "strong_effect"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction == 2L
+  ] <- "not_applicable"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      is.na(out$effect)
+  ] <- "missing"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      !is.na(out$effect) & out$effect == 0L
+  ] <- "weak_or_no_effect"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      !is.na(out$effect) & out$effect == 1L
+  ] <- "strong_effect"
 
   out$pcat_class <- rep("invalid", nrow(out))
-  valid_response <- !direction_invalid & !effect_invalid
   out$pcat_class[valid_response & is.na(out$direction)] <- "missing"
   out$pcat_class[valid_response & !is.na(out$direction) & out$direction == 2L] <- "neutral"
   out$pcat_class[valid_response & !is.na(out$direction) & out$direction == 1L & !is.na(out$effect) & out$effect == 1L] <- "strong_barrier"

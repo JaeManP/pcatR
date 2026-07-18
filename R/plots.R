@@ -122,7 +122,10 @@ plot_pcat_profile <- function(
     drop = FALSE
   ]
   if (nrow(complete) == 0L) {
-    .pcat_abort("No complete five-category responses are available to plot.")
+    .pcat_abort(
+      "No complete five-category responses are available to plot.",
+      "pcat_no_complete_plot_data"
+    )
   }
 
   complete$.pcat_group <- .pcat_plot_group_label(
@@ -776,7 +779,7 @@ pcat_save_profile_pdf <- function(
     height = 8.5,
     title_prefix = "pCAT profile",
     ...) {
-  if (length(path) != 1L || is.na(path) || !nzchar(path)) {
+  if (!is.character(path) || length(path) != 1L || is.na(path) || !nzchar(path)) {
     .pcat_abort("`path` must be one non-missing PDF file path.")
   }
   if (file.exists(path) && !isTRUE(overwrite)) {
@@ -798,11 +801,6 @@ pcat_save_profile_pdf <- function(
     .pcat_abort("No pCAT records are available to export.")
   }
 
-  parent <- dirname(path)
-  if (!dir.exists(parent)) {
-    dir.create(parent, recursive = TRUE, showWarnings = FALSE)
-  }
-
   if (length(group_vars) == 0L) {
     keys <- rep("Overall", nrow(classified))
     key_levels <- "Overall"
@@ -811,17 +809,10 @@ pcat_save_profile_pdf <- function(
     key_levels <- unique(keys)
   }
 
-  grDevices::pdf(path, width = width, height = height, onefile = TRUE)
-  pdf_device <- grDevices::dev.cur()
-  closed <- FALSE
-  on.exit({
-    if (!closed && !is.null(grDevices::dev.list()) &&
-        pdf_device %in% grDevices::dev.list()) {
-      grDevices::dev.off(which = pdf_device)
-    }
-  }, add = TRUE)
-
-  for (key in key_levels) {
+  pages <- vector("list", length(key_levels))
+  page_labels <- character(length(key_levels))
+  for (i in seq_along(key_levels)) {
+    key <- key_levels[[i]]
     one <- classified[keys == key, , drop = FALSE]
     page_label <- if (length(group_vars) == 0L) {
       "Overall"
@@ -833,16 +824,126 @@ pcat_save_profile_pdf <- function(
     } else {
       paste0(title_prefix, ": ", page_label)
     }
-    p <- plot_pcat_profile(
-      one,
-      group_vars = NULL,
-      title = page_title,
-      ...
+    page_labels[[i]] <- page_label
+    pages[[i]] <- tryCatch(
+      {
+        page <- plot_pcat_profile(
+          one,
+          group_vars = NULL,
+          title = page_title,
+          ...
+        )
+        ggplot2::ggplot_build(page)
+        page
+      },
+      error = function(error) {
+        condition_class <- if (
+          inherits(error, "pcat_no_complete_plot_data")
+        ) {
+          "pcat_no_complete_plot_data"
+        } else {
+          "pcat_profile_export_error"
+        }
+        .pcat_abort(
+          paste0(
+            "Could not construct profile page for group `", page_label,
+            "`: ", conditionMessage(error)
+          ),
+          condition_class
+        )
+      }
     )
-    print(p)
   }
 
+  parent <- dirname(path)
+  if (!dir.exists(parent)) {
+    dir.create(parent, recursive = TRUE, showWarnings = FALSE)
+  }
+  if (!dir.exists(parent)) {
+    .pcat_abort(
+      paste0("Could not create output directory: `", parent, "`."),
+      "pcat_profile_export_error"
+    )
+  }
+
+  temporary <- tempfile(
+    pattern = ".pcat-profile-",
+    tmpdir = parent,
+    fileext = ".pdf"
+  )
+  pdf_device <- NULL
+  closed <- FALSE
+  on.exit({
+    if (!closed && !is.null(pdf_device) && !is.null(grDevices::dev.list()) &&
+        pdf_device %in% grDevices::dev.list()) {
+      grDevices::dev.off(which = pdf_device)
+    }
+    if (file.exists(temporary)) unlink(temporary, force = TRUE)
+  }, add = TRUE)
+
+  grDevices::pdf(temporary, width = width, height = height, onefile = TRUE)
+  pdf_device <- grDevices::dev.cur()
+  for (i in seq_along(pages)) {
+    tryCatch(
+      print(pages[[i]]),
+      error = function(error) {
+        .pcat_abort(
+          paste0(
+            "Could not write profile page for group `", page_labels[[i]],
+            "`: ", conditionMessage(error)
+          ),
+          "pcat_profile_export_error"
+        )
+      }
+    )
+  }
   grDevices::dev.off(which = pdf_device)
   closed <- TRUE
+
+  if (!file.exists(temporary) || is.na(file.info(temporary)$size) ||
+      file.info(temporary)$size <= 0) {
+    .pcat_abort(
+      "The temporary profile PDF was not created successfully.",
+      "pcat_profile_export_error"
+    )
+  }
+
+  if (file.exists(path)) {
+    backup <- tempfile(
+      pattern = ".pcat-profile-backup-",
+      tmpdir = parent,
+      fileext = ".pdf"
+    )
+    if (!file.rename(path, backup)) {
+      .pcat_abort(
+        paste0("Could not preserve the existing output file: `", path, "`."),
+        "pcat_profile_export_error"
+      )
+    }
+    installed <- file.rename(temporary, path)
+    if (!installed) {
+      restored <- file.rename(backup, path)
+      if (!restored) {
+        .pcat_abort(
+          paste0(
+            "Could not install the new profile PDF or restore the existing ",
+            "file. The preserved file remains at `", backup, "`."
+          ),
+          "pcat_profile_export_error"
+        )
+      }
+      .pcat_abort(
+        paste0("Could not replace the existing output file: `", path, "`."),
+        "pcat_profile_export_error"
+      )
+    }
+    unlink(backup, force = TRUE)
+  } else if (!file.rename(temporary, path)) {
+    .pcat_abort(
+      paste0("Could not move the completed profile PDF to `", path, "`."),
+      "pcat_profile_export_error"
+    )
+  }
+
   invisible(normalizePath(path, winslash = "/", mustWork = TRUE))
 }

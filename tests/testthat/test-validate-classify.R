@@ -24,6 +24,29 @@ test_that("five complete response combinations classify correctly", {
   expect_equal(out$pcat_display_code, c(-2, -1, 0, 1, 2))
 })
 
+test_that("strength classification requires valid direction and effect", {
+  dat <- data.frame(
+    respondent_id = paste0("R", 1:9),
+    item_id = 1:9,
+    direction = c(4, 1, 1, 1, 2, 2, 3, 3, 3),
+    effect = c(1, NA, 0, 1, NA, 1, NA, 0, 1)
+  )
+  out <- pcat_classify(dat, validation_action = "none")
+
+  expect_equal(out$pcat_side[[1L]], "invalid")
+  expect_equal(out$pcat_strength[[1L]], "invalid")
+  expect_equal(out$pcat_class[[1L]], "invalid")
+  expect_true(is.na(out$pcat_class5[[1L]]))
+  expect_true(is.na(out$pcat_display_code[[1L]]))
+  expect_equal(
+    out$pcat_strength[-1L],
+    c(
+      "missing", "weak_or_no_effect", "strong_effect", "not_applicable",
+      "not_applicable", "missing", "weak_or_no_effect", "strong_effect"
+    )
+  )
+})
+
 test_that("invalid and duplicate rows are reported", {
   dat <- data.frame(
     respondent_id = c("R1", "R1"),
@@ -140,4 +163,3 @@ test_that("neutral paired with weak or strong effect is flagged", {
   expect_equal(val$n_warnings, 2L)
   expect_equal(sum(issues$issue_code == "neutral_with_effect"), 2L)
 })
-

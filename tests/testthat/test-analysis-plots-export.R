@@ -130,6 +130,75 @@ test_that("profile PDF exporter creates a non-empty PDF", {
 
   expect_true(file.exists(output))
   expect_gt(file.info(output)$size, 1000)
+  expect_identical(
+    output,
+    normalizePath(path, winslash = "/", mustWork = TRUE)
+  )
+})
+
+test_that("profile PDF preflight leaves no new partial target", {
+  parent <- tempfile("pcat_pdf_failure_")
+  dir.create(parent)
+  on.exit(unlink(parent, recursive = TRUE, force = TRUE), add = TRUE)
+  target <- file.path(parent, "profiles.pdf")
+  dat <- data.frame(
+    respondent_id = c("R1", "R2"),
+    site_id = c("A", "B"),
+    item_id = 1L,
+    direction = c(1, 1),
+    effect = c(1, NA)
+  )
+
+  expect_error(
+    pcat_save_profile_pdf(
+      dat,
+      target,
+      group_vars = "site_id",
+      label = "item_id"
+    ),
+    regexp = "group `B`",
+    class = "pcat_no_complete_plot_data"
+  )
+  expect_false(file.exists(target))
+  expect_length(
+    list.files(parent, pattern = "^\\.pcat-profile-", all.files = TRUE),
+    0L
+  )
+})
+
+test_that("profile PDF preflight preserves an existing target byte for byte", {
+  parent <- tempfile("pcat_pdf_existing_")
+  dir.create(parent)
+  on.exit(unlink(parent, recursive = TRUE, force = TRUE), add = TRUE)
+  target <- file.path(parent, "profiles.pdf")
+  sentinel <- charToRaw("existing-profile-sentinel")
+  writeBin(sentinel, target)
+  dat <- data.frame(
+    respondent_id = c("R1", "R2"),
+    site_id = c("A", "B"),
+    item_id = 1L,
+    direction = c(1, 3),
+    effect = c(1, NA)
+  )
+
+  expect_error(
+    pcat_save_profile_pdf(
+      dat,
+      target,
+      group_vars = "site_id",
+      overwrite = TRUE,
+      label = "item_id"
+    ),
+    class = "pcat_no_complete_plot_data"
+  )
+  expect_identical(
+    readBin(target, what = "raw", n = file.info(target)$size),
+    sentinel
+  )
+  expect_length(
+    list.files(parent, pattern = "^\\.pcat-profile-", all.files = TRUE),
+    0L
+  )
 })
 
 test_that("profile export warns when tabular suppression is active", {
