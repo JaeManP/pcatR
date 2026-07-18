@@ -188,15 +188,21 @@ pcat_self_test <- function(verbose = TRUE) {
     "distinct analysis denominators" = function() {
       data <- data.frame(
         respondent_id = paste0("R", 1:4), item_id = 1,
-        direction = c(1, 1, 2, 3), effect = c(1, NA, NA, 0)
+        direction = c(1, 2, 2, 3), effect = c(1, NA, 2, 0)
       )
       value <- pcat_summarise(data)
       stopifnot(
         value$n_valid_direction == 4L,
+        value$n_neutral == 2L,
         value$n_complete_class == 3L,
-        same(value$pct_barrier, 0.50),
+        value$n_neutral_complete == 1L,
+        same(value$pct_neutral, 2 / 4),
+        same(value$pct_neutral_complete, 1 / 3),
         same(value$pct_strong_barrier, 1 / 3),
-        same(value$pct_effect_missing, 0.25)
+        value$n_complete_class ==
+          value$n_strong_barrier + value$n_weak_barrier +
+          value$n_neutral_complete + value$n_weak_facilitator +
+          value$n_strong_facilitator
       )
     },
     "small-cell suppression" = function() {
@@ -213,7 +219,8 @@ pcat_self_test <- function(verbose = TRUE) {
         value$item_id == 1L,
         !is.na(value$item_text),
         is.na(value$n_respondents),
-        is.na(value$pct_barrier)
+        is.na(value$pct_barrier),
+        is.na(value$modal_class)
       )
     },
     "packaged technical guide" = function() {

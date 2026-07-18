@@ -39,7 +39,8 @@ pcat_summarise <- function(
     one <- working[idx, , drop = FALSE]
     eligible <- one$pcat_record_eligible %in% TRUE
     valid_side <- eligible & one$pcat_side %in% c("barrier", "neutral", "facilitator")
-    complete_class <- eligible & !is.na(one$pcat_class5)
+    class5_values <- as.character(one$pcat_class5)
+    complete_class <- eligible & !is.na(class5_values)
 
     respondent_values <- as.character(one[[respondent_id]][eligible])
     respondent_values <- respondent_values[!is.na(respondent_values) & nzchar(respondent_values)]
@@ -54,18 +55,28 @@ pcat_summarise <- function(
     part$n_barrier <- sum(eligible & one$pcat_side == "barrier", na.rm = TRUE)
     part$n_neutral <- sum(eligible & one$pcat_side == "neutral", na.rm = TRUE)
     part$n_facilitator <- sum(eligible & one$pcat_side == "facilitator", na.rm = TRUE)
-    part$n_strong_barrier <- sum(eligible & one$pcat_class == "strong_barrier", na.rm = TRUE)
-    part$n_weak_barrier <- sum(eligible & one$pcat_class == "weak_barrier", na.rm = TRUE)
+    part$n_strong_barrier <- sum(
+      eligible & class5_values == "strong_barrier",
+      na.rm = TRUE
+    )
+    part$n_weak_barrier <- sum(
+      eligible & class5_values == "weak_barrier",
+      na.rm = TRUE
+    )
+    part$n_neutral_complete <- sum(
+      eligible & class5_values == "neutral",
+      na.rm = TRUE
+    )
     part$n_barrier_effect_missing <- sum(
       eligible & one$pcat_class == "barrier_effect_missing",
       na.rm = TRUE
     )
     part$n_weak_facilitator <- sum(
-      eligible & one$pcat_class == "weak_facilitator",
+      eligible & class5_values == "weak_facilitator",
       na.rm = TRUE
     )
     part$n_strong_facilitator <- sum(
-      eligible & one$pcat_class == "strong_facilitator",
+      eligible & class5_values == "strong_facilitator",
       na.rm = TRUE
     )
     part$n_facilitator_effect_missing <- sum(
@@ -77,7 +88,7 @@ pcat_summarise <- function(
       na.rm = TRUE
     )
 
-    class_values <- as.character(one$pcat_class5[eligible])
+    class_values <- class5_values[eligible]
     part$modal_class <- .pcat_mode(class_values)
     display_values <- one$pcat_display_code[eligible]
     part$mean_display_code <- if (
@@ -100,7 +111,10 @@ pcat_summarise <- function(
   # Directional percentages above use every valid direction response.
   out$pct_strong_barrier <- .pcat_divide(out$n_strong_barrier, out$n_complete_class)
   out$pct_weak_barrier <- .pcat_divide(out$n_weak_barrier, out$n_complete_class)
-  out$pct_neutral_complete <- .pcat_divide(out$n_neutral, out$n_complete_class)
+  out$pct_neutral_complete <- .pcat_divide(
+    out$n_neutral_complete,
+    out$n_complete_class
+  )
   out$pct_strong_facilitator <- .pcat_divide(
     out$n_strong_facilitator,
     out$n_complete_class
@@ -117,7 +131,14 @@ pcat_summarise <- function(
   out$modal_class_n <- vapply(seq_len(nrow(out)), function(i) {
     current <- out$modal_class[[i]]
     if (is.na(current) || identical(current, "tie")) return(NA_integer_)
-    column <- paste0("n_", current)
+    column <- c(
+      strong_barrier = "n_strong_barrier",
+      weak_barrier = "n_weak_barrier",
+      neutral = "n_neutral_complete",
+      weak_facilitator = "n_weak_facilitator",
+      strong_facilitator = "n_strong_facilitator"
+    )[[current]]
+    if (is.null(column)) return(NA_integer_)
     if (!column %in% names(out)) return(NA_integer_)
     as.integer(out[[column]][[i]])
   }, integer(1))
@@ -155,6 +176,10 @@ pcat_summarise <- function(
     numeric_measures <- names(out)[vapply(out, is.numeric, logical(1))]
     numeric_measures <- setdiff(numeric_measures, protected)
     for (column in numeric_measures) out[[column]][suppress] <- NA
+    analytic_character_measures <- intersect("modal_class", names(out))
+    for (column in analytic_character_measures) {
+      out[[column]][suppress] <- NA_character_
+    }
   }
 
   rownames(out) <- NULL
@@ -164,7 +189,8 @@ pcat_summarise <- function(
   attr(out, "five_category_denominator") <- "n_complete_class"
   attr(out, "denominator_note") <- paste(
     "pct_barrier, pct_neutral, pct_facilitator, and pct_effect_missing use",
-    "n_valid_direction; five-category strength percentages use n_complete_class."
+    "n_valid_direction; five-category percentages use n_complete_class and",
+    "counts derived exclusively from pcat_class5."
   )
   out
 }
