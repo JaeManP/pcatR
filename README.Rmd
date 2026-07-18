@@ -171,6 +171,16 @@ standard <- pcat_standardize(
 | Diagnostic check | `pcat_self_test()` |
 | Optional dashboard | `pcat_app()` |
 
+## Summary denominators
+
+Directional percentages use all eligible records with a valid direction and
+therefore use `n_valid_direction`. The directional `n_neutral` count includes
+every valid neutral direction. Complete five-category percentages use only
+eligible records with a complete direction-plus-effect classification and use
+`n_complete_class`; their neutral numerator is `n_neutral_complete`. A neutral
+direction with an invalid effect remains in `n_neutral` but is excluded from
+`n_neutral_complete` and the complete five-category distribution.
+
 ## CFIR mappings
 
 The package retains the original pCAT-to-CFIR mapping and the updated mapping
@@ -187,9 +197,10 @@ pcat_construct_map("2022", include_secondary = TRUE)
 Use coded respondent identifiers. Do not place names, medical-record numbers,
 email addresses, or protected health information in pCAT files. Avoid
 respondent-level heatmaps for small or identifiable teams. For tabular outputs,
-`pcat_summarise(..., suppress_below = 5)` suppresses numerical results below a
-user-specified respondent threshold; select the threshold required by your
-protocol or organization.
+`pcat_summarise(..., suppress_below = 5)` suppresses numerical analytic results
+and the derived `modal_class` below a user-specified respondent threshold while
+retaining grouping, item, and CFIR metadata. Select the threshold required by
+your protocol or organization.
 
 The Shiny interface is an analysis convenience, not a secure survey-collection
 platform.

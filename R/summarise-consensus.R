@@ -1,9 +1,17 @@
 #' Summarize pCAT responses by item
 #'
+#' Directional percentages use eligible records with a valid direction.
+#' Complete five-category percentages use only eligible records with a complete
+#' direction-plus-effect classification. Consequently, `n_neutral` and
+#' `n_neutral_complete` can differ when a neutral direction has an invalid
+#' effect value.
+#'
 #' @param data Raw, validated, or classified long-format data.
 #' @param group_vars Optional grouping columns such as site and time point.
 #' @param respondent_id Respondent identifier column.
-#' @param suppress_below Optional minimum respondent count.
+#' @param suppress_below Optional minimum respondent count. Numeric analytic
+#'   measures and the derived `modal_class` are missing in suppressed rows;
+#'   grouping, item, and CFIR metadata remain visible.
 #' @return A data frame of class `pcat_summary`.
 #' @export
 pcat_summarise <- function(
@@ -199,8 +207,10 @@ pcat_summarise <- function(
 #'
 #' @param data Raw/classified data or output from [pcat_summarise()].
 #' @param group_vars Passed to [pcat_summarise()] when needed.
-#' @param agreement_threshold Minimum share for a consensus label.
-#' @param polarization_min Minimum share on both barrier and facilitator sides.
+#' @param agreement_threshold One finite number from zero through one giving
+#'   the minimum share for a consensus label.
+#' @param polarization_min One finite number from zero through one giving the
+#'   minimum share on both barrier and facilitator sides.
 #' @param minimum_n Minimum valid directions required.
 #' @return A pCAT summary with consensus diagnostics.
 #' @rdname pcat_summarise

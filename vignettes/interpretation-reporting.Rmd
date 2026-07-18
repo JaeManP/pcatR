@@ -70,8 +70,10 @@ suppressed <- pcat_summarise(
 head(suppressed)
 ```
 
-Suppression affects the returned summary table only. It does not transform or
-de-identify source data, classified responses, heatmaps, or profile PDFs.
+Suppression hides numeric analytic results and the derived `modal_class` while
+retaining grouping, item, and CFIR metadata. It affects the returned summary
+table only and does not transform or de-identify source data, classified
+responses, heatmaps, or profile PDFs.
 
 ## Reporting checklist
 

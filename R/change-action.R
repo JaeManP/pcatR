@@ -109,8 +109,10 @@ pcat_change <- function(
 #'
 #' @param data Raw/classified data or a pCAT summary.
 #' @param group_vars Grouping columns used when summarization is needed.
-#' @param barrier_threshold Minimum proportion identifying a barrier.
-#' @param strong_barrier_threshold Minimum proportion identifying a strong barrier.
+#' @param barrier_threshold One finite number from zero through one giving the
+#'   minimum proportion identifying a barrier.
+#' @param strong_barrier_threshold One finite number from zero through one
+#'   giving the minimum proportion identifying a strong barrier.
 #' @param include_strategy_candidates Join candidate ERIC strategies.
 #' @param include_approximate Include an approximate source-table mapping.
 #' @return A data frame ready for local action planning.

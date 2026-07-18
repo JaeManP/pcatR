@@ -2,7 +2,10 @@
 #'
 #' Combines direction and effect into five complete categories while retaining
 #' explicit categories for missing or invalid responses. The numeric display
-#' code is descriptive and is not a validated scale score.
+#' code is descriptive and is not a validated scale score. Strength categories
+#' are assigned only when both direction and effect validation are valid. A
+#' neutral row with an invalid effect remains directionally neutral but has an
+#' invalid strength and no complete five-category classification.
 #'
 #' @param data A long data frame or `pcat_validation` object.
 #' @param validation_action Action used if raw data must be validated.

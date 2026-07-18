@@ -758,7 +758,10 @@ plot_pcat_change <- function(
 #' Save readable pCAT profiles as a multi-page PDF
 #'
 #' Each grouping combination is placed on its own page, which avoids clipped
-#' labels and overcrowded multi-panel screen output.
+#' labels and overcrowded multi-panel screen output. Every page is constructed
+#' and validated before a temporary PDF is written in the target directory. The
+#' requested path is replaced only after the complete temporary file is
+#' nonempty, so an export failure does not leave a partial target.
 #'
 #' @param data Raw, validated, or classified pCAT data.
 #' @param path Output PDF path.

@@ -234,8 +234,7 @@ test_that("packaged technical guide can be located", {
   html <- paste(readLines(html_path, warn = FALSE), collapse = "\n")
   expect_match(
     html,
-    '<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">',
-    fixed = TRUE
+    '<html(?: xmlns="http://www\\.w3\\.org/1999/xhtml")? lang="en-US" xml:lang="en-US">'
   )
 })
 

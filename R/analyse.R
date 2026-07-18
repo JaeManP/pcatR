@@ -14,10 +14,14 @@
 #'   `"error"`.
 #' @param strict Treat validation warnings as invalid.
 #' @param suppress_below Optional minimum respondent count for summary output.
+#'   Numeric analytic results and derived modal classifications are hidden for
+#'   suppressed rows.
 #' @param agreement_threshold,polarization_min,minimum_n Consensus settings
-#'   passed to [pcat_consensus()].
+#'   passed to [pcat_consensus()]. Probability thresholds must each be one
+#'   finite number from zero through one.
 #' @param include_action_plan Create an action-plan table.
-#' @param barrier_threshold,strong_barrier_threshold Action-plan thresholds.
+#' @param barrier_threshold,strong_barrier_threshold Action-plan thresholds;
+#'   each must be one finite number from zero through one.
 #' @param include_approximate Include approximate strategy mappings.
 #' @return A list of class `pcat_analysis`.
 #' @export

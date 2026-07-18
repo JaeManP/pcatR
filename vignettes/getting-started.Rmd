@@ -82,4 +82,6 @@ pcat_write_analysis(
 
 The export includes an analysis manifest, validation findings, classified
 responses, item summaries, consensus diagnostics, an action-plan worksheet,
-and an optional multi-page profile PDF.
+and an optional multi-page profile PDF. The profile exporter validates every
+page before writing a temporary PDF and replaces the requested path only after
+the complete temporary file is nonempty.
