@@ -2,13 +2,16 @@
 
 Prepared: July 12, 2026
 
+Last updated: July 17, 2026
+
 Status: provisional until the final source commit is frozen and Win-builder
 checks are complete. This record does not claim that version 1.0.1 has been
 released or accepted by CRAN.
 
 ## Candidate identification
 
-- Pull request: `JaeManP/pcatR#2`
+- CRAN preparation pull requests: `JaeManP/pcatR#2` and
+  `JaeManP/pcatR#3`
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Candidate SHA-256: pending final source freeze
