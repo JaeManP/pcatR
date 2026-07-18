@@ -85,7 +85,8 @@ run IDs and the final checksum remain pending the source freeze.
 
 ## Outstanding external gates
 
-- Retain the original instrument authors' package-name confirmation.
+- Obtain and retain the original instrument authors' package-name and
+  source-content confirmation.
 - Run the exact frozen archive through Win-builder R-release and R-devel.
 - Replace provisional entries above with the frozen commit, archive SHA-256,
   GitHub run IDs, and Win-builder results.
