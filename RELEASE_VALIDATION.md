@@ -10,8 +10,8 @@ released or accepted by CRAN.
 
 ## Candidate identification
 
-- CRAN preparation pull requests: `JaeManP/pcatR#2` and
-  `JaeManP/pcatR#3`
+- CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`, and
+  `JaeManP/pcatR#4`
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Pre-freeze local candidate SHA-256:
