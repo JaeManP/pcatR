@@ -36,3 +36,39 @@ test_that("action-plan filtering treats missing strong-barrier shares as no sign
   )
   expect_equal(nrow(plan), 0L)
 })
+
+test_that("action-plan probability thresholds require numeric scalars", {
+  dat <- data.frame(
+    respondent_id = paste0("R", 1:3),
+    item_id = 1L,
+    direction = c(1, 2, 3),
+    effect = c(1, NA, 0)
+  )
+  invalid <- list(
+    c(0.4, 0.6), numeric(), NA_real_, NaN, Inf, -Inf, "0.5", -0.1, 1.1
+  )
+
+  for (argument in c("barrier_threshold", "strong_barrier_threshold")) {
+    valid_args <- list(data = dat, include_strategy_candidates = FALSE)
+    valid_args[[argument]] <- 0.5
+    expect_s3_class(do.call(pcat_action_plan, valid_args), "pcat_action_plan")
+    for (value in invalid) {
+      invalid_args <- list(data = dat, include_strategy_candidates = FALSE)
+      invalid_args[[argument]] <- value
+      expect_error(
+        do.call(pcat_action_plan, invalid_args),
+        class = "pcat_invalid_probability"
+      )
+    }
+  }
+
+  expect_s3_class(
+    pcat_action_plan(
+      dat,
+      barrier_threshold = 0,
+      strong_barrier_threshold = 1,
+      include_strategy_candidates = FALSE
+    ),
+    "pcat_action_plan"
+  )
+})

@@ -24,6 +24,37 @@ test_that("polarization is detected", {
   expect_equal(out$consensus_label, "polarized")
 })
 
+test_that("consensus probability thresholds require numeric scalars", {
+  dat <- data.frame(
+    respondent_id = paste0("R", 1:3),
+    item_id = 1L,
+    direction = c(1, 2, 3),
+    effect = c(1, NA, 0)
+  )
+  invalid <- list(
+    c(0.4, 0.6), numeric(), NA_real_, NaN, Inf, -Inf, "0.5", -0.1, 1.1
+  )
+
+  for (argument in c("agreement_threshold", "polarization_min")) {
+    valid_args <- list(data = dat)
+    valid_args[[argument]] <- 0.5
+    expect_s3_class(do.call(pcat_consensus, valid_args), "pcat_consensus")
+    for (value in invalid) {
+      invalid_args <- list(data = dat)
+      invalid_args[[argument]] <- value
+      expect_error(
+        do.call(pcat_consensus, invalid_args),
+        class = "pcat_invalid_probability"
+      )
+    }
+  }
+
+  expect_s3_class(
+    pcat_consensus(dat, agreement_threshold = 0, polarization_min = 1),
+    "pcat_consensus"
+  )
+})
+
 test_that("profile labels remain unique when original constructs repeat", {
   skip_if_not_installed("ggplot2")
   classified <- pcat_classify(pcat_example_data())

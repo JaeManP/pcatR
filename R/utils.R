@@ -22,6 +22,23 @@
   warning(condition)
 }
 
+.pcat_check_probability_scalar <- function(x, name) {
+  if (
+    !is.numeric(x) ||
+      length(x) != 1L ||
+      is.na(x) ||
+      !is.finite(x) ||
+      x < 0 ||
+      x > 1
+  ) {
+    .pcat_abort(
+      paste0("`", name, "` must be one finite number between 0 and 1."),
+      "pcat_invalid_probability"
+    )
+  }
+  invisible(x)
+}
+
 .pcat_check_data_frame <- function(data) {
   if (!is.data.frame(data)) {
     .pcat_abort("`data` must be a data frame.", "pcat_bad_data")

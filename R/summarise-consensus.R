@@ -211,11 +211,8 @@ pcat_consensus <- function(
     agreement_threshold = 0.60,
     polarization_min = 0.20,
     minimum_n = 2L) {
-  for (value in c(agreement_threshold, polarization_min)) {
-    if (length(value) != 1L || is.na(value) || value < 0 || value > 1) {
-      .pcat_abort("Consensus thresholds must be single numbers between 0 and 1.")
-    }
-  }
+  .pcat_check_probability_scalar(agreement_threshold, "agreement_threshold")
+  .pcat_check_probability_scalar(polarization_min, "polarization_min")
   minimum_n <- suppressWarnings(as.integer(minimum_n))
   if (length(minimum_n) != 1L || is.na(minimum_n) || minimum_n < 1L) {
     .pcat_abort("`minimum_n` must be a positive integer.")

@@ -123,11 +123,11 @@ pcat_action_plan <- function(
     strong_barrier_threshold = 0.20,
     include_strategy_candidates = TRUE,
     include_approximate = FALSE) {
-  for (value in c(barrier_threshold, strong_barrier_threshold)) {
-    if (length(value) != 1L || is.na(value) || value < 0 || value > 1) {
-      .pcat_abort("Barrier thresholds must be single numbers between 0 and 1.")
-    }
-  }
+  .pcat_check_probability_scalar(barrier_threshold, "barrier_threshold")
+  .pcat_check_probability_scalar(
+    strong_barrier_threshold,
+    "strong_barrier_threshold"
+  )
 
   required <- c(
     "item_id", "pct_barrier", "pct_strong_barrier",

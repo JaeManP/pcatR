@@ -210,7 +210,7 @@ Analyses should cite the software, the original pCAT development article, and,
 when updated CFIR mappings are used, the 2026 mapping article. Instrument wording
 and source-derived mapping content are attributed under CC BY 4.0; package code
 is MIT licensed. See [LICENSE.note](LICENSE.note) and
-[REFERENCES.md](REFERENCES.md).
+[REFERENCES.md](https://github.com/JaeManP/pcatR/blob/main/REFERENCES.md).
 
 This software is independent and is not an official product or endorsement of
 the original pCAT authors, the U.S. Department of Veterans Affairs, the CFIR
@@ -230,4 +230,4 @@ See [CONTRIBUTING.md](https://github.com/JaeManP/pcatR/blob/main/CONTRIBUTING.md
 [SECURITY.md](https://github.com/JaeManP/pcatR/blob/main/SECURITY.md) before contributing.
 
 Before publishing, follow [PUBLISHING.md](https://github.com/JaeManP/pcatR/blob/main/PUBLISHING.md), use [RELEASE_CHECKLIST.md](https://github.com/JaeManP/pcatR/blob/main/RELEASE_CHECKLIST.md) as the reusable review template, and require all GitHub Actions jobs to pass. The completed release-candidate checks and remaining external gates are documented in
-[RELEASE_VALIDATION.md](RELEASE_VALIDATION.md).
+[RELEASE_VALIDATION.md](https://github.com/JaeManP/pcatR/blob/main/RELEASE_VALIDATION.md).
