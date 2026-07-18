@@ -32,7 +32,7 @@ GitHub `v1.0.0` release.
       article, citation, author, license, attribution, and release pages.
 - [x] Joint software copyright ownership is implemented consistently in
       `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS`.
-- [ ] Retain Lilac Li's written approval of her authorship and copyright-holder
+- [x] Retain Lilac Li's written approval of her authorship and copyright-holder
       role, Jae Man Park's maintainer role, the MIT and CC BY 4.0 licensing
       treatment, public distribution, and submission to CRAN.
 - [ ] Win-builder R-devel and R-release results reviewed.
@@ -46,6 +46,11 @@ GitHub `v1.0.0` release.
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
+Lilac Li's written approval is dated July 13, 2026. It covers every role,
+licensing, distribution, and submission item listed above. The maintainer
+retains the original evidence privately because it contains personal contact
+details and email metadata; it is excluded from Git and package source builds.
+
 ## Pre-freeze automated evidence
 
 Candidate workflows have successfully checked exact uploaded archives under
@@ -53,8 +58,8 @@ current R-release and R-devel with full PDF manuals. The workflow now stores a
 generated `.sha256` file beside each archive and verifies it before both checks.
 
 The final source head, run IDs, and SHA-256 are deliberately pending. Record
-them only after the external approvals are retained, the source is frozen, and
-one exact archive is selected for Win-builder and CRAN submission.
+them only after the remaining external approval is retained, the source is
+frozen, and one exact archive is selected for Win-builder and CRAN submission.
 
 ## Registry check recorded July 12, 2026
 

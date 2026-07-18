@@ -13,6 +13,8 @@ released or accepted by CRAN.
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Candidate SHA-256: pending final source freeze
 - Final frozen-submission SHA-256: pending source freeze
+- Lilac Li authorization: written approval dated July 13, 2026, retained
+  privately by the maintainer
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
 
@@ -51,11 +53,17 @@ Windows R-release, macOS R-release, Ubuntu R-release, R-devel, R-oldrel-1, and
 R 4.1; coverage and PR-only pkgdown builds are separate required checks. Final
 run IDs and the final checksum remain pending the source freeze.
 
+## Completed external authorization
+
+- Lilac Li approved her first-author and joint-copyright-holder roles, Jae Man
+  Park's second-author, joint-copyright-holder, and package-maintainer roles,
+  the documented MIT and CC BY 4.0 licensing treatment, public distribution,
+  and CRAN submission by Jae Man Park. Her written statement is dated July 13,
+  2026 and is retained privately because it contains personal contact details
+  and email metadata.
+
 ## Outstanding external gates
 
-- Retain Lilac Li's written approval of her authorship and copyright-holder
-  role, Jae Man Park's maintainer role, licensing, public distribution, and
-  CRAN submission.
 - Retain the original instrument authors' package-name confirmation.
 - Run the exact frozen archive through Win-builder R-release and R-devel.
 - Replace provisional entries above with the frozen commit, archive SHA-256,
