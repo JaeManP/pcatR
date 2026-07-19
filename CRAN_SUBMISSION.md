@@ -16,6 +16,11 @@ GitHub `v1.0.0` release.
 - Unreleased-version metadata identifies the guide as a CRAN submission
   candidate rather than assigning version 1.0.1 a release date.
 - The documented minimum R version is exercised by an R 4.1 CI job.
+- The candidate underwent pre-CRAN analytical and privacy hardening covering
+  complete-category partitioning, small-cell modal suppression, response
+  validity, probability thresholds, an explicit complete-classification
+  diagnostic, unknown-polarization semantics, and failure-safe profile export
+  with directory-path and finite-dimension validation.
 
 ## Required evidence before submission
 

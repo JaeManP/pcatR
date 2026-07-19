@@ -109,8 +109,10 @@ pcat_change <- function(
 #'
 #' @param data Raw/classified data or a pCAT summary.
 #' @param group_vars Grouping columns used when summarization is needed.
-#' @param barrier_threshold Minimum proportion identifying a barrier.
-#' @param strong_barrier_threshold Minimum proportion identifying a strong barrier.
+#' @param barrier_threshold One finite number from zero through one giving the
+#'   minimum proportion identifying a barrier.
+#' @param strong_barrier_threshold One finite number from zero through one
+#'   giving the minimum proportion identifying a strong barrier.
 #' @param include_strategy_candidates Join candidate ERIC strategies.
 #' @param include_approximate Include an approximate source-table mapping.
 #' @return A data frame ready for local action planning.
@@ -123,11 +125,11 @@ pcat_action_plan <- function(
     strong_barrier_threshold = 0.20,
     include_strategy_candidates = TRUE,
     include_approximate = FALSE) {
-  for (value in c(barrier_threshold, strong_barrier_threshold)) {
-    if (length(value) != 1L || is.na(value) || value < 0 || value > 1) {
-      .pcat_abort("Barrier thresholds must be single numbers between 0 and 1.")
-    }
-  }
+  .pcat_check_probability_scalar(barrier_threshold, "barrier_threshold")
+  .pcat_check_probability_scalar(
+    strong_barrier_threshold,
+    "strong_barrier_threshold"
+  )
 
   required <- c(
     "item_id", "pct_barrier", "pct_strong_barrier",

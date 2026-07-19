@@ -82,7 +82,12 @@ pcat_validate(
 
 ## Denominators
 
-Directional percentages use `n_valid_direction`. Five-category strength
-percentages use `n_complete_class`. These denominators may differ when an effect
-response is missing. Report both rather than silently treating missing effect
-responses as weak effects.
+Directional percentages use all eligible records with a valid direction and
+therefore use `n_valid_direction`. Complete five-category percentages use only
+eligible records with a complete direction-plus-effect classification and use
+`n_complete_class`. `pct_complete_class` is `n_complete_class` divided by
+`n_valid_direction` and describes the share of valid-direction records with a
+complete five-category classification. The directional `n_neutral` count can exceed
+`n_neutral_complete` when a neutral direction has an invalid effect value.
+Report both denominators rather than silently treating missing or invalid
+effects as complete classifications.

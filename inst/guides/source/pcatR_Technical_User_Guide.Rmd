@@ -14,9 +14,10 @@ output:
 
 **Software:** pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data  
 **Version:** 1.0.1<br>
-**Document version:** 1.2<br>
+**Document version:** 1.4<br>
 **Document status:** CRAN submission candidate<br>
 **Prepared:** July 12, 2026<br>
+**Last updated:** July 18, 2026<br>
 **Authors:** [Lilac Li](https://www.unk.edu/academics/management/lilac-li.php); [Jae Man Park](https://www.linkedin.com/in/jae-man-park/)<br>
 **Maintainer:** Jae Man Park<br>
 **Repository:** https://github.com/JaeManP/pcatR  
@@ -240,7 +241,7 @@ Apply the following controls:
 
 `pcatR` performs local analysis. It does not transmit data by itself. The optional Shiny application is not a secure survey system. Deploying it to a server introduces hosting, authentication, logging, and data-retention responsibilities that are outside the package.
 
-The `suppress_below` argument can replace numeric summary measures with missing values for groups below a user-defined respondent count. This is a disclosure-control aid, not a complete statistical disclosure-control system.
+The `suppress_below` argument can replace numeric analytic measures and the derived `modal_class` with missing values for groups below a user-defined respondent count. Grouping, item, and CFIR metadata remain visible. This is a disclosure-control aid, not a complete statistical disclosure-control system.
 
 # 5. Data specification
 
@@ -424,6 +425,8 @@ classified <- pcat_classify(validation)
 
 `pcat_class5` contains only the five complete analytic categories. This is the field used for the five-category profile. `pcat_side` retains barrier, neutral, or facilitator direction even when effect is missing. A non-missing effect paired with neutral does not change the neutral classification, but validation records `neutral_with_effect` unless the user explicitly selects `neutral_effect = "allow"`.
 
+`pcat_strength` is assigned only when both direction and effect parsing and validation are valid. An invalid direction or invalid effect therefore produces `pcat_strength = "invalid"`. A neutral direction with an invalid effect can remain directionally neutral in `pcat_side`, but it has no complete `pcat_class5` value.
+
 # 9. Item-level summaries and denominators
 
 ```r
@@ -442,7 +445,9 @@ Two denominators serve different purposes:
 1. `n_valid_direction`: eligible rows with a valid barrier, neutral, or facilitator direction. This denominator supports `pct_barrier`, `pct_neutral`, `pct_facilitator`, `pct_effect_missing`, and `pct_complete_class`.
 2. `n_complete_class`: eligible rows that can be assigned to one of the five complete categories. This denominator supports `pct_strong_barrier`, `pct_weak_barrier`, `pct_neutral_complete`, `pct_weak_facilitator`, `pct_strong_facilitator`, and `modal_class_share`.
 
-Never infer denominators from percentages alone. Report the relevant `n` with every percentage, especially when effect responses are missing.
+Directional percentages use all eligible records with a valid direction. Complete five-category percentages use only eligible records with a complete direction-plus-effect classification. The directional `n_neutral` count includes every valid neutral direction, whereas `n_neutral_complete` includes only neutral rows with a complete five-category classification. A neutral response with an invalid effect remains part of `n_neutral` but is excluded from `n_neutral_complete` and the complete five-category distribution.
+
+Never infer denominators from percentages alone. Report the relevant `n` with every percentage, especially when effect responses are missing or invalid. The five complete-category counts partition `n_complete_class`, and their percentages sum to one whenever that denominator is positive.
 
 ## 9.2 Core summary fields
 
@@ -454,6 +459,8 @@ Never infer denominators from percentages alone. Report the relevant `n` with ev
 | `n_respondents` | Unique eligible respondent identifiers |
 | `n_valid_direction` | Valid barrier, neutral, or facilitator directions |
 | `n_complete_class` | Complete five-category classifications |
+| `n_neutral` | Valid neutral directions, including rows without a complete effect classification |
+| `n_neutral_complete` | Neutral rows in the complete five-category classification |
 | `pct_barrier` | Barrier directions divided by valid directions |
 | `pct_neutral` | Neutral directions divided by valid directions |
 | `pct_facilitator` | Facilitator directions divided by valid directions |
@@ -461,15 +468,17 @@ Never infer denominators from percentages alone. Report the relevant `n` with ev
 | `pct_complete_class` | Complete classifications divided by valid directions |
 | `pct_strong_barrier` | Strong barriers divided by complete classifications |
 | `pct_weak_barrier` | Weak barriers divided by complete classifications |
-| `pct_neutral_complete` | Neutral responses divided by complete classifications |
+| `pct_neutral_complete` | `n_neutral_complete` divided by complete classifications |
 | `pct_weak_facilitator` | Weak facilitators divided by complete classifications |
 | `pct_strong_facilitator` | Strong facilitators divided by complete classifications |
 | `modal_class` | Most frequent complete category, or `tie` |
 | `modal_class_share` | Modal-category count divided by complete classifications |
 
+When `suppress_below` applies to a summary row, numeric analytic measures and the derived `modal_class` are missing. Group identifiers, item identifiers and wording, CFIR metadata, and the `suppressed` indicator remain available for context.
+
 ## 9.3 Display statistics
 
-`include_display_statistics = TRUE` adds item-level mean and median display codes. Because the categories are ordered but not established as an interval scale, these are exploratory descriptive summaries. Prefer category percentages, median category, and visual profiles for substantive reporting.
+The summary includes item-level mean and median display codes. Because the categories are ordered but not established as an interval scale, these are exploratory descriptive summaries. Prefer category percentages and visual profiles for substantive reporting.
 
 # 10. Agreement, disagreement, and polarization
 
@@ -490,7 +499,11 @@ The function adds:
 - `normalized_entropy`: distributional dispersion across the three directions, from 0 for complete concentration to 1 for an even three-way distribution; and
 - `consensus_label`: insufficient data, polarized, consensus barrier, consensus neutral, consensus facilitator, or mixed.
 
+When the barrier or facilitator share is unavailable, including after small-cell suppression, `polarized` is missing rather than `FALSE`. Suppressed rows retain `consensus_label = "insufficient_data"`; unavailable data are not interpreted as evidence that a cell is nonpolarized.
+
 The default 60% agreement and 20% polarization rules are package conventions. They are not empirically established pCAT cut points. Prespecify and report any threshold used. Sensitivity analysis is recommended when decisions depend on a threshold.
+
+Each probability threshold must be one finite numeric value from 0 through 1. Vectors, missing or infinite values, character values, and values outside that range are rejected.
 
 A polarized result is analytically important. It may indicate different roles, workflows, information access, or local experiences rather than measurement error. Review comments and stratified results before collapsing disagreement into a single summary.
 
@@ -554,6 +567,8 @@ The candidate strategy table is source-derived and does not constitute automated
 
 The default action-plan rule uses `pct_barrier` with `n_valid_direction` as its denominator and `pct_strong_barrier` with `n_complete_class` as its denominator. Review `pct_complete_class` and effect missingness before interpreting a strong-barrier threshold. A row with a missing strong-barrier percentage is never retained solely because the value is missing.
 
+Both action-plan probability thresholds must be finite numeric scalars from 0 through 1; vector or nonnumeric inputs are rejected.
+
 # 13. Visualization and export
 
 ## 13.1 Barrier-facilitator profile
@@ -584,6 +599,10 @@ pcat_save_profile_pdf(
   overwrite = TRUE
 )
 ```
+
+The exporter constructs and validates every requested group page before creating output, writes the complete document to a temporary PDF in the target directory, and replaces the requested path only after the temporary file is confirmed nonempty. If any group lacks complete five-category data or another page fails, the error identifies that group, a new target is not left behind, and an existing target remains unchanged.
+
+The output `path` must identify a PDF file, not a directory, even when `overwrite = TRUE`. Page `width` and `height` must each be one positive finite number. These checks occur before any backup or output operation.
 
 ## 13.2 Respondent heatmap
 
@@ -833,6 +852,8 @@ For development problems, include `sessionInfo()`, the exact error, and a synthe
 
 | Document version | Date | Software version | Change |
 | --- | --- | --- | --- |
+| 1.4 | July 18, 2026 | 1.0.1 | Added the complete-classification diagnostic, safe directory-path and finite-dimension checks for PDF export, and explicit unknown-polarization semantics |
+| 1.3 | July 17, 2026 | 1.0.1 | Documented analytical and privacy hardening, distinct neutral counts, scalar threshold validation, and failure-safe profile export |
 | 1.2 | July 12, 2026 | 1.0.1 | Added installed editable source and submission-candidate metadata |
 | 1.1 | July 12, 2026 | 1.0.1 | Added CRAN-ready attribution, citation, and installed guide formats |
 | 1.0 | July 12, 2026 | 1.0.0 | Initial stable technical guide for the GitHub release |

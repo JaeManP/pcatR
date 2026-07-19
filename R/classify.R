@@ -2,7 +2,10 @@
 #'
 #' Combines direction and effect into five complete categories while retaining
 #' explicit categories for missing or invalid responses. The numeric display
-#' code is descriptive and is not a validated scale score.
+#' code is descriptive and is not a validated scale score. Strength categories
+#' are assigned only when both direction and effect validation are valid. A
+#' neutral row with an invalid effect remains directionally neutral but has an
+#' invalid strength and no complete five-category classification.
 #'
 #' @param data A long data frame or `pcat_validation` object.
 #' @param validation_action Action used if raw data must be validated.
@@ -40,14 +43,25 @@ pcat_classify <- function(
   out$pcat_side[!is.na(out$direction) & out$direction == 2L & !direction_invalid] <- "neutral"
   out$pcat_side[!is.na(out$direction) & out$direction == 3L & !direction_invalid] <- "facilitator"
 
+  valid_response <- !direction_invalid & !effect_invalid
   out$pcat_strength <- rep("invalid", nrow(out))
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction == 2L] <- "not_applicable"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & is.na(out$effect)] <- "missing"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & !is.na(out$effect) & out$effect == 0L] <- "weak_or_no_effect"
-  out$pcat_strength[!effect_invalid & !is.na(out$direction) & out$direction != 2L & !is.na(out$effect) & out$effect == 1L] <- "strong_effect"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction == 2L
+  ] <- "not_applicable"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      is.na(out$effect)
+  ] <- "missing"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      !is.na(out$effect) & out$effect == 0L
+  ] <- "weak_or_no_effect"
+  out$pcat_strength[
+    valid_response & !is.na(out$direction) & out$direction != 2L &
+      !is.na(out$effect) & out$effect == 1L
+  ] <- "strong_effect"
 
   out$pcat_class <- rep("invalid", nrow(out))
-  valid_response <- !direction_invalid & !effect_invalid
   out$pcat_class[valid_response & is.na(out$direction)] <- "missing"
   out$pcat_class[valid_response & !is.na(out$direction) & out$direction == 2L] <- "neutral"
   out$pcat_class[valid_response & !is.na(out$direction) & out$direction == 1L & !is.na(out$effect) & out$effect == 1L] <- "strong_barrier"

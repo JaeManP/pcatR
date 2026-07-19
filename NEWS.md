@@ -10,6 +10,23 @@
 - Added a dedicated R 4.1 continuous-integration check for the documented
   minimum R version.
 - Updated release metadata and submission checks for an initial CRAN review.
+- Corrected the complete five-category partition by adding
+  `n_neutral_complete` and deriving all five category counts from
+  `pcat_class5`, while retaining directional `n_neutral`.
+- Extended small-cell suppression to derived modal classifications.
+- Required valid direction and effect parsing before assigning a non-invalid
+  strength category.
+- Added validation of every page before failure-safe multi-page profile PDF
+  writing, so a late page error cannot leave or replace a partial target.
+- Enforced true finite scalar validation for consensus and action-plan
+  probability thresholds and repaired broken links in the source archive.
+- Added `pct_complete_class`, the share of valid-direction responses with a
+  complete five-category classification, as an explicit completeness
+  diagnostic.
+- Rejected directory-valued profile PDF targets and infinite page dimensions
+  before any output or backup operation.
+- Represented polarization as unavailable rather than false when the required
+  directional percentages are missing.
 
 # pcatR 1.0.0
 

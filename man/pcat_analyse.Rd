@@ -41,17 +41,19 @@ warning, or an error.}
 \item{strict}{Logical; treat warnings as invalid when setting the validation
 object's \code{valid} field.}
 \item{suppress_below}{Optional positive minimum respondent count. Numeric
-summary results below this threshold are replaced with missing values.}
-\item{agreement_threshold}{Minimum dominant-side share used for a consensus
-label.}
-\item{polarization_min}{Minimum barrier and facilitator shares required to
-label an item polarized.}
+summary results and the derived modal classification below this threshold are
+replaced with missing values.}
+\item{agreement_threshold}{One finite number from zero through one giving the
+minimum dominant-side share used for a consensus label.}
+\item{polarization_min}{One finite number from zero through one giving the
+minimum barrier and facilitator shares required to label an item polarized.}
 \item{minimum_n}{Minimum number of valid direction responses required for a
 consensus label.}
 \item{include_action_plan}{Logical; create a barrier-focused action-plan table.}
-\item{barrier_threshold}{Minimum barrier prevalence for action-plan inclusion.}
-\item{strong_barrier_threshold}{Minimum strong-barrier prevalence for
-action-plan inclusion.}
+\item{barrier_threshold}{One finite number from zero through one giving the
+minimum barrier prevalence for action-plan inclusion.}
+\item{strong_barrier_threshold}{One finite number from zero through one giving
+the minimum strong-barrier prevalence for action-plan inclusion.}
 \item{include_approximate}{Logical; include the source table's non-identical
 Relative Priority to Relative Advantage approximation.}
 \item{x}{A \code{pcat_analysis} object.}
@@ -64,8 +66,9 @@ diagnostics, and optionally creates a barrier-focused action plan.
 \details{
 The result retains validation findings and all denominators needed for
 transparent reporting. It does not calculate an overall pCAT scale score.
-Small-cell suppression applies to summary tables; respondent-level classified
-data are retained in the result and must be governed separately.
+Small-cell suppression hides numeric analytic measures and the derived modal
+classification in summary tables; respondent-level classified data are
+retained in the result and must be governed separately.
 }
 \value{
 \code{pcat_analyse()} returns a list of class \code{pcat_analysis} with

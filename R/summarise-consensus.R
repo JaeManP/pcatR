@@ -1,9 +1,22 @@
 #' Summarize pCAT responses by item
 #'
+#' Directional percentages use eligible records with a valid direction.
+#' Complete five-category percentages use only eligible records with a complete
+#' direction-plus-effect classification. Consequently, `n_neutral` and
+#' `n_neutral_complete` can differ when a neutral direction has an invalid
+#' effect value.
+#'
+#' `pct_complete_class` reports the share of valid-direction records that also
+#' have a complete five-category classification. Its denominator is
+#' `n_valid_direction`; the five category-specific percentages instead use
+#' `n_complete_class`.
+#'
 #' @param data Raw, validated, or classified long-format data.
 #' @param group_vars Optional grouping columns such as site and time point.
 #' @param respondent_id Respondent identifier column.
-#' @param suppress_below Optional minimum respondent count.
+#' @param suppress_below Optional minimum respondent count. Numeric analytic
+#'   measures and the derived `modal_class` are missing in suppressed rows;
+#'   grouping, item, and CFIR metadata remain visible.
 #' @return A data frame of class `pcat_summary`.
 #' @export
 pcat_summarise <- function(
@@ -39,7 +52,8 @@ pcat_summarise <- function(
     one <- working[idx, , drop = FALSE]
     eligible <- one$pcat_record_eligible %in% TRUE
     valid_side <- eligible & one$pcat_side %in% c("barrier", "neutral", "facilitator")
-    complete_class <- eligible & !is.na(one$pcat_class5)
+    class5_values <- as.character(one$pcat_class5)
+    complete_class <- eligible & !is.na(class5_values)
 
     respondent_values <- as.character(one[[respondent_id]][eligible])
     respondent_values <- respondent_values[!is.na(respondent_values) & nzchar(respondent_values)]
@@ -54,18 +68,28 @@ pcat_summarise <- function(
     part$n_barrier <- sum(eligible & one$pcat_side == "barrier", na.rm = TRUE)
     part$n_neutral <- sum(eligible & one$pcat_side == "neutral", na.rm = TRUE)
     part$n_facilitator <- sum(eligible & one$pcat_side == "facilitator", na.rm = TRUE)
-    part$n_strong_barrier <- sum(eligible & one$pcat_class == "strong_barrier", na.rm = TRUE)
-    part$n_weak_barrier <- sum(eligible & one$pcat_class == "weak_barrier", na.rm = TRUE)
+    part$n_strong_barrier <- sum(
+      eligible & class5_values == "strong_barrier",
+      na.rm = TRUE
+    )
+    part$n_weak_barrier <- sum(
+      eligible & class5_values == "weak_barrier",
+      na.rm = TRUE
+    )
+    part$n_neutral_complete <- sum(
+      eligible & class5_values == "neutral",
+      na.rm = TRUE
+    )
     part$n_barrier_effect_missing <- sum(
       eligible & one$pcat_class == "barrier_effect_missing",
       na.rm = TRUE
     )
     part$n_weak_facilitator <- sum(
-      eligible & one$pcat_class == "weak_facilitator",
+      eligible & class5_values == "weak_facilitator",
       na.rm = TRUE
     )
     part$n_strong_facilitator <- sum(
-      eligible & one$pcat_class == "strong_facilitator",
+      eligible & class5_values == "strong_facilitator",
       na.rm = TRUE
     )
     part$n_facilitator_effect_missing <- sum(
@@ -77,7 +101,7 @@ pcat_summarise <- function(
       na.rm = TRUE
     )
 
-    class_values <- as.character(one$pcat_class5[eligible])
+    class_values <- class5_values[eligible]
     part$modal_class <- .pcat_mode(class_values)
     display_values <- one$pcat_display_code[eligible]
     part$mean_display_code <- if (
@@ -96,11 +120,18 @@ pcat_summarise <- function(
   out$pct_barrier <- .pcat_divide(out$n_barrier, out$n_valid_direction)
   out$pct_neutral <- .pcat_divide(out$n_neutral, out$n_valid_direction)
   out$pct_facilitator <- .pcat_divide(out$n_facilitator, out$n_valid_direction)
+  out$pct_complete_class <- .pcat_divide(
+    out$n_complete_class,
+    out$n_valid_direction
+  )
   # Five-category percentages use complete direction-plus-effect responses.
   # Directional percentages above use every valid direction response.
   out$pct_strong_barrier <- .pcat_divide(out$n_strong_barrier, out$n_complete_class)
   out$pct_weak_barrier <- .pcat_divide(out$n_weak_barrier, out$n_complete_class)
-  out$pct_neutral_complete <- .pcat_divide(out$n_neutral, out$n_complete_class)
+  out$pct_neutral_complete <- .pcat_divide(
+    out$n_neutral_complete,
+    out$n_complete_class
+  )
   out$pct_strong_facilitator <- .pcat_divide(
     out$n_strong_facilitator,
     out$n_complete_class
@@ -117,7 +148,14 @@ pcat_summarise <- function(
   out$modal_class_n <- vapply(seq_len(nrow(out)), function(i) {
     current <- out$modal_class[[i]]
     if (is.na(current) || identical(current, "tie")) return(NA_integer_)
-    column <- paste0("n_", current)
+    column <- c(
+      strong_barrier = "n_strong_barrier",
+      weak_barrier = "n_weak_barrier",
+      neutral = "n_neutral_complete",
+      weak_facilitator = "n_weak_facilitator",
+      strong_facilitator = "n_strong_facilitator"
+    )[[current]]
+    if (is.null(column)) return(NA_integer_)
     if (!column %in% names(out)) return(NA_integer_)
     as.integer(out[[column]][[i]])
   }, integer(1))
@@ -155,6 +193,10 @@ pcat_summarise <- function(
     numeric_measures <- names(out)[vapply(out, is.numeric, logical(1))]
     numeric_measures <- setdiff(numeric_measures, protected)
     for (column in numeric_measures) out[[column]][suppress] <- NA
+    analytic_character_measures <- intersect("modal_class", names(out))
+    for (column in analytic_character_measures) {
+      out[[column]][suppress] <- NA_character_
+    }
   }
 
   rownames(out) <- NULL
@@ -163,8 +205,9 @@ pcat_summarise <- function(
   attr(out, "direction_denominator") <- "n_valid_direction"
   attr(out, "five_category_denominator") <- "n_complete_class"
   attr(out, "denominator_note") <- paste(
-    "pct_barrier, pct_neutral, pct_facilitator, and pct_effect_missing use",
-    "n_valid_direction; five-category strength percentages use n_complete_class."
+    "pct_barrier, pct_neutral, pct_facilitator, pct_effect_missing, and",
+    "pct_complete_class use n_valid_direction; five-category percentages",
+    "use n_complete_class and counts derived exclusively from pcat_class5."
   )
   out
 }
@@ -173,8 +216,10 @@ pcat_summarise <- function(
 #'
 #' @param data Raw/classified data or output from [pcat_summarise()].
 #' @param group_vars Passed to [pcat_summarise()] when needed.
-#' @param agreement_threshold Minimum share for a consensus label.
-#' @param polarization_min Minimum share on both barrier and facilitator sides.
+#' @param agreement_threshold One finite number from zero through one giving
+#'   the minimum share for a consensus label.
+#' @param polarization_min One finite number from zero through one giving the
+#'   minimum share on both barrier and facilitator sides.
 #' @param minimum_n Minimum valid directions required.
 #' @return A pCAT summary with consensus diagnostics.
 #' @rdname pcat_summarise
@@ -185,11 +230,8 @@ pcat_consensus <- function(
     agreement_threshold = 0.60,
     polarization_min = 0.20,
     minimum_n = 2L) {
-  for (value in c(agreement_threshold, polarization_min)) {
-    if (length(value) != 1L || is.na(value) || value < 0 || value > 1) {
-      .pcat_abort("Consensus thresholds must be single numbers between 0 and 1.")
-    }
-  }
+  .pcat_check_probability_scalar(agreement_threshold, "agreement_threshold")
+  .pcat_check_probability_scalar(polarization_min, "polarization_min")
   minimum_n <- suppressWarnings(as.integer(minimum_n))
   if (length(minimum_n) != 1L || is.na(minimum_n) || minimum_n < 1L) {
     .pcat_abort("`minimum_n` must be a positive integer.")
@@ -209,7 +251,7 @@ pcat_consensus <- function(
 
   out$agreement_share <- NA_real_
   out$dominant_side <- NA_character_
-  out$polarized <- FALSE
+  out$polarized <- rep(NA, nrow(out))
   out$normalized_entropy <- NA_real_
   out$consensus_label <- NA_character_
 
@@ -226,10 +268,13 @@ pcat_consensus <- function(
       winners <- names(comparable)[comparable == max(comparable)]
       out$dominant_side[[i]] <- if (length(winners) == 1L) winners[[1L]] else "tie"
     }
-    out$polarized[[i]] <- !is.na(out$pct_barrier[[i]]) &&
-      !is.na(out$pct_facilitator[[i]]) &&
-      out$pct_barrier[[i]] >= polarization_min &&
-      out$pct_facilitator[[i]] >= polarization_min
+    has_polarization_data <- !is.na(out$pct_barrier[[i]]) &&
+      !is.na(out$pct_facilitator[[i]])
+    if (has_polarization_data) {
+      out$polarized[[i]] <-
+        out$pct_barrier[[i]] >= polarization_min &&
+        out$pct_facilitator[[i]] >= polarization_min
+    }
     out$normalized_entropy[[i]] <- .pcat_entropy(probabilities)
 
     out$consensus_label[[i]] <- if (
