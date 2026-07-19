@@ -199,6 +199,7 @@ pcat_self_test <- function(verbose = TRUE) {
         value$n_complete_class == 3L,
         value$n_neutral_complete == 1L,
         same(value$pct_neutral, 2 / 4),
+        same(value$pct_complete_class, 3 / 4),
         same(value$pct_neutral_complete, 1 / 3),
         same(value$pct_strong_barrier, 1 / 3),
         value$n_complete_class ==
@@ -222,6 +223,7 @@ pcat_self_test <- function(verbose = TRUE) {
         !is.na(value$item_text),
         is.na(value$n_respondents),
         is.na(value$pct_barrier),
+        is.na(value$pct_complete_class),
         is.na(value$modal_class)
       )
     },

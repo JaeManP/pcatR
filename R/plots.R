@@ -761,13 +761,14 @@ plot_pcat_change <- function(
 #' labels and overcrowded multi-panel screen output. Every page is constructed
 #' and validated before a temporary PDF is written in the target directory. The
 #' requested path is replaced only after the complete temporary file is
-#' nonempty, so an export failure does not leave a partial target.
+#' nonempty, so an export failure does not leave a partial target. An existing
+#' directory is rejected as `path` before any backup or output operation.
 #'
 #' @param data Raw, validated, or classified pCAT data.
-#' @param path Output PDF path.
+#' @param path Output PDF file path. Existing directories are rejected.
 #' @param group_vars Grouping columns defining one PDF page.
 #' @param overwrite Overwrite an existing file.
-#' @param width,height PDF page dimensions in inches.
+#' @param width,height Positive finite PDF page dimensions in inches.
 #' @param title_prefix Prefix used in page titles.
 #' @param ... Additional arguments passed to [plot_pcat_profile()].
 #' @return The normalized output path, invisibly.
@@ -785,6 +786,16 @@ pcat_save_profile_pdf <- function(
   if (!is.character(path) || length(path) != 1L || is.na(path) || !nzchar(path)) {
     .pcat_abort("`path` must be one non-missing PDF file path.")
   }
+  if (dir.exists(path)) {
+    .pcat_abort(
+      paste0(
+        "`path` must identify a PDF file, not a directory: `",
+        path,
+        "`."
+      ),
+      "pcat_profile_export_error"
+    )
+  }
   if (file.exists(path) && !isTRUE(overwrite)) {
     .pcat_abort(
       paste0("File already exists: `", path, "`. Set `overwrite = TRUE` to replace it.")
@@ -792,9 +803,12 @@ pcat_save_profile_pdf <- function(
   }
   width <- suppressWarnings(as.numeric(width))
   height <- suppressWarnings(as.numeric(height))
-  if (length(width) != 1L || is.na(width) || width <= 0 ||
-      length(height) != 1L || is.na(height) || height <= 0) {
-    .pcat_abort("`width` and `height` must be positive numbers.")
+  if (length(width) != 1L || is.na(width) || !is.finite(width) || width <= 0 ||
+      length(height) != 1L || is.na(height) || !is.finite(height) || height <= 0) {
+    .pcat_abort(
+      "`width` and `height` must be positive finite numbers.",
+      "pcat_profile_export_error"
+    )
   }
 
   classified <- .pcat_as_classified(data, attach_items = TRUE)

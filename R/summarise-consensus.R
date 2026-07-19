@@ -6,6 +6,11 @@
 #' `n_neutral_complete` can differ when a neutral direction has an invalid
 #' effect value.
 #'
+#' `pct_complete_class` reports the share of valid-direction records that also
+#' have a complete five-category classification. Its denominator is
+#' `n_valid_direction`; the five category-specific percentages instead use
+#' `n_complete_class`.
+#'
 #' @param data Raw, validated, or classified long-format data.
 #' @param group_vars Optional grouping columns such as site and time point.
 #' @param respondent_id Respondent identifier column.
@@ -115,6 +120,10 @@ pcat_summarise <- function(
   out$pct_barrier <- .pcat_divide(out$n_barrier, out$n_valid_direction)
   out$pct_neutral <- .pcat_divide(out$n_neutral, out$n_valid_direction)
   out$pct_facilitator <- .pcat_divide(out$n_facilitator, out$n_valid_direction)
+  out$pct_complete_class <- .pcat_divide(
+    out$n_complete_class,
+    out$n_valid_direction
+  )
   # Five-category percentages use complete direction-plus-effect responses.
   # Directional percentages above use every valid direction response.
   out$pct_strong_barrier <- .pcat_divide(out$n_strong_barrier, out$n_complete_class)
@@ -196,9 +205,9 @@ pcat_summarise <- function(
   attr(out, "direction_denominator") <- "n_valid_direction"
   attr(out, "five_category_denominator") <- "n_complete_class"
   attr(out, "denominator_note") <- paste(
-    "pct_barrier, pct_neutral, pct_facilitator, and pct_effect_missing use",
-    "n_valid_direction; five-category percentages use n_complete_class and",
-    "counts derived exclusively from pcat_class5."
+    "pct_barrier, pct_neutral, pct_facilitator, pct_effect_missing, and",
+    "pct_complete_class use n_valid_direction; five-category percentages",
+    "use n_complete_class and counts derived exclusively from pcat_class5."
   )
   out
 }
@@ -242,7 +251,7 @@ pcat_consensus <- function(
 
   out$agreement_share <- NA_real_
   out$dominant_side <- NA_character_
-  out$polarized <- FALSE
+  out$polarized <- rep(NA, nrow(out))
   out$normalized_entropy <- NA_real_
   out$consensus_label <- NA_character_
 
@@ -259,10 +268,13 @@ pcat_consensus <- function(
       winners <- names(comparable)[comparable == max(comparable)]
       out$dominant_side[[i]] <- if (length(winners) == 1L) winners[[1L]] else "tie"
     }
-    out$polarized[[i]] <- !is.na(out$pct_barrier[[i]]) &&
-      !is.na(out$pct_facilitator[[i]]) &&
-      out$pct_barrier[[i]] >= polarization_min &&
-      out$pct_facilitator[[i]] >= polarization_min
+    has_polarization_data <- !is.na(out$pct_barrier[[i]]) &&
+      !is.na(out$pct_facilitator[[i]])
+    if (has_polarization_data) {
+      out$polarized[[i]] <-
+        out$pct_barrier[[i]] >= polarization_min &&
+        out$pct_facilitator[[i]] >= polarization_min
+    }
     out$normalized_entropy[[i]] <- .pcat_entropy(probabilities)
 
     out$consensus_label[[i]] <- if (

@@ -77,6 +77,7 @@ test_that("directional and five-category percentages use distinct denominators",
 
   expect_equal(out$n_valid_direction, 4L)
   expect_equal(out$n_complete_class, 3L)
+  expect_equal(out$pct_complete_class, 3 / 4)
   expect_equal(out$n_neutral_complete, 1L)
   expect_equal(out$pct_barrier, 2 / 4)
   expect_equal(out$pct_neutral, 1 / 4)
@@ -102,6 +103,7 @@ test_that("complete categories form a five-part partition", {
   expect_equal(out$n_complete_class, 3L)
   expect_equal(out$n_neutral_complete, 1L)
   expect_equal(out$pct_neutral, 2 / 4)
+  expect_equal(out$pct_complete_class, 3 / 4)
   expect_equal(out$pct_neutral_complete, 1 / 3)
 
   complete_counts <- out[c(
@@ -133,9 +135,25 @@ test_that("zero complete-category denominators produce missing percentages", {
   percentages <- unlist(out[percentage_names], use.names = FALSE)
 
   expect_equal(out$n_complete_class, 0L)
+  expect_equal(out$pct_complete_class, 0)
   expect_true(all(is.na(percentages)))
   expect_false(any(is.nan(percentages)))
   expect_false(any(is.infinite(percentages)))
+})
+
+test_that("completeness percentage is missing without valid directions", {
+  dat <- data.frame(
+    respondent_id = c("R1", "R2"),
+    item_id = 1L,
+    direction = c(NA, 4),
+    effect = c(NA, 1)
+  )
+  out <- pcat_summarise(dat)
+
+  expect_equal(out$n_valid_direction, 0L)
+  expect_equal(out$n_complete_class, 0L)
+  expect_type(out$pct_complete_class, "double")
+  expect_true(is.na(out$pct_complete_class))
 })
 
 test_that("complete-category partition holds for grouped example summaries", {
@@ -153,6 +171,15 @@ test_that("complete-category partition holds for grouped example summaries", {
   )]
 
   expect_equal(rowSums(complete_counts), out$n_complete_class)
+  valid_direction <- !is.na(out$n_valid_direction) & out$n_valid_direction > 0L
+  expect_equal(
+    out$pct_complete_class[valid_direction],
+    out$n_complete_class[valid_direction] /
+      out$n_valid_direction[valid_direction]
+  )
+  expect_true(all(out$pct_complete_class[valid_direction] >= 0))
+  expect_true(all(out$pct_complete_class[valid_direction] <= 1))
+  expect_true(all(is.na(out$pct_complete_class[!valid_direction])))
   positive <- out$n_complete_class > 0L
   expect_equal(
     unname(rowSums(complete_percentages[positive, , drop = FALSE])),
@@ -182,9 +209,29 @@ test_that("small-cell suppression masks analytic measures but preserves context"
   expect_true(is.na(out$n_respondents))
   expect_true(is.na(out$n_valid_direction))
   expect_true(is.na(out$pct_barrier))
+  expect_true(is.na(out$pct_complete_class))
   expect_true(is.na(out$mean_display_code))
   expect_true(is.na(out$modal_class))
 
   visible <- pcat_summarise(dat, group_vars = "site_id")
   expect_false(is.na(visible$modal_class))
+})
+
+test_that("polarization is unknown when summary shares are unavailable", {
+  dat <- data.frame(
+    respondent_id = paste0("R", 1:3),
+    site_id = "SITE_A",
+    item_id = 1L,
+    direction = c(1, 2, 3),
+    effect = c(1, NA, 0)
+  )
+  suppressed <- pcat_summarise(
+    dat,
+    group_vars = "site_id",
+    suppress_below = 4
+  )
+  out <- pcat_consensus(suppressed)
+
+  expect_true(is.na(out$polarized))
+  expect_equal(out$consensus_label, "insufficient_data")
 })

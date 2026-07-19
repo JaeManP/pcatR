@@ -201,6 +201,61 @@ test_that("profile PDF preflight preserves an existing target byte for byte", {
   )
 })
 
+test_that("profile PDF exporter rejects a directory-valued target safely", {
+  parent <- tempfile("pcat_pdf_directory_", tmpdir = tempdir())
+  dir.create(parent)
+  on.exit(unlink(parent, recursive = TRUE, force = TRUE), add = TRUE)
+  target <- file.path(parent, "profiles.pdf")
+  dir.create(target)
+  sentinel_path <- file.path(target, "sentinel.bin")
+  sentinel <- charToRaw("directory-target-sentinel")
+  writeBin(sentinel, sentinel_path)
+
+  expect_error(
+    pcat_save_profile_pdf(
+      pcat_example_data(),
+      target,
+      overwrite = TRUE,
+      label = "item_id"
+    ),
+    regexp = "not a directory",
+    class = "pcat_profile_export_error"
+  )
+  expect_true(dir.exists(target))
+  expect_identical(
+    readBin(sentinel_path, what = "raw", n = file.info(sentinel_path)$size),
+    sentinel
+  )
+  expect_length(
+    list.files(
+      parent,
+      pattern = "^\\.pcat-profile(-backup)?-",
+      all.files = TRUE
+    ),
+    0L
+  )
+})
+
+test_that("profile PDF exporter rejects infinite page dimensions", {
+  for (dimension in c("width", "height")) {
+    for (value in c(Inf, -Inf)) {
+      target <- tempfile(fileext = ".pdf")
+      arguments <- list(
+        data = pcat_example_data(),
+        path = target,
+        label = "item_id"
+      )
+      arguments[[dimension]] <- value
+      expect_error(
+        do.call(pcat_save_profile_pdf, arguments),
+        regexp = "positive finite numbers",
+        class = "pcat_profile_export_error"
+      )
+      expect_false(file.exists(target))
+    }
+  }
+})
+
 test_that("profile export warns when tabular suppression is active", {
   result <- pcat_analyse(
     pcat_example_data(),
