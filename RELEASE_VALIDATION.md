@@ -2,7 +2,7 @@
 
 Prepared: July 12, 2026
 
-Last updated: July 18, 2026
+Last updated: July 19, 2026
 
 Status: provisional until the final source commit is frozen and Win-builder
 checks are complete. This record does not claim that version 1.0.1 has been
@@ -17,7 +17,8 @@ released or accepted by CRAN.
 - Pre-freeze local candidate SHA-256:
   `a8ee1f3e02861eda11281e4390207335339dd4312cf17ab69bf4a925eee44377`
 - Final frozen-submission SHA-256: pending source freeze
-- Lilac Li authorization: written approval dated July 13, 2026, retained
+- Lilac Li package-author authorization: initial written approval dated July
+  13, 2026, and final version-specific approval dated July 19, 2026, retained
   privately by the maintainer
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
@@ -77,19 +78,30 @@ Windows R-release, macOS R-release, Ubuntu R-release, R-devel, R-oldrel-1, and
 R 4.1; coverage and PR-only pkgdown builds are separate required checks. Final
 run IDs and the final checksum remain pending the source freeze.
 
-## Completed external authorization
+## Completed package-author authorization
 
-- Lilac Li approved her first-author and joint-copyright-holder roles, Jae Man
-  Park's second-author, joint-copyright-holder, and package-maintainer roles,
-  the documented MIT and CC BY 4.0 licensing treatment, public distribution,
-  and CRAN submission by Jae Man Park. Her written statement is dated July 13,
-  2026 and is retained privately because it contains personal contact details
-  and email metadata.
+- Lilac Li's initial written authorization is dated July 13, 2026.
+- Lilac Li provided final version-specific approval of pcatR 1.0.1 on July 19,
+  2026.
+- The combined retained evidence covers:
+  - Lilac Li as first package author and joint software copyright holder;
+  - Jae Man Park as second package author, joint software copyright holder,
+    maintainer, and CRAN submitter;
+  - MIT licensing of original package code;
+  - documented attribution and licensing treatment of source-derived content;
+  - public GitHub and CRAN distribution.
+- The final approval applies to package candidate
+  `36ca2da22ab80a938509dfb7f06b59ecf1a3ca75`.
+- The evidence is retained privately because it contains personal communication
+  and metadata.
+- This authorization concerns Lilac Li's own role and authority and is not
+  treated as authorization from the original pCAT authors.
 
 ## Outstanding external gates
 
-- Obtain and retain the original instrument authors' package-name and
-  source-content confirmation.
+- Obtain and retain the original pCAT authors' package-name and source-content
+  confirmation, or formally resolve and document the license-reliance
+  approach.
 - Run the exact frozen archive through Win-builder R-release and R-devel.
 - Replace provisional entries above with the frozen commit, archive SHA-256,
   GitHub run IDs, and Win-builder results.
