@@ -180,6 +180,9 @@ eligible records with a complete direction-plus-effect classification and use
 `n_complete_class`; their neutral numerator is `n_neutral_complete`. A neutral
 direction with an invalid effect remains in `n_neutral` but is excluded from
 `n_neutral_complete` and the complete five-category distribution.
+`pct_complete_class` is the share of valid-direction records that have a
+complete five-category classification and can be reviewed as a completeness
+diagnostic before interpreting category-specific percentages.
 
 ## CFIR mappings
 

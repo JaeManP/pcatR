@@ -485,7 +485,7 @@ pre code {
 <div id="pcatr-technical-user-guide" class="section level1">
 <h1>pcatR Technical User Guide</h1>
 <p><strong>Software:</strong> pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data<br />
-<strong>Version:</strong> 1.0.1<br> <strong>Document version:</strong> 1.3<br> <strong>Document status:</strong> CRAN submission candidate<br> <strong>Prepared:</strong> July 12, 2026<br> <strong>Last updated:</strong> July 17, 2026<br> <strong>Authors:</strong> <a href="https://www.unk.edu/academics/management/lilac-li.php">Lilac Li</a>; <a href="https://www.linkedin.com/in/jae-man-park/">Jae Man Park</a><br> <strong>Maintainer:</strong> Jae Man Park<br> <strong>Repository:</strong> <a href="https://github.com/JaeManP/pcatR" class="uri">https://github.com/JaeManP/pcatR</a><br />
+<strong>Version:</strong> 1.0.1<br> <strong>Document version:</strong> 1.4<br> <strong>Document status:</strong> CRAN submission candidate<br> <strong>Prepared:</strong> July 12, 2026<br> <strong>Last updated:</strong> July 18, 2026<br> <strong>Authors:</strong> <a href="https://www.unk.edu/academics/management/lilac-li.php">Lilac Li</a>; <a href="https://www.linkedin.com/in/jae-man-park/">Jae Man Park</a><br> <strong>Maintainer:</strong> Jae Man Park<br> <strong>Repository:</strong> <a href="https://github.com/JaeManP/pcatR" class="uri">https://github.com/JaeManP/pcatR</a><br />
 <strong>Package website:</strong> <a href="https://jaemanp.github.io/pcatR/" class="uri">https://jaemanp.github.io/pcatR/</a></p>
 <hr />
 <div id="document-control" class="section level2">
@@ -1351,6 +1351,7 @@ pcat_validation_issues(validation)</code></pre>
 <li><code>normalized_entropy</code>: distributional dispersion across the three directions, from 0 for complete concentration to 1 for an even three-way distribution; and</li>
 <li><code>consensus_label</code>: insufficient data, polarized, consensus barrier, consensus neutral, consensus facilitator, or mixed.</li>
 </ul>
+<p>When the barrier or facilitator share is unavailable, including after small-cell suppression, <code>polarized</code> is missing rather than <code>FALSE</code>. Suppressed rows retain <code>consensus_label = &quot;insufficient_data&quot;</code>; unavailable data are not interpreted as evidence that a cell is nonpolarized.</p>
 <p>The default 60% agreement and 20% polarization rules are package conventions. They are not empirically established pCAT cut points. Prespecify and report any threshold used. Sensitivity analysis is recommended when decisions depend on a threshold.</p>
 <p>Each probability threshold must be one finite numeric value from 0 through 1. Vectors, missing or infinite values, character values, and values outside that range are rejected.</p>
 <p>A polarized result is analytically important. It may indicate different roles, workflows, information access, or local experiences rather than measurement error. Review comments and stratified results before collapsing disagreement into a single summary.</p>
@@ -1457,6 +1458,7 @@ print(profile)</code></pre>
   overwrite = TRUE
 )</code></pre>
 <p>The exporter constructs and validates every requested group page before creating output, writes the complete document to a temporary PDF in the target directory, and replaces the requested path only after the temporary file is confirmed nonempty. If any group lacks complete five-category data or another page fails, the error identifies that group, a new target is not left behind, and an existing target remains unchanged.</p>
+<p>The output <code>path</code> must identify a PDF file, not a directory, even when <code>overwrite = TRUE</code>. Page <code>width</code> and <code>height</code> must each be one positive finite number. These checks occur before any backup or output operation.</p>
 </div>
 <div id="respondent-heatmap" class="section level2">
 <h2>13.2 Respondent heatmap</h2>
@@ -1827,24 +1829,30 @@ pak::pak(&quot;JaeManP/pcatR&quot;)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td>1.4</td>
+<td>July 18, 2026</td>
+<td>1.0.1</td>
+<td>Added the complete-classification diagnostic, safe directory-path and finite-dimension checks for PDF export, and explicit unknown-polarization semantics</td>
+</tr>
+<tr class="even">
 <td>1.3</td>
 <td>July 17, 2026</td>
 <td>1.0.1</td>
 <td>Documented analytical and privacy hardening, distinct neutral counts, scalar threshold validation, and failure-safe profile export</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>1.2</td>
 <td>July 12, 2026</td>
 <td>1.0.1</td>
 <td>Added installed editable source and submission-candidate metadata</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>1.1</td>
 <td>July 12, 2026</td>
 <td>1.0.1</td>
 <td>Added CRAN-ready attribution, citation, and installed guide formats</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>1.0</td>
 <td>July 12, 2026</td>
 <td>1.0.0</td>

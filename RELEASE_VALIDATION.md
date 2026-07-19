@@ -2,7 +2,7 @@
 
 Prepared: July 12, 2026
 
-Last updated: July 17, 2026
+Last updated: July 18, 2026
 
 Status: provisional until the final source commit is frozen and Win-builder
 checks are complete. This record does not claim that version 1.0.1 has been
@@ -15,7 +15,7 @@ released or accepted by CRAN.
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Pre-freeze local candidate SHA-256:
-  `a068e1e21b5d8adafeacb911b15dd69e1c76e8f23ed2d980626d3d79e878610e`
+  `a8ee1f3e02861eda11281e4390207335339dd4312cf17ab69bf4a925eee44377`
 - Final frozen-submission SHA-256: pending source freeze
 - Lilac Li authorization: written approval dated July 13, 2026, retained
   privately by the maintainer
@@ -24,7 +24,7 @@ released or accepted by CRAN.
 
 ## Completed local checks
 
-- 210 `testthat` expectations passed with zero failures, errors, warnings, or
+- 236 `testthat` expectations passed with zero failures, errors, warnings, or
   skips, including focused analytical, suppression, validation, and export
   regressions.
 - All 25 `pcat_self_test()` checks passed.
@@ -53,13 +53,16 @@ released or accepted by CRAN.
 
 The pre-freeze candidate now derives every complete five-category count from
 `pcat_class5`, distinguishes directional `n_neutral` from complete-category
-`n_neutral_complete`, masks derived modal classifications in suppressed cells,
-requires valid direction and effect parsing for strength classification,
-validates probability thresholds as finite numeric scalars, and writes profile
-PDFs through validated same-directory temporary files. Source-archive README
-links now use explicit repository URLs. These changes do not alter item wording,
-CFIR mappings, response-code meanings, or the boundary against a purported
-validated total score.
+`n_neutral_complete`, exposes `pct_complete_class` as the share of valid
+directions with a complete five-category classification, masks derived modal
+classifications in suppressed cells, and represents unavailable polarization
+as missing rather than false. It requires valid direction and effect parsing
+for strength classification, validates probability thresholds as finite
+numeric scalars, rejects directory-valued profile targets and nonfinite page
+dimensions, and writes profile PDFs through validated same-directory temporary
+files. Source-archive README links now use explicit repository URLs. These
+changes do not alter item wording, CFIR mappings, response-code meanings, or the
+boundary against a purported validated total score.
 
 ## Automated current-R archive checks
 

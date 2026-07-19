@@ -69,7 +69,8 @@ paired longitudinal transitions, and barrier-focused action-plan tables.
 }
 \details{
 Directional percentages (\code{pct_barrier}, \code{pct_neutral},
-\code{pct_facilitator}, and \code{pct_effect_missing}) use eligible records
+\code{pct_facilitator}, \code{pct_effect_missing}, and
+\code{pct_complete_class}) use eligible records
 with a valid direction and denominator \code{n_valid_direction}. Complete
 five-category percentages use only eligible records with a complete
 direction-plus-effect classification and denominator \code{n_complete_class}.
@@ -77,12 +78,17 @@ The directional \code{n_neutral} count can therefore exceed
 \code{n_neutral_complete} when a neutral direction has an invalid effect.
 All five complete-category counts are derived from \code{pcat_class5} and
 partition \code{n_complete_class}. Report both denominators when they differ.
+\code{pct_complete_class} is the proportion of valid-direction records with a
+complete five-category classification.
 
 Means, medians, and change values based on \code{pcat_display_code} are
 strictly descriptive. Candidate strategies require local stakeholder review
 and are not automatic prescriptions. Small-cell suppression hides numeric
 analytic measures and \code{modal_class}; it applies only to the returned
 summary table and does not de-identify source or classified data.
+When barrier or facilitator percentages are unavailable,
+\code{pcat_consensus()} reports \code{polarized = NA}; unavailable data are not
+treated as evidence that a cell is nonpolarized.
 }
 \value{A data frame with a function-specific class and documented denominator
 attributes where applicable.}

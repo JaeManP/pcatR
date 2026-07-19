@@ -18,7 +18,9 @@ GitHub `v1.0.0` release.
 - The documented minimum R version is exercised by an R 4.1 CI job.
 - The candidate underwent pre-CRAN analytical and privacy hardening covering
   complete-category partitioning, small-cell modal suppression, response
-  validity, probability thresholds, and failure-safe profile export.
+  validity, probability thresholds, an explicit complete-classification
+  diagnostic, unknown-polarization semantics, and failure-safe profile export
+  with directory-path and finite-dimension validation.
 
 ## Required evidence before submission
 

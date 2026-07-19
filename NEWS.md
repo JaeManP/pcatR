@@ -20,6 +20,13 @@
   writing, so a late page error cannot leave or replace a partial target.
 - Enforced true finite scalar validation for consensus and action-plan
   probability thresholds and repaired broken links in the source archive.
+- Added `pct_complete_class`, the share of valid-direction responses with a
+  complete five-category classification, as an explicit completeness
+  diagnostic.
+- Rejected directory-valued profile PDF targets and infinite page dimensions
+  before any output or backup operation.
+- Represented polarization as unavailable rather than false when the required
+  directional percentages are missing.
 
 # pcatR 1.0.0
 

@@ -14,10 +14,10 @@ output:
 
 **Software:** pcatR - Analyze and Visualize Pragmatic Context Assessment Tool Data  
 **Version:** 1.0.1<br>
-**Document version:** 1.3<br>
+**Document version:** 1.4<br>
 **Document status:** CRAN submission candidate<br>
 **Prepared:** July 12, 2026<br>
-**Last updated:** July 17, 2026<br>
+**Last updated:** July 18, 2026<br>
 **Authors:** [Lilac Li](https://www.unk.edu/academics/management/lilac-li.php); [Jae Man Park](https://www.linkedin.com/in/jae-man-park/)<br>
 **Maintainer:** Jae Man Park<br>
 **Repository:** https://github.com/JaeManP/pcatR  
@@ -499,6 +499,8 @@ The function adds:
 - `normalized_entropy`: distributional dispersion across the three directions, from 0 for complete concentration to 1 for an even three-way distribution; and
 - `consensus_label`: insufficient data, polarized, consensus barrier, consensus neutral, consensus facilitator, or mixed.
 
+When the barrier or facilitator share is unavailable, including after small-cell suppression, `polarized` is missing rather than `FALSE`. Suppressed rows retain `consensus_label = "insufficient_data"`; unavailable data are not interpreted as evidence that a cell is nonpolarized.
+
 The default 60% agreement and 20% polarization rules are package conventions. They are not empirically established pCAT cut points. Prespecify and report any threshold used. Sensitivity analysis is recommended when decisions depend on a threshold.
 
 Each probability threshold must be one finite numeric value from 0 through 1. Vectors, missing or infinite values, character values, and values outside that range are rejected.
@@ -599,6 +601,8 @@ pcat_save_profile_pdf(
 ```
 
 The exporter constructs and validates every requested group page before creating output, writes the complete document to a temporary PDF in the target directory, and replaces the requested path only after the temporary file is confirmed nonempty. If any group lacks complete five-category data or another page fails, the error identifies that group, a new target is not left behind, and an existing target remains unchanged.
+
+The output `path` must identify a PDF file, not a directory, even when `overwrite = TRUE`. Page `width` and `height` must each be one positive finite number. These checks occur before any backup or output operation.
 
 ## 13.2 Respondent heatmap
 
@@ -848,6 +852,7 @@ For development problems, include `sessionInfo()`, the exact error, and a synthe
 
 | Document version | Date | Software version | Change |
 | --- | --- | --- | --- |
+| 1.4 | July 18, 2026 | 1.0.1 | Added the complete-classification diagnostic, safe directory-path and finite-dimension checks for PDF export, and explicit unknown-polarization semantics |
 | 1.3 | July 17, 2026 | 1.0.1 | Documented analytical and privacy hardening, distinct neutral counts, scalar threshold validation, and failure-safe profile export |
 | 1.2 | July 12, 2026 | 1.0.1 | Added installed editable source and submission-candidate metadata |
 | 1.1 | July 12, 2026 | 1.0.1 | Added CRAN-ready attribution, citation, and installed guide formats |

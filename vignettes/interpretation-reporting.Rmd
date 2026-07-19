@@ -75,6 +75,11 @@ retaining grouping, item, and CFIR metadata. It affects the returned summary
 table only and does not transform or de-identify source data, classified
 responses, heatmaps, or profile PDFs.
 
+When the directional shares are unavailable, including after suppression,
+`pcat_consensus()` reports `polarized = NA` and
+`consensus_label = "insufficient_data"`; it does not treat an unavailable cell
+as confirmed nonpolarized.
+
 ## Reporting checklist
 
 Report the implementation effort assessed, assessment timing, respondent roles,
