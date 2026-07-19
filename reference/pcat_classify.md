@@ -31,6 +31,11 @@ pcat_classify(
 
 ## Details
 
+Strength categories are assigned only when both direction and effect
+validation are valid. A neutral row with an invalid effect remains
+directionally neutral but has an invalid strength and no complete
+five-category classification.
+
 The numeric `pcat_display_code` ranges from -2 to +2 and is supplied
 only for descriptive plotting and transition displays. It is not a
 validated scale score and should not be summed into an overall pCAT

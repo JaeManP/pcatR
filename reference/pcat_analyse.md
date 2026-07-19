@@ -74,16 +74,18 @@ print(x, ...)
 - suppress_below:
 
   Optional positive minimum respondent count. Numeric summary results
-  below this threshold are replaced with missing values.
+  and the derived modal classification below this threshold are replaced
+  with missing values.
 
 - agreement_threshold:
 
-  Minimum dominant-side share used for a consensus label.
+  One finite number from zero through one giving the minimum
+  dominant-side share used for a consensus label.
 
 - polarization_min:
 
-  Minimum barrier and facilitator shares required to label an item
-  polarized.
+  One finite number from zero through one giving the minimum barrier and
+  facilitator shares required to label an item polarized.
 
 - minimum_n:
 
@@ -96,11 +98,13 @@ print(x, ...)
 
 - barrier_threshold:
 
-  Minimum barrier prevalence for action-plan inclusion.
+  One finite number from zero through one giving the minimum barrier
+  prevalence for action-plan inclusion.
 
 - strong_barrier_threshold:
 
-  Minimum strong-barrier prevalence for action-plan inclusion.
+  One finite number from zero through one giving the minimum
+  strong-barrier prevalence for action-plan inclusion.
 
 - include_approximate:
 
@@ -119,9 +123,10 @@ print(x, ...)
 
 The result retains validation findings and all denominators needed for
 transparent reporting. It does not calculate an overall pCAT scale
-score. Small-cell suppression applies to summary tables;
-respondent-level classified data are retained in the result and must be
-governed separately.
+score. Small-cell suppression hides numeric analytic measures and the
+derived modal classification in summary tables; respondent-level
+classified data are retained in the result and must be governed
+separately.
 
 ## Value
 
@@ -164,48 +169,55 @@ head(analysis$summary)
 #> 4             6                 6                6         0         1
 #> 5             6                 6                6         0         1
 #> 6             6                 6                6         0         6
-#>   n_facilitator n_strong_barrier n_weak_barrier n_barrier_effect_missing
-#> 1             6                0              0                        0
-#> 2             6                0              0                        0
-#> 3             1                1              0                        0
-#> 4             5                0              0                        0
-#> 5             5                0              0                        0
-#> 6             0                0              0                        0
-#>   n_weak_facilitator n_strong_facilitator n_facilitator_effect_missing
-#> 1                  5                    1                            0
-#> 2                  4                    2                            0
-#> 3                  1                    0                            0
-#> 4                  4                    1                            0
-#> 5                  4                    1                            0
-#> 6                  0                    0                            0
-#>   n_invalid_or_missing      modal_class mean_display_code median_display_code
-#> 1                    0 weak_facilitator         1.1666667                   1
-#> 2                    0 weak_facilitator         1.3333333                   1
-#> 3                    0          neutral        -0.1666667                   0
-#> 4                    0 weak_facilitator         1.0000000                   1
-#> 5                    0 weak_facilitator         1.0000000                   1
-#> 6                    0          neutral         0.0000000                   0
-#>   pct_barrier pct_neutral pct_facilitator pct_strong_barrier pct_weak_barrier
-#> 1   0.0000000   0.0000000       1.0000000          0.0000000                0
-#> 2   0.0000000   0.0000000       1.0000000          0.0000000                0
-#> 3   0.1666667   0.6666667       0.1666667          0.1666667                0
-#> 4   0.0000000   0.1666667       0.8333333          0.0000000                0
-#> 5   0.0000000   0.1666667       0.8333333          0.0000000                0
-#> 6   0.0000000   1.0000000       0.0000000          0.0000000                0
-#>   pct_neutral_complete pct_strong_facilitator pct_weak_facilitator
-#> 1            0.0000000              0.1666667            0.8333333
-#> 2            0.0000000              0.3333333            0.6666667
-#> 3            0.6666667              0.0000000            0.1666667
-#> 4            0.1666667              0.1666667            0.6666667
-#> 5            0.1666667              0.1666667            0.6666667
-#> 6            1.0000000              0.0000000            0.0000000
-#>   pct_effect_missing modal_class_n modal_class_share           item_key
-#> 1                  0             5         0.8333333      patient_needs
-#> 2                  0             4         0.6666667     communications
-#> 3                  0             4         0.6666667      data_tracking
-#> 4                  0             4         0.6666667   leadership_goals
-#> 5                  0             4         0.6666667   clinician_values
-#> 6                  0             6         1.0000000 clinical_processes
+#>   n_facilitator n_strong_barrier n_weak_barrier n_neutral_complete
+#> 1             6                0              0                  0
+#> 2             6                0              0                  0
+#> 3             1                1              0                  4
+#> 4             5                0              0                  1
+#> 5             5                0              0                  1
+#> 6             0                0              0                  6
+#>   n_barrier_effect_missing n_weak_facilitator n_strong_facilitator
+#> 1                        0                  5                    1
+#> 2                        0                  4                    2
+#> 3                        0                  1                    0
+#> 4                        0                  4                    1
+#> 5                        0                  4                    1
+#> 6                        0                  0                    0
+#>   n_facilitator_effect_missing n_invalid_or_missing      modal_class
+#> 1                            0                    0 weak_facilitator
+#> 2                            0                    0 weak_facilitator
+#> 3                            0                    0          neutral
+#> 4                            0                    0 weak_facilitator
+#> 5                            0                    0 weak_facilitator
+#> 6                            0                    0          neutral
+#>   mean_display_code median_display_code pct_barrier pct_neutral pct_facilitator
+#> 1         1.1666667                   1   0.0000000   0.0000000       1.0000000
+#> 2         1.3333333                   1   0.0000000   0.0000000       1.0000000
+#> 3        -0.1666667                   0   0.1666667   0.6666667       0.1666667
+#> 4         1.0000000                   1   0.0000000   0.1666667       0.8333333
+#> 5         1.0000000                   1   0.0000000   0.1666667       0.8333333
+#> 6         0.0000000                   0   0.0000000   1.0000000       0.0000000
+#>   pct_complete_class pct_strong_barrier pct_weak_barrier pct_neutral_complete
+#> 1                  1          0.0000000                0            0.0000000
+#> 2                  1          0.0000000                0            0.0000000
+#> 3                  1          0.1666667                0            0.6666667
+#> 4                  1          0.0000000                0            0.1666667
+#> 5                  1          0.0000000                0            0.1666667
+#> 6                  1          0.0000000                0            1.0000000
+#>   pct_strong_facilitator pct_weak_facilitator pct_effect_missing modal_class_n
+#> 1              0.1666667            0.8333333                  0             5
+#> 2              0.3333333            0.6666667                  0             4
+#> 3              0.0000000            0.1666667                  0             4
+#> 4              0.1666667            0.6666667                  0             4
+#> 5              0.1666667            0.6666667                  0             4
+#> 6              0.0000000            0.0000000                  0             6
+#>   modal_class_share           item_key
+#> 1         0.8333333      patient_needs
+#> 2         0.6666667     communications
+#> 3         0.6666667      data_tracking
+#> 4         0.6666667   leadership_goals
+#> 5         0.6666667   clinician_values
+#> 6         1.0000000 clinical_processes
 #>                                                                                                     item_text
 #> 1 People here regularly seek to understand the needs of patients and make changes to better meet those needs.
 #> 2                                 I have open lines of communication with everyone needed to make the change.

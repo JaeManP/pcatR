@@ -180,6 +180,21 @@ standard <- pcat_standardize(
 | Diagnostic check | [`pcat_self_test()`](https://jaemanp.github.io/pcatR/reference/pcat_self_test.md) |
 | Optional dashboard | [`pcat_app()`](https://jaemanp.github.io/pcatR/reference/pcat_app.md) |
 
+## Summary denominators
+
+Directional percentages use all eligible records with a valid direction
+and therefore use `n_valid_direction`. The directional `n_neutral` count
+includes every valid neutral direction. Complete five-category
+percentages use only eligible records with a complete
+direction-plus-effect classification and use `n_complete_class`; their
+neutral numerator is `n_neutral_complete`. A neutral direction with an
+invalid effect remains in `n_neutral` but is excluded from
+`n_neutral_complete` and the complete five-category distribution.
+`pct_complete_class` is the share of valid-direction records that have a
+complete five-category classification and can be reviewed as a
+completeness diagnostic before interpreting category-specific
+percentages.
+
 ## CFIR mappings
 
 The package retains the original pCAT-to-CFIR mapping and the updated
@@ -199,8 +214,10 @@ Use coded respondent identifiers. Do not place names, medical-record
 numbers, email addresses, or protected health information in pCAT files.
 Avoid respondent-level heatmaps for small or identifiable teams. For
 tabular outputs, `pcat_summarise(..., suppress_below = 5)` suppresses
-numerical results below a user-specified respondent threshold; select
-the threshold required by your protocol or organization.
+numerical analytic results and the derived `modal_class` below a
+user-specified respondent threshold while retaining grouping, item, and
+CFIR metadata. Select the threshold required by your protocol or
+organization.
 
 The Shiny interface is an analysis convenience, not a secure
 survey-collection platform.
@@ -224,7 +241,7 @@ article, and, when updated CFIR mappings are used, the 2026 mapping
 article. Instrument wording and source-derived mapping content are
 attributed under CC BY 4.0; package code is MIT licensed. See
 [LICENSE.note](https://jaemanp.github.io/pcatR/LICENSE.note) and
-[REFERENCES.md](https://jaemanp.github.io/pcatR/REFERENCES.md).
+[REFERENCES.md](https://github.com/JaeManP/pcatR/blob/main/REFERENCES.md).
 
 This software is independent and is not an official product or
 endorsement of the original pCAT authors, the U.S. Department of
@@ -256,4 +273,4 @@ use
 as the reusable review template, and require all GitHub Actions jobs to
 pass. The completed release-candidate checks and remaining external
 gates are documented in
-[RELEASE_VALIDATION.md](https://jaemanp.github.io/pcatR/RELEASE_VALIDATION.md).
+[RELEASE_VALIDATION.md](https://github.com/JaeManP/pcatR/blob/main/RELEASE_VALIDATION.md).

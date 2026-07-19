@@ -322,6 +322,11 @@
 </table>
 </div>
 <div class="section level2">
+<h2 id="summary-denominators">Summary denominators<a class="anchor" aria-label="anchor" href="#summary-denominators"></a>
+</h2>
+<p>Directional percentages use all eligible records with a valid direction and therefore use <code>n_valid_direction</code>. The directional <code>n_neutral</code> count includes every valid neutral direction. Complete five-category percentages use only eligible records with a complete direction-plus-effect classification and use <code>n_complete_class</code>; their neutral numerator is <code>n_neutral_complete</code>. A neutral direction with an invalid effect remains in <code>n_neutral</code> but is excluded from <code>n_neutral_complete</code> and the complete five-category distribution. <code>pct_complete_class</code> is the share of valid-direction records that have a complete five-category classification and can be reviewed as a completeness diagnostic before interpreting category-specific percentages.</p>
+</div>
+<div class="section level2">
 <h2 id="cfir-mappings">CFIR mappings<a class="anchor" aria-label="anchor" href="#cfir-mappings"></a>
 </h2>
 <p>The package retains the original pCAT-to-CFIR mapping and the updated mapping reported in 2026. Item 10 has two updated-CFIR links in Supplementary Table S3: <code>Available Resources: Materials &amp; Equipment</code> (primary in the package dictionary) and <code>Available Resources: Funding</code> (secondary). Retrieve all links with:</p>
@@ -331,7 +336,7 @@
 <div class="section level2">
 <h2 id="privacy-and-operational-use">Privacy and operational use<a class="anchor" aria-label="anchor" href="#privacy-and-operational-use"></a>
 </h2>
-<p>Use coded respondent identifiers. Do not place names, medical-record numbers, email addresses, or protected health information in pCAT files. Avoid respondent-level heatmaps for small or identifiable teams. For tabular outputs, <code>pcat_summarise(..., suppress_below = 5)</code> suppresses numerical results below a user-specified respondent threshold; select the threshold required by your protocol or organization.</p>
+<p>Use coded respondent identifiers. Do not place names, medical-record numbers, email addresses, or protected health information in pCAT files. Avoid respondent-level heatmaps for small or identifiable teams. For tabular outputs, <code>pcat_summarise(..., suppress_below = 5)</code> suppresses numerical analytic results and the derived <code>modal_class</code> below a user-specified respondent threshold while retaining grouping, item, and CFIR metadata. Select the threshold required by your protocol or organization.</p>
 <p>The Shiny interface is an analysis convenience, not a secure survey-collection platform.</p>
 </div>
 <div class="section level2">
@@ -341,7 +346,7 @@
 <p>Run:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"pcatR"</span><span class="op">)</span></span></code></pre></div>
-<p>Analyses should cite the software, the original pCAT development article, and, when updated CFIR mappings are used, the 2026 mapping article. Instrument wording and source-derived mapping content are attributed under CC BY 4.0; package code is MIT licensed. See <a href="LICENSE.note">LICENSE.note</a> and <a href="REFERENCES.html">REFERENCES.md</a>.</p>
+<p>Analyses should cite the software, the original pCAT development article, and, when updated CFIR mappings are used, the 2026 mapping article. Instrument wording and source-derived mapping content are attributed under CC BY 4.0; package code is MIT licensed. See <a href="LICENSE.note">LICENSE.note</a> and <a href="https://github.com/JaeManP/pcatR/blob/main/REFERENCES.md" class="external-link">REFERENCES.md</a>.</p>
 <p>This software is independent and is not an official product or endorsement of the original pCAT authors, the U.S. Department of Veterans Affairs, the CFIR Leadership Team, or the instrument repository.</p>
 </div>
 <div class="section level2">
@@ -354,7 +359,7 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>See <a href="https://github.com/JaeManP/pcatR/blob/main/CONTRIBUTING.md" class="external-link">CONTRIBUTING.md</a>, <a href="https://github.com/JaeManP/pcatR/blob/main/GOVERNANCE.md" class="external-link">GOVERNANCE.md</a>, and <a href="https://github.com/JaeManP/pcatR/blob/main/SECURITY.md" class="external-link">SECURITY.md</a> before contributing.</p>
-<p>Before publishing, follow <a href="https://github.com/JaeManP/pcatR/blob/main/PUBLISHING.md" class="external-link">PUBLISHING.md</a>, use <a href="https://github.com/JaeManP/pcatR/blob/main/RELEASE_CHECKLIST.md" class="external-link">RELEASE_CHECKLIST.md</a> as the reusable review template, and require all GitHub Actions jobs to pass. The completed release-candidate checks and remaining external gates are documented in <a href="RELEASE_VALIDATION.html">RELEASE_VALIDATION.md</a>.</p>
+<p>Before publishing, follow <a href="https://github.com/JaeManP/pcatR/blob/main/PUBLISHING.md" class="external-link">PUBLISHING.md</a>, use <a href="https://github.com/JaeManP/pcatR/blob/main/RELEASE_CHECKLIST.md" class="external-link">RELEASE_CHECKLIST.md</a> as the reusable review template, and require all GitHub Actions jobs to pass. The completed release-candidate checks and remaining external gates are documented in <a href="https://github.com/JaeManP/pcatR/blob/main/RELEASE_VALIDATION.md" class="external-link">RELEASE_VALIDATION.md</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

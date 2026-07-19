@@ -170,11 +170,18 @@ boundaries.</p>
 <div class="section level2">
 <h2 id="denominators">Denominators<a class="anchor" aria-label="anchor" href="#denominators"></a>
 </h2>
-<p>Directional percentages use <code>n_valid_direction</code>.
-Five-category strength percentages use <code>n_complete_class</code>.
-These denominators may differ when an effect response is missing. Report
-both rather than silently treating missing effect responses as weak
-effects.</p>
+<p>Directional percentages use all eligible records with a valid
+direction and therefore use <code>n_valid_direction</code>. Complete
+five-category percentages use only eligible records with a complete
+direction-plus-effect classification and use
+<code>n_complete_class</code>. <code>pct_complete_class</code> is
+<code>n_complete_class</code> divided by <code>n_valid_direction</code>
+and describes the share of valid-direction records with a complete
+five-category classification. The directional <code>n_neutral</code>
+count can exceed <code>n_neutral_complete</code> when a neutral
+direction has an invalid effect value. Report both denominators rather
+than silently treating missing or invalid effects as complete
+classifications.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

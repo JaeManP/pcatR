@@ -58,18 +58,19 @@ pcat_action_plan(
 
 - suppress_below:
 
-  Optional positive minimum respondent count. Numerical summary measures
-  below it are replaced with missing values and `suppressed` is set to
-  `TRUE`.
+  Optional positive minimum respondent count. Numeric analytic measures
+  and the derived `modal_class` below it are replaced with missing
+  values and `suppressed` is set to `TRUE`.
 
 - agreement_threshold:
 
-  Minimum dominant-side share used for a consensus label.
+  One finite number from zero through one giving the minimum
+  dominant-side share used for a consensus label.
 
 - polarization_min:
 
-  Minimum barrier and facilitator shares required to label an item
-  polarized.
+  One finite number from zero through one giving the minimum barrier and
+  facilitator shares required to label an item polarized.
 
 - minimum_n:
 
@@ -89,11 +90,13 @@ pcat_action_plan(
 
 - barrier_threshold:
 
-  Minimum barrier prevalence for action-plan inclusion.
+  One finite number from zero through one giving the minimum barrier
+  prevalence for action-plan inclusion.
 
 - strong_barrier_threshold:
 
-  Minimum strong-barrier prevalence for action-plan inclusion.
+  One finite number from zero through one giving the minimum
+  strong-barrier prevalence for action-plan inclusion.
 
 - include_strategy_candidates:
 
@@ -108,16 +111,25 @@ pcat_action_plan(
 ## Details
 
 Directional percentages (`pct_barrier`, `pct_neutral`,
-`pct_facilitator`, and `pct_effect_missing`) use `n_valid_direction`.
-Five-category strength percentages use `n_complete_class`, because
-barrier and facilitator responses require a nonmissing effect to be
-fully classified. Report both denominators when they differ.
+`pct_facilitator`, `pct_effect_missing`, and `pct_complete_class`) use
+eligible records with a valid direction and denominator
+`n_valid_direction`. Complete five-category percentages use only
+eligible records with a complete direction-plus-effect classification
+and denominator `n_complete_class`. The directional `n_neutral` count
+can therefore exceed `n_neutral_complete` when a neutral direction has
+an invalid effect. All five complete-category counts are derived from
+`pcat_class5` and partition `n_complete_class`. Report both denominators
+when they differ. `pct_complete_class` is the proportion of
+valid-direction records with a complete five-category classification.
 
 Means, medians, and change values based on `pcat_display_code` are
 strictly descriptive. Candidate strategies require local stakeholder
-review and are not automatic prescriptions. Small-cell suppression
-applies only to the returned summary table and does not de-identify
-source or classified data.
+review and are not automatic prescriptions. Small-cell suppression hides
+numeric analytic measures and `modal_class`; it applies only to the
+returned summary table and does not de-identify source or classified
+data. When barrier or facilitator percentages are unavailable,
+`pcat_consensus()` reports `polarized = NA`; unavailable data are not
+treated as evidence that a cell is nonpolarized.
 
 ## Value
 
@@ -247,63 +259,63 @@ pcat_consensus(summary)
 #> 54               0             6                 6                6         0
 #> 55               0             6                 6                6         3
 #> 56               0             6                 6                6         3
-#>    n_neutral n_facilitator n_strong_barrier n_weak_barrier
-#> 1          0             6                0              0
-#> 2          0             6                0              0
-#> 3          4             1                1              0
-#> 4          1             5                0              0
-#> 5          1             5                0              0
-#> 6          6             0                0              0
-#> 7          1             0                5              0
-#> 8          1             0                5              0
-#> 9          1             0                5              0
-#> 10         0             0                6              0
-#> 11         6             0                0              0
-#> 12         0             6                0              0
-#> 13         5             1                0              0
-#> 14         4             1                1              0
-#> 15         1             5                0              0
-#> 16         0             6                0              0
-#> 17         5             1                0              0
-#> 18         1             5                0              0
-#> 19         1             5                0              0
-#> 20         5             0                1              0
-#> 21         4             0                2              0
-#> 22         3             1                2              0
-#> 23         3             1                2              0
-#> 24         5             0                1              0
-#> 25         5             0                0              1
-#> 26         1             5                0              0
-#> 27         2             4                0              0
-#> 28         2             4                0              0
-#> 29         1             5                0              0
-#> 30         1             5                0              0
-#> 31         0             0                1              5
-#> 32         0             6                0              0
-#> 33         1             5                0              0
-#> 34         4             1                1              0
-#> 35         0             0                6              0
-#> 36         0             0                6              0
-#> 37         1             0                5              0
-#> 38         1             0                5              0
-#> 39         4             1                0              1
-#> 40         1             5                0              0
-#> 41         0             0                6              0
-#> 42         0             0                6              0
-#> 43         1             5                0              0
-#> 44         1             5                0              0
-#> 45         0             0                1              5
-#> 46         0             6                0              0
-#> 47         0             6                0              0
-#> 48         5             1                0              0
-#> 49         5             0                1              0
-#> 50         3             0                3              0
-#> 51         3             0                3              0
-#> 52         4             0                2              0
-#> 53         5             1                0              0
-#> 54         1             5                0              0
-#> 55         2             1                3              0
-#> 56         3             0                3              0
+#>    n_neutral n_facilitator n_strong_barrier n_weak_barrier n_neutral_complete
+#> 1          0             6                0              0                  0
+#> 2          0             6                0              0                  0
+#> 3          4             1                1              0                  4
+#> 4          1             5                0              0                  1
+#> 5          1             5                0              0                  1
+#> 6          6             0                0              0                  6
+#> 7          1             0                5              0                  1
+#> 8          1             0                5              0                  1
+#> 9          1             0                5              0                  1
+#> 10         0             0                6              0                  0
+#> 11         6             0                0              0                  6
+#> 12         0             6                0              0                  0
+#> 13         5             1                0              0                  5
+#> 14         4             1                1              0                  4
+#> 15         1             5                0              0                  1
+#> 16         0             6                0              0                  0
+#> 17         5             1                0              0                  5
+#> 18         1             5                0              0                  1
+#> 19         1             5                0              0                  1
+#> 20         5             0                1              0                  5
+#> 21         4             0                2              0                  4
+#> 22         3             1                2              0                  3
+#> 23         3             1                2              0                  3
+#> 24         5             0                1              0                  5
+#> 25         5             0                0              1                  5
+#> 26         1             5                0              0                  1
+#> 27         2             4                0              0                  2
+#> 28         2             4                0              0                  2
+#> 29         1             5                0              0                  1
+#> 30         1             5                0              0                  1
+#> 31         0             0                1              5                  0
+#> 32         0             6                0              0                  0
+#> 33         1             5                0              0                  1
+#> 34         4             1                1              0                  4
+#> 35         0             0                6              0                  0
+#> 36         0             0                6              0                  0
+#> 37         1             0                5              0                  1
+#> 38         1             0                5              0                  1
+#> 39         4             1                0              1                  4
+#> 40         1             5                0              0                  1
+#> 41         0             0                6              0                  0
+#> 42         0             0                6              0                  0
+#> 43         1             5                0              0                  1
+#> 44         1             5                0              0                  1
+#> 45         0             0                1              5                  0
+#> 46         0             6                0              0                  0
+#> 47         0             6                0              0                  0
+#> 48         5             1                0              0                  5
+#> 49         5             0                1              0                  5
+#> 50         3             0                3              0                  3
+#> 51         3             0                3              0                  3
+#> 52         4             0                2              0                  4
+#> 53         5             1                0              0                  5
+#> 54         1             5                0              0                  1
+#> 55         2             1                3              0                  2
+#> 56         3             0                3              0                  3
 #>    n_barrier_effect_missing n_weak_facilitator n_strong_facilitator
 #> 1                         0                  5                    1
 #> 2                         0                  4                    2
@@ -475,177 +487,177 @@ pcat_consensus(summary)
 #> 54         1.6666667                   2   0.0000000   0.1666667
 #> 55        -0.6666667                  -1   0.5000000   0.3333333
 #> 56        -1.0000000                  -1   0.5000000   0.5000000
-#>    pct_facilitator pct_strong_barrier pct_weak_barrier pct_neutral_complete
-#> 1        1.0000000          0.0000000        0.0000000            0.0000000
-#> 2        1.0000000          0.0000000        0.0000000            0.0000000
-#> 3        0.1666667          0.1666667        0.0000000            0.6666667
-#> 4        0.8333333          0.0000000        0.0000000            0.1666667
-#> 5        0.8333333          0.0000000        0.0000000            0.1666667
-#> 6        0.0000000          0.0000000        0.0000000            1.0000000
-#> 7        0.0000000          0.8333333        0.0000000            0.1666667
-#> 8        0.0000000          0.8333333        0.0000000            0.1666667
-#> 9        0.0000000          0.8333333        0.0000000            0.1666667
-#> 10       0.0000000          1.0000000        0.0000000            0.0000000
-#> 11       0.0000000          0.0000000        0.0000000            1.0000000
-#> 12       1.0000000          0.0000000        0.0000000            0.0000000
-#> 13       0.1666667          0.0000000        0.0000000            0.8333333
-#> 14       0.1666667          0.1666667        0.0000000            0.6666667
-#> 15       0.8333333          0.0000000        0.0000000            0.1666667
-#> 16       1.0000000          0.0000000        0.0000000            0.0000000
-#> 17       0.1666667          0.0000000        0.0000000            0.8333333
-#> 18       0.8333333          0.0000000        0.0000000            0.1666667
-#> 19       0.8333333          0.0000000        0.0000000            0.1666667
-#> 20       0.0000000          0.1666667        0.0000000            0.8333333
-#> 21       0.0000000          0.3333333        0.0000000            0.6666667
-#> 22       0.1666667          0.3333333        0.0000000            0.5000000
-#> 23       0.1666667          0.3333333        0.0000000            0.5000000
-#> 24       0.0000000          0.1666667        0.0000000            0.8333333
-#> 25       0.0000000          0.0000000        0.1666667            0.8333333
-#> 26       0.8333333          0.0000000        0.0000000            0.1666667
-#> 27       0.6666667          0.0000000        0.0000000            0.3333333
-#> 28       0.6666667          0.0000000        0.0000000            0.3333333
-#> 29       0.8333333          0.0000000        0.0000000            0.1666667
-#> 30       0.8333333          0.0000000        0.0000000            0.1666667
-#> 31       0.0000000          0.1666667        0.8333333            0.0000000
-#> 32       1.0000000          0.0000000        0.0000000            0.0000000
-#> 33       0.8333333          0.0000000        0.0000000            0.1666667
-#> 34       0.1666667          0.1666667        0.0000000            0.6666667
-#> 35       0.0000000          1.0000000        0.0000000            0.0000000
-#> 36       0.0000000          1.0000000        0.0000000            0.0000000
-#> 37       0.0000000          0.8333333        0.0000000            0.1666667
-#> 38       0.0000000          0.8333333        0.0000000            0.1666667
-#> 39       0.1666667          0.0000000        0.1666667            0.6666667
-#> 40       0.8333333          0.0000000        0.0000000            0.1666667
-#> 41       0.0000000          1.0000000        0.0000000            0.0000000
-#> 42       0.0000000          1.0000000        0.0000000            0.0000000
-#> 43       0.8333333          0.0000000        0.0000000            0.1666667
-#> 44       0.8333333          0.0000000        0.0000000            0.1666667
-#> 45       0.0000000          0.1666667        0.8333333            0.0000000
-#> 46       1.0000000          0.0000000        0.0000000            0.0000000
-#> 47       1.0000000          0.0000000        0.0000000            0.0000000
-#> 48       0.1666667          0.0000000        0.0000000            0.8333333
-#> 49       0.0000000          0.1666667        0.0000000            0.8333333
-#> 50       0.0000000          0.5000000        0.0000000            0.5000000
-#> 51       0.0000000          0.5000000        0.0000000            0.5000000
-#> 52       0.0000000          0.3333333        0.0000000            0.6666667
-#> 53       0.1666667          0.0000000        0.0000000            0.8333333
-#> 54       0.8333333          0.0000000        0.0000000            0.1666667
-#> 55       0.1666667          0.5000000        0.0000000            0.3333333
-#> 56       0.0000000          0.5000000        0.0000000            0.5000000
-#>    pct_strong_facilitator pct_weak_facilitator pct_effect_missing modal_class_n
-#> 1               0.1666667            0.8333333                  0             5
-#> 2               0.3333333            0.6666667                  0             4
-#> 3               0.0000000            0.1666667                  0             4
-#> 4               0.1666667            0.6666667                  0             4
-#> 5               0.1666667            0.6666667                  0             4
-#> 6               0.0000000            0.0000000                  0             6
-#> 7               0.0000000            0.0000000                  0             5
-#> 8               0.0000000            0.0000000                  0             5
-#> 9               0.0000000            0.0000000                  0             5
-#> 10              0.0000000            0.0000000                  0             6
-#> 11              0.0000000            0.0000000                  0             6
-#> 12              1.0000000            0.0000000                  0             6
-#> 13              0.1666667            0.0000000                  0             5
-#> 14              0.1666667            0.0000000                  0             4
-#> 15              0.1666667            0.6666667                  0             4
-#> 16              0.3333333            0.6666667                  0             4
-#> 17              0.1666667            0.0000000                  0             5
-#> 18              0.1666667            0.6666667                  0             4
-#> 19              0.1666667            0.6666667                  0             4
-#> 20              0.0000000            0.0000000                  0             5
-#> 21              0.0000000            0.0000000                  0             4
-#> 22              0.1666667            0.0000000                  0             3
-#> 23              0.1666667            0.0000000                  0             3
-#> 24              0.0000000            0.0000000                  0             5
-#> 25              0.0000000            0.0000000                  0             5
-#> 26              0.8333333            0.0000000                  0             5
-#> 27              0.6666667            0.0000000                  0             4
-#> 28              0.6666667            0.0000000                  0             4
-#> 29              0.3333333            0.5000000                  0             3
-#> 30              0.1666667            0.6666667                  0             4
-#> 31              0.0000000            0.0000000                  0             5
-#> 32              0.3333333            0.6666667                  0             4
-#> 33              0.3333333            0.5000000                  0             3
-#> 34              0.0000000            0.1666667                  0             4
-#> 35              0.0000000            0.0000000                  0             6
-#> 36              0.0000000            0.0000000                  0             6
-#> 37              0.0000000            0.0000000                  0             5
-#> 38              0.0000000            0.0000000                  0             5
-#> 39              0.0000000            0.1666667                  0             4
-#> 40              0.8333333            0.0000000                  0             5
-#> 41              0.0000000            0.0000000                  0             6
-#> 42              0.0000000            0.0000000                  0             6
-#> 43              0.3333333            0.5000000                  0             3
-#> 44              0.0000000            0.8333333                  0             5
-#> 45              0.0000000            0.0000000                  0             5
-#> 46              0.3333333            0.6666667                  0             4
-#> 47              0.3333333            0.6666667                  0             4
-#> 48              0.1666667            0.0000000                  0             5
-#> 49              0.0000000            0.0000000                  0             5
-#> 50              0.0000000            0.0000000                  0            NA
-#> 51              0.0000000            0.0000000                  0            NA
-#> 52              0.0000000            0.0000000                  0             4
-#> 53              0.0000000            0.1666667                  0             5
-#> 54              0.8333333            0.0000000                  0             5
-#> 55              0.1666667            0.0000000                  0             3
-#> 56              0.0000000            0.0000000                  0            NA
-#>    modal_class_share             item_key
-#> 1          0.8333333        patient_needs
-#> 2          0.6666667       communications
-#> 3          0.6666667        data_tracking
-#> 4          0.6666667     leadership_goals
-#> 5          0.6666667     clinician_values
-#> 6          1.0000000   clinical_processes
-#> 7          0.8333333  structures_policies
-#> 8          0.8333333                space
-#> 9          0.8333333                 time
-#> 10         1.0000000      other_resources
-#> 11         1.0000000   tension_for_change
-#> 12         1.0000000   relative_advantage
-#> 13         0.8333333 higher_level_leaders
-#> 14         0.6666667      closest_leaders
-#> 15         0.6666667        patient_needs
-#> 16         0.6666667       communications
-#> 17         0.8333333        data_tracking
-#> 18         0.6666667     leadership_goals
-#> 19         0.6666667     clinician_values
-#> 20         0.8333333   clinical_processes
-#> 21         0.6666667  structures_policies
-#> 22         0.5000000                space
-#> 23         0.5000000                 time
-#> 24         0.8333333      other_resources
-#> 25         0.8333333   tension_for_change
-#> 26         0.8333333   relative_advantage
-#> 27         0.6666667 higher_level_leaders
-#> 28         0.6666667      closest_leaders
-#> 29         0.5000000        patient_needs
-#> 30         0.6666667       communications
-#> 31         0.8333333        data_tracking
-#> 32         0.6666667     leadership_goals
-#> 33         0.5000000     clinician_values
-#> 34         0.6666667   clinical_processes
-#> 35         1.0000000  structures_policies
-#> 36         1.0000000                space
-#> 37         0.8333333                 time
-#> 38         0.8333333      other_resources
-#> 39         0.6666667   tension_for_change
-#> 40         0.8333333   relative_advantage
-#> 41         1.0000000 higher_level_leaders
-#> 42         1.0000000      closest_leaders
-#> 43         0.5000000        patient_needs
-#> 44         0.8333333       communications
-#> 45         0.8333333        data_tracking
-#> 46         0.6666667     leadership_goals
-#> 47         0.6666667     clinician_values
-#> 48         0.8333333   clinical_processes
-#> 49         0.8333333  structures_policies
-#> 50                NA                space
-#> 51                NA                 time
-#> 52         0.6666667      other_resources
-#> 53         0.8333333   tension_for_change
-#> 54         0.8333333   relative_advantage
-#> 55         0.5000000 higher_level_leaders
-#> 56                NA      closest_leaders
+#>    pct_facilitator pct_complete_class pct_strong_barrier pct_weak_barrier
+#> 1        1.0000000                  1          0.0000000        0.0000000
+#> 2        1.0000000                  1          0.0000000        0.0000000
+#> 3        0.1666667                  1          0.1666667        0.0000000
+#> 4        0.8333333                  1          0.0000000        0.0000000
+#> 5        0.8333333                  1          0.0000000        0.0000000
+#> 6        0.0000000                  1          0.0000000        0.0000000
+#> 7        0.0000000                  1          0.8333333        0.0000000
+#> 8        0.0000000                  1          0.8333333        0.0000000
+#> 9        0.0000000                  1          0.8333333        0.0000000
+#> 10       0.0000000                  1          1.0000000        0.0000000
+#> 11       0.0000000                  1          0.0000000        0.0000000
+#> 12       1.0000000                  1          0.0000000        0.0000000
+#> 13       0.1666667                  1          0.0000000        0.0000000
+#> 14       0.1666667                  1          0.1666667        0.0000000
+#> 15       0.8333333                  1          0.0000000        0.0000000
+#> 16       1.0000000                  1          0.0000000        0.0000000
+#> 17       0.1666667                  1          0.0000000        0.0000000
+#> 18       0.8333333                  1          0.0000000        0.0000000
+#> 19       0.8333333                  1          0.0000000        0.0000000
+#> 20       0.0000000                  1          0.1666667        0.0000000
+#> 21       0.0000000                  1          0.3333333        0.0000000
+#> 22       0.1666667                  1          0.3333333        0.0000000
+#> 23       0.1666667                  1          0.3333333        0.0000000
+#> 24       0.0000000                  1          0.1666667        0.0000000
+#> 25       0.0000000                  1          0.0000000        0.1666667
+#> 26       0.8333333                  1          0.0000000        0.0000000
+#> 27       0.6666667                  1          0.0000000        0.0000000
+#> 28       0.6666667                  1          0.0000000        0.0000000
+#> 29       0.8333333                  1          0.0000000        0.0000000
+#> 30       0.8333333                  1          0.0000000        0.0000000
+#> 31       0.0000000                  1          0.1666667        0.8333333
+#> 32       1.0000000                  1          0.0000000        0.0000000
+#> 33       0.8333333                  1          0.0000000        0.0000000
+#> 34       0.1666667                  1          0.1666667        0.0000000
+#> 35       0.0000000                  1          1.0000000        0.0000000
+#> 36       0.0000000                  1          1.0000000        0.0000000
+#> 37       0.0000000                  1          0.8333333        0.0000000
+#> 38       0.0000000                  1          0.8333333        0.0000000
+#> 39       0.1666667                  1          0.0000000        0.1666667
+#> 40       0.8333333                  1          0.0000000        0.0000000
+#> 41       0.0000000                  1          1.0000000        0.0000000
+#> 42       0.0000000                  1          1.0000000        0.0000000
+#> 43       0.8333333                  1          0.0000000        0.0000000
+#> 44       0.8333333                  1          0.0000000        0.0000000
+#> 45       0.0000000                  1          0.1666667        0.8333333
+#> 46       1.0000000                  1          0.0000000        0.0000000
+#> 47       1.0000000                  1          0.0000000        0.0000000
+#> 48       0.1666667                  1          0.0000000        0.0000000
+#> 49       0.0000000                  1          0.1666667        0.0000000
+#> 50       0.0000000                  1          0.5000000        0.0000000
+#> 51       0.0000000                  1          0.5000000        0.0000000
+#> 52       0.0000000                  1          0.3333333        0.0000000
+#> 53       0.1666667                  1          0.0000000        0.0000000
+#> 54       0.8333333                  1          0.0000000        0.0000000
+#> 55       0.1666667                  1          0.5000000        0.0000000
+#> 56       0.0000000                  1          0.5000000        0.0000000
+#>    pct_neutral_complete pct_strong_facilitator pct_weak_facilitator
+#> 1             0.0000000              0.1666667            0.8333333
+#> 2             0.0000000              0.3333333            0.6666667
+#> 3             0.6666667              0.0000000            0.1666667
+#> 4             0.1666667              0.1666667            0.6666667
+#> 5             0.1666667              0.1666667            0.6666667
+#> 6             1.0000000              0.0000000            0.0000000
+#> 7             0.1666667              0.0000000            0.0000000
+#> 8             0.1666667              0.0000000            0.0000000
+#> 9             0.1666667              0.0000000            0.0000000
+#> 10            0.0000000              0.0000000            0.0000000
+#> 11            1.0000000              0.0000000            0.0000000
+#> 12            0.0000000              1.0000000            0.0000000
+#> 13            0.8333333              0.1666667            0.0000000
+#> 14            0.6666667              0.1666667            0.0000000
+#> 15            0.1666667              0.1666667            0.6666667
+#> 16            0.0000000              0.3333333            0.6666667
+#> 17            0.8333333              0.1666667            0.0000000
+#> 18            0.1666667              0.1666667            0.6666667
+#> 19            0.1666667              0.1666667            0.6666667
+#> 20            0.8333333              0.0000000            0.0000000
+#> 21            0.6666667              0.0000000            0.0000000
+#> 22            0.5000000              0.1666667            0.0000000
+#> 23            0.5000000              0.1666667            0.0000000
+#> 24            0.8333333              0.0000000            0.0000000
+#> 25            0.8333333              0.0000000            0.0000000
+#> 26            0.1666667              0.8333333            0.0000000
+#> 27            0.3333333              0.6666667            0.0000000
+#> 28            0.3333333              0.6666667            0.0000000
+#> 29            0.1666667              0.3333333            0.5000000
+#> 30            0.1666667              0.1666667            0.6666667
+#> 31            0.0000000              0.0000000            0.0000000
+#> 32            0.0000000              0.3333333            0.6666667
+#> 33            0.1666667              0.3333333            0.5000000
+#> 34            0.6666667              0.0000000            0.1666667
+#> 35            0.0000000              0.0000000            0.0000000
+#> 36            0.0000000              0.0000000            0.0000000
+#> 37            0.1666667              0.0000000            0.0000000
+#> 38            0.1666667              0.0000000            0.0000000
+#> 39            0.6666667              0.0000000            0.1666667
+#> 40            0.1666667              0.8333333            0.0000000
+#> 41            0.0000000              0.0000000            0.0000000
+#> 42            0.0000000              0.0000000            0.0000000
+#> 43            0.1666667              0.3333333            0.5000000
+#> 44            0.1666667              0.0000000            0.8333333
+#> 45            0.0000000              0.0000000            0.0000000
+#> 46            0.0000000              0.3333333            0.6666667
+#> 47            0.0000000              0.3333333            0.6666667
+#> 48            0.8333333              0.1666667            0.0000000
+#> 49            0.8333333              0.0000000            0.0000000
+#> 50            0.5000000              0.0000000            0.0000000
+#> 51            0.5000000              0.0000000            0.0000000
+#> 52            0.6666667              0.0000000            0.0000000
+#> 53            0.8333333              0.0000000            0.1666667
+#> 54            0.1666667              0.8333333            0.0000000
+#> 55            0.3333333              0.1666667            0.0000000
+#> 56            0.5000000              0.0000000            0.0000000
+#>    pct_effect_missing modal_class_n modal_class_share             item_key
+#> 1                   0             5         0.8333333        patient_needs
+#> 2                   0             4         0.6666667       communications
+#> 3                   0             4         0.6666667        data_tracking
+#> 4                   0             4         0.6666667     leadership_goals
+#> 5                   0             4         0.6666667     clinician_values
+#> 6                   0             6         1.0000000   clinical_processes
+#> 7                   0             5         0.8333333  structures_policies
+#> 8                   0             5         0.8333333                space
+#> 9                   0             5         0.8333333                 time
+#> 10                  0             6         1.0000000      other_resources
+#> 11                  0             6         1.0000000   tension_for_change
+#> 12                  0             6         1.0000000   relative_advantage
+#> 13                  0             5         0.8333333 higher_level_leaders
+#> 14                  0             4         0.6666667      closest_leaders
+#> 15                  0             4         0.6666667        patient_needs
+#> 16                  0             4         0.6666667       communications
+#> 17                  0             5         0.8333333        data_tracking
+#> 18                  0             4         0.6666667     leadership_goals
+#> 19                  0             4         0.6666667     clinician_values
+#> 20                  0             5         0.8333333   clinical_processes
+#> 21                  0             4         0.6666667  structures_policies
+#> 22                  0             3         0.5000000                space
+#> 23                  0             3         0.5000000                 time
+#> 24                  0             5         0.8333333      other_resources
+#> 25                  0             5         0.8333333   tension_for_change
+#> 26                  0             5         0.8333333   relative_advantage
+#> 27                  0             4         0.6666667 higher_level_leaders
+#> 28                  0             4         0.6666667      closest_leaders
+#> 29                  0             3         0.5000000        patient_needs
+#> 30                  0             4         0.6666667       communications
+#> 31                  0             5         0.8333333        data_tracking
+#> 32                  0             4         0.6666667     leadership_goals
+#> 33                  0             3         0.5000000     clinician_values
+#> 34                  0             4         0.6666667   clinical_processes
+#> 35                  0             6         1.0000000  structures_policies
+#> 36                  0             6         1.0000000                space
+#> 37                  0             5         0.8333333                 time
+#> 38                  0             5         0.8333333      other_resources
+#> 39                  0             4         0.6666667   tension_for_change
+#> 40                  0             5         0.8333333   relative_advantage
+#> 41                  0             6         1.0000000 higher_level_leaders
+#> 42                  0             6         1.0000000      closest_leaders
+#> 43                  0             3         0.5000000        patient_needs
+#> 44                  0             5         0.8333333       communications
+#> 45                  0             5         0.8333333        data_tracking
+#> 46                  0             4         0.6666667     leadership_goals
+#> 47                  0             4         0.6666667     clinician_values
+#> 48                  0             5         0.8333333   clinical_processes
+#> 49                  0             5         0.8333333  structures_policies
+#> 50                  0            NA                NA                space
+#> 51                  0            NA                NA                 time
+#> 52                  0             4         0.6666667      other_resources
+#> 53                  0             5         0.8333333   tension_for_change
+#> 54                  0             5         0.8333333   relative_advantage
+#> 55                  0             3         0.5000000 higher_level_leaders
+#> 56                  0            NA                NA      closest_leaders
 #>                                                                                                      item_text
 #> 1  People here regularly seek to understand the needs of patients and make changes to better meet those needs.
 #> 2                                  I have open lines of communication with everyone needed to make the change.
@@ -2542,258 +2554,321 @@ pcat_action_plan(
 #> 60                6         5         1             0                5
 #> 61                6         5         1             0                5
 #> 62                6         6         0             0                1
-#>    n_weak_barrier n_barrier_effect_missing n_weak_facilitator
-#> 1               0                        0                  0
-#> 2               0                        0                  0
-#> 3               0                        0                  0
-#> 4               0                        0                  0
-#> 5               0                        0                  0
-#> 6               0                        0                  0
-#> 7               0                        0                  0
-#> 8               0                        0                  0
-#> 9               0                        0                  0
-#> 10              0                        0                  0
-#> 11              0                        0                  0
-#> 12              0                        0                  0
-#> 13              0                        0                  0
-#> 14              0                        0                  0
-#> 15              0                        0                  0
-#> 16              0                        0                  0
-#> 17              0                        0                  0
-#> 18              0                        0                  0
-#> 19              0                        0                  0
-#> 20              0                        0                  0
-#> 21              0                        0                  0
-#> 22              0                        0                  0
-#> 23              0                        0                  0
-#> 24              0                        0                  0
-#> 25              0                        0                  0
-#> 26              0                        0                  0
-#> 27              0                        0                  0
-#> 28              0                        0                  0
-#> 29              0                        0                  0
-#> 30              0                        0                  0
-#> 31              0                        0                  0
-#> 32              0                        0                  0
-#> 33              0                        0                  0
-#> 34              0                        0                  0
-#> 35              0                        0                  0
-#> 36              0                        0                  0
-#> 37              0                        0                  0
-#> 38              0                        0                  0
-#> 39              5                        0                  0
-#> 40              0                        0                  0
-#> 41              0                        0                  0
-#> 42              0                        0                  0
-#> 43              0                        0                  0
-#> 44              0                        0                  0
-#> 45              0                        0                  0
-#> 46              0                        0                  0
-#> 47              0                        0                  0
-#> 48              0                        0                  0
-#> 49              0                        0                  0
-#> 50              0                        0                  0
-#> 51              0                        0                  0
-#> 52              0                        0                  0
-#> 53              0                        0                  0
-#> 54              0                        0                  0
-#> 55              0                        0                  0
-#> 56              0                        0                  0
-#> 57              0                        0                  0
-#> 58              0                        0                  0
-#> 59              0                        0                  0
-#> 60              0                        0                  0
-#> 61              0                        0                  0
-#> 62              5                        0                  0
-#>    n_strong_facilitator n_facilitator_effect_missing n_invalid_or_missing
-#> 1                     0                            0                    0
-#> 2                     1                            0                    0
-#> 3                     1                            0                    0
-#> 4                     1                            0                    0
-#> 5                     1                            0                    0
-#> 6                     1                            0                    0
-#> 7                     1                            0                    0
-#> 8                     0                            0                    0
-#> 9                     0                            0                    0
-#> 10                    0                            0                    0
-#> 11                    0                            0                    0
-#> 12                    0                            0                    0
-#> 13                    0                            0                    0
-#> 14                    0                            0                    0
-#> 15                    0                            0                    0
-#> 16                    0                            0                    0
-#> 17                    0                            0                    0
-#> 18                    0                            0                    0
-#> 19                    0                            0                    0
-#> 20                    0                            0                    0
-#> 21                    0                            0                    0
-#> 22                    0                            0                    0
-#> 23                    0                            0                    0
-#> 24                    1                            0                    0
-#> 25                    1                            0                    0
-#> 26                    1                            0                    0
-#> 27                    1                            0                    0
-#> 28                    1                            0                    0
-#> 29                    1                            0                    0
-#> 30                    0                            0                    0
-#> 31                    0                            0                    0
-#> 32                    0                            0                    0
-#> 33                    0                            0                    0
-#> 34                    0                            0                    0
-#> 35                    0                            0                    0
-#> 36                    0                            0                    0
-#> 37                    0                            0                    0
-#> 38                    0                            0                    0
-#> 39                    0                            0                    0
-#> 40                    0                            0                    0
-#> 41                    0                            0                    0
-#> 42                    0                            0                    0
-#> 43                    0                            0                    0
-#> 44                    0                            0                    0
-#> 45                    0                            0                    0
-#> 46                    0                            0                    0
-#> 47                    0                            0                    0
-#> 48                    0                            0                    0
-#> 49                    0                            0                    0
-#> 50                    0                            0                    0
-#> 51                    0                            0                    0
-#> 52                    0                            0                    0
-#> 53                    0                            0                    0
-#> 54                    0                            0                    0
-#> 55                    0                            0                    0
-#> 56                    0                            0                    0
-#> 57                    0                            0                    0
-#> 58                    0                            0                    0
-#> 59                    0                            0                    0
-#> 60                    0                            0                    0
-#> 61                    0                            0                    0
-#> 62                    0                            0                    0
-#>       modal_class mean_display_code median_display_code pct_barrier pct_neutral
-#> 1         neutral        -0.6666667                   0   0.3333333   0.6666667
-#> 2         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 3         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 4         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 5         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 6         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 7         neutral        -0.3333333                   0   0.3333333   0.5000000
-#> 8  strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 9  strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 10 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 11 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 12 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 13 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 14 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 15 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 16 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 17 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 18            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 19            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 20            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 21            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 22            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 23            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 24 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 25 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 26 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 27 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 28 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 29 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333
-#> 30            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 31            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 32            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 33            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 34            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 35            tie        -1.0000000                  -1   0.5000000   0.5000000
-#> 36        neutral        -0.6666667                   0   0.3333333   0.6666667
-#> 37        neutral        -0.6666667                   0   0.3333333   0.6666667
-#> 38        neutral        -0.6666667                   0   0.3333333   0.6666667
-#> 39   weak_barrier        -1.1666667                  -1   1.0000000   0.0000000
-#> 40 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 41 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 42 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 43 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 44 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 45 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 46 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 47 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 48 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 49 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 50 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 51 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 52 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 53 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 54 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 55 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000
-#> 56 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 57 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 58 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 59 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 60 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 61 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667
-#> 62   weak_barrier        -1.1666667                  -1   1.0000000   0.0000000
-#>    pct_facilitator pct_strong_barrier pct_weak_barrier pct_neutral_complete
-#> 1        0.0000000          0.3333333        0.0000000            0.6666667
-#> 2        0.1666667          0.3333333        0.0000000            0.5000000
-#> 3        0.1666667          0.3333333        0.0000000            0.5000000
-#> 4        0.1666667          0.3333333        0.0000000            0.5000000
-#> 5        0.1666667          0.3333333        0.0000000            0.5000000
-#> 6        0.1666667          0.3333333        0.0000000            0.5000000
-#> 7        0.1666667          0.3333333        0.0000000            0.5000000
-#> 8        0.0000000          1.0000000        0.0000000            0.0000000
-#> 9        0.0000000          1.0000000        0.0000000            0.0000000
-#> 10       0.0000000          1.0000000        0.0000000            0.0000000
-#> 11       0.0000000          0.8333333        0.0000000            0.1666667
-#> 12       0.0000000          0.8333333        0.0000000            0.1666667
-#> 13       0.0000000          0.8333333        0.0000000            0.1666667
-#> 14       0.0000000          0.8333333        0.0000000            0.1666667
-#> 15       0.0000000          0.8333333        0.0000000            0.1666667
-#> 16       0.0000000          0.8333333        0.0000000            0.1666667
-#> 17       0.0000000          0.8333333        0.0000000            0.1666667
-#> 18       0.0000000          0.5000000        0.0000000            0.5000000
-#> 19       0.0000000          0.5000000        0.0000000            0.5000000
-#> 20       0.0000000          0.5000000        0.0000000            0.5000000
-#> 21       0.0000000          0.5000000        0.0000000            0.5000000
-#> 22       0.0000000          0.5000000        0.0000000            0.5000000
-#> 23       0.0000000          0.5000000        0.0000000            0.5000000
-#> 24       0.1666667          0.5000000        0.0000000            0.3333333
-#> 25       0.1666667          0.5000000        0.0000000            0.3333333
-#> 26       0.1666667          0.5000000        0.0000000            0.3333333
-#> 27       0.1666667          0.5000000        0.0000000            0.3333333
-#> 28       0.1666667          0.5000000        0.0000000            0.3333333
-#> 29       0.1666667          0.5000000        0.0000000            0.3333333
-#> 30       0.0000000          0.5000000        0.0000000            0.5000000
-#> 31       0.0000000          0.5000000        0.0000000            0.5000000
-#> 32       0.0000000          0.5000000        0.0000000            0.5000000
-#> 33       0.0000000          0.5000000        0.0000000            0.5000000
-#> 34       0.0000000          0.5000000        0.0000000            0.5000000
-#> 35       0.0000000          0.5000000        0.0000000            0.5000000
-#> 36       0.0000000          0.3333333        0.0000000            0.6666667
-#> 37       0.0000000          0.3333333        0.0000000            0.6666667
-#> 38       0.0000000          0.3333333        0.0000000            0.6666667
-#> 39       0.0000000          0.1666667        0.8333333            0.0000000
-#> 40       0.0000000          1.0000000        0.0000000            0.0000000
-#> 41       0.0000000          1.0000000        0.0000000            0.0000000
-#> 42       0.0000000          1.0000000        0.0000000            0.0000000
-#> 43       0.0000000          1.0000000        0.0000000            0.0000000
-#> 44       0.0000000          1.0000000        0.0000000            0.0000000
-#> 45       0.0000000          1.0000000        0.0000000            0.0000000
-#> 46       0.0000000          1.0000000        0.0000000            0.0000000
-#> 47       0.0000000          1.0000000        0.0000000            0.0000000
-#> 48       0.0000000          1.0000000        0.0000000            0.0000000
-#> 49       0.0000000          1.0000000        0.0000000            0.0000000
-#> 50       0.0000000          1.0000000        0.0000000            0.0000000
-#> 51       0.0000000          1.0000000        0.0000000            0.0000000
-#> 52       0.0000000          1.0000000        0.0000000            0.0000000
-#> 53       0.0000000          1.0000000        0.0000000            0.0000000
-#> 54       0.0000000          1.0000000        0.0000000            0.0000000
-#> 55       0.0000000          1.0000000        0.0000000            0.0000000
-#> 56       0.0000000          0.8333333        0.0000000            0.1666667
-#> 57       0.0000000          0.8333333        0.0000000            0.1666667
-#> 58       0.0000000          0.8333333        0.0000000            0.1666667
-#> 59       0.0000000          0.8333333        0.0000000            0.1666667
-#> 60       0.0000000          0.8333333        0.0000000            0.1666667
-#> 61       0.0000000          0.8333333        0.0000000            0.1666667
-#> 62       0.0000000          0.1666667        0.8333333            0.0000000
+#>    n_weak_barrier n_neutral_complete n_barrier_effect_missing
+#> 1               0                  4                        0
+#> 2               0                  3                        0
+#> 3               0                  3                        0
+#> 4               0                  3                        0
+#> 5               0                  3                        0
+#> 6               0                  3                        0
+#> 7               0                  3                        0
+#> 8               0                  0                        0
+#> 9               0                  0                        0
+#> 10              0                  0                        0
+#> 11              0                  1                        0
+#> 12              0                  1                        0
+#> 13              0                  1                        0
+#> 14              0                  1                        0
+#> 15              0                  1                        0
+#> 16              0                  1                        0
+#> 17              0                  1                        0
+#> 18              0                  3                        0
+#> 19              0                  3                        0
+#> 20              0                  3                        0
+#> 21              0                  3                        0
+#> 22              0                  3                        0
+#> 23              0                  3                        0
+#> 24              0                  2                        0
+#> 25              0                  2                        0
+#> 26              0                  2                        0
+#> 27              0                  2                        0
+#> 28              0                  2                        0
+#> 29              0                  2                        0
+#> 30              0                  3                        0
+#> 31              0                  3                        0
+#> 32              0                  3                        0
+#> 33              0                  3                        0
+#> 34              0                  3                        0
+#> 35              0                  3                        0
+#> 36              0                  4                        0
+#> 37              0                  4                        0
+#> 38              0                  4                        0
+#> 39              5                  0                        0
+#> 40              0                  0                        0
+#> 41              0                  0                        0
+#> 42              0                  0                        0
+#> 43              0                  0                        0
+#> 44              0                  0                        0
+#> 45              0                  0                        0
+#> 46              0                  0                        0
+#> 47              0                  0                        0
+#> 48              0                  0                        0
+#> 49              0                  0                        0
+#> 50              0                  0                        0
+#> 51              0                  0                        0
+#> 52              0                  0                        0
+#> 53              0                  0                        0
+#> 54              0                  0                        0
+#> 55              0                  0                        0
+#> 56              0                  1                        0
+#> 57              0                  1                        0
+#> 58              0                  1                        0
+#> 59              0                  1                        0
+#> 60              0                  1                        0
+#> 61              0                  1                        0
+#> 62              5                  0                        0
+#>    n_weak_facilitator n_strong_facilitator n_facilitator_effect_missing
+#> 1                   0                    0                            0
+#> 2                   0                    1                            0
+#> 3                   0                    1                            0
+#> 4                   0                    1                            0
+#> 5                   0                    1                            0
+#> 6                   0                    1                            0
+#> 7                   0                    1                            0
+#> 8                   0                    0                            0
+#> 9                   0                    0                            0
+#> 10                  0                    0                            0
+#> 11                  0                    0                            0
+#> 12                  0                    0                            0
+#> 13                  0                    0                            0
+#> 14                  0                    0                            0
+#> 15                  0                    0                            0
+#> 16                  0                    0                            0
+#> 17                  0                    0                            0
+#> 18                  0                    0                            0
+#> 19                  0                    0                            0
+#> 20                  0                    0                            0
+#> 21                  0                    0                            0
+#> 22                  0                    0                            0
+#> 23                  0                    0                            0
+#> 24                  0                    1                            0
+#> 25                  0                    1                            0
+#> 26                  0                    1                            0
+#> 27                  0                    1                            0
+#> 28                  0                    1                            0
+#> 29                  0                    1                            0
+#> 30                  0                    0                            0
+#> 31                  0                    0                            0
+#> 32                  0                    0                            0
+#> 33                  0                    0                            0
+#> 34                  0                    0                            0
+#> 35                  0                    0                            0
+#> 36                  0                    0                            0
+#> 37                  0                    0                            0
+#> 38                  0                    0                            0
+#> 39                  0                    0                            0
+#> 40                  0                    0                            0
+#> 41                  0                    0                            0
+#> 42                  0                    0                            0
+#> 43                  0                    0                            0
+#> 44                  0                    0                            0
+#> 45                  0                    0                            0
+#> 46                  0                    0                            0
+#> 47                  0                    0                            0
+#> 48                  0                    0                            0
+#> 49                  0                    0                            0
+#> 50                  0                    0                            0
+#> 51                  0                    0                            0
+#> 52                  0                    0                            0
+#> 53                  0                    0                            0
+#> 54                  0                    0                            0
+#> 55                  0                    0                            0
+#> 56                  0                    0                            0
+#> 57                  0                    0                            0
+#> 58                  0                    0                            0
+#> 59                  0                    0                            0
+#> 60                  0                    0                            0
+#> 61                  0                    0                            0
+#> 62                  0                    0                            0
+#>    n_invalid_or_missing    modal_class mean_display_code median_display_code
+#> 1                     0        neutral        -0.6666667                   0
+#> 2                     0        neutral        -0.3333333                   0
+#> 3                     0        neutral        -0.3333333                   0
+#> 4                     0        neutral        -0.3333333                   0
+#> 5                     0        neutral        -0.3333333                   0
+#> 6                     0        neutral        -0.3333333                   0
+#> 7                     0        neutral        -0.3333333                   0
+#> 8                     0 strong_barrier        -2.0000000                  -2
+#> 9                     0 strong_barrier        -2.0000000                  -2
+#> 10                    0 strong_barrier        -2.0000000                  -2
+#> 11                    0 strong_barrier        -1.6666667                  -2
+#> 12                    0 strong_barrier        -1.6666667                  -2
+#> 13                    0 strong_barrier        -1.6666667                  -2
+#> 14                    0 strong_barrier        -1.6666667                  -2
+#> 15                    0 strong_barrier        -1.6666667                  -2
+#> 16                    0 strong_barrier        -1.6666667                  -2
+#> 17                    0 strong_barrier        -1.6666667                  -2
+#> 18                    0            tie        -1.0000000                  -1
+#> 19                    0            tie        -1.0000000                  -1
+#> 20                    0            tie        -1.0000000                  -1
+#> 21                    0            tie        -1.0000000                  -1
+#> 22                    0            tie        -1.0000000                  -1
+#> 23                    0            tie        -1.0000000                  -1
+#> 24                    0 strong_barrier        -0.6666667                  -1
+#> 25                    0 strong_barrier        -0.6666667                  -1
+#> 26                    0 strong_barrier        -0.6666667                  -1
+#> 27                    0 strong_barrier        -0.6666667                  -1
+#> 28                    0 strong_barrier        -0.6666667                  -1
+#> 29                    0 strong_barrier        -0.6666667                  -1
+#> 30                    0            tie        -1.0000000                  -1
+#> 31                    0            tie        -1.0000000                  -1
+#> 32                    0            tie        -1.0000000                  -1
+#> 33                    0            tie        -1.0000000                  -1
+#> 34                    0            tie        -1.0000000                  -1
+#> 35                    0            tie        -1.0000000                  -1
+#> 36                    0        neutral        -0.6666667                   0
+#> 37                    0        neutral        -0.6666667                   0
+#> 38                    0        neutral        -0.6666667                   0
+#> 39                    0   weak_barrier        -1.1666667                  -1
+#> 40                    0 strong_barrier        -2.0000000                  -2
+#> 41                    0 strong_barrier        -2.0000000                  -2
+#> 42                    0 strong_barrier        -2.0000000                  -2
+#> 43                    0 strong_barrier        -2.0000000                  -2
+#> 44                    0 strong_barrier        -2.0000000                  -2
+#> 45                    0 strong_barrier        -2.0000000                  -2
+#> 46                    0 strong_barrier        -2.0000000                  -2
+#> 47                    0 strong_barrier        -2.0000000                  -2
+#> 48                    0 strong_barrier        -2.0000000                  -2
+#> 49                    0 strong_barrier        -2.0000000                  -2
+#> 50                    0 strong_barrier        -2.0000000                  -2
+#> 51                    0 strong_barrier        -2.0000000                  -2
+#> 52                    0 strong_barrier        -2.0000000                  -2
+#> 53                    0 strong_barrier        -2.0000000                  -2
+#> 54                    0 strong_barrier        -2.0000000                  -2
+#> 55                    0 strong_barrier        -2.0000000                  -2
+#> 56                    0 strong_barrier        -1.6666667                  -2
+#> 57                    0 strong_barrier        -1.6666667                  -2
+#> 58                    0 strong_barrier        -1.6666667                  -2
+#> 59                    0 strong_barrier        -1.6666667                  -2
+#> 60                    0 strong_barrier        -1.6666667                  -2
+#> 61                    0 strong_barrier        -1.6666667                  -2
+#> 62                    0   weak_barrier        -1.1666667                  -1
+#>    pct_barrier pct_neutral pct_facilitator pct_complete_class
+#> 1    0.3333333   0.6666667       0.0000000                  1
+#> 2    0.3333333   0.5000000       0.1666667                  1
+#> 3    0.3333333   0.5000000       0.1666667                  1
+#> 4    0.3333333   0.5000000       0.1666667                  1
+#> 5    0.3333333   0.5000000       0.1666667                  1
+#> 6    0.3333333   0.5000000       0.1666667                  1
+#> 7    0.3333333   0.5000000       0.1666667                  1
+#> 8    1.0000000   0.0000000       0.0000000                  1
+#> 9    1.0000000   0.0000000       0.0000000                  1
+#> 10   1.0000000   0.0000000       0.0000000                  1
+#> 11   0.8333333   0.1666667       0.0000000                  1
+#> 12   0.8333333   0.1666667       0.0000000                  1
+#> 13   0.8333333   0.1666667       0.0000000                  1
+#> 14   0.8333333   0.1666667       0.0000000                  1
+#> 15   0.8333333   0.1666667       0.0000000                  1
+#> 16   0.8333333   0.1666667       0.0000000                  1
+#> 17   0.8333333   0.1666667       0.0000000                  1
+#> 18   0.5000000   0.5000000       0.0000000                  1
+#> 19   0.5000000   0.5000000       0.0000000                  1
+#> 20   0.5000000   0.5000000       0.0000000                  1
+#> 21   0.5000000   0.5000000       0.0000000                  1
+#> 22   0.5000000   0.5000000       0.0000000                  1
+#> 23   0.5000000   0.5000000       0.0000000                  1
+#> 24   0.5000000   0.3333333       0.1666667                  1
+#> 25   0.5000000   0.3333333       0.1666667                  1
+#> 26   0.5000000   0.3333333       0.1666667                  1
+#> 27   0.5000000   0.3333333       0.1666667                  1
+#> 28   0.5000000   0.3333333       0.1666667                  1
+#> 29   0.5000000   0.3333333       0.1666667                  1
+#> 30   0.5000000   0.5000000       0.0000000                  1
+#> 31   0.5000000   0.5000000       0.0000000                  1
+#> 32   0.5000000   0.5000000       0.0000000                  1
+#> 33   0.5000000   0.5000000       0.0000000                  1
+#> 34   0.5000000   0.5000000       0.0000000                  1
+#> 35   0.5000000   0.5000000       0.0000000                  1
+#> 36   0.3333333   0.6666667       0.0000000                  1
+#> 37   0.3333333   0.6666667       0.0000000                  1
+#> 38   0.3333333   0.6666667       0.0000000                  1
+#> 39   1.0000000   0.0000000       0.0000000                  1
+#> 40   1.0000000   0.0000000       0.0000000                  1
+#> 41   1.0000000   0.0000000       0.0000000                  1
+#> 42   1.0000000   0.0000000       0.0000000                  1
+#> 43   1.0000000   0.0000000       0.0000000                  1
+#> 44   1.0000000   0.0000000       0.0000000                  1
+#> 45   1.0000000   0.0000000       0.0000000                  1
+#> 46   1.0000000   0.0000000       0.0000000                  1
+#> 47   1.0000000   0.0000000       0.0000000                  1
+#> 48   1.0000000   0.0000000       0.0000000                  1
+#> 49   1.0000000   0.0000000       0.0000000                  1
+#> 50   1.0000000   0.0000000       0.0000000                  1
+#> 51   1.0000000   0.0000000       0.0000000                  1
+#> 52   1.0000000   0.0000000       0.0000000                  1
+#> 53   1.0000000   0.0000000       0.0000000                  1
+#> 54   1.0000000   0.0000000       0.0000000                  1
+#> 55   1.0000000   0.0000000       0.0000000                  1
+#> 56   0.8333333   0.1666667       0.0000000                  1
+#> 57   0.8333333   0.1666667       0.0000000                  1
+#> 58   0.8333333   0.1666667       0.0000000                  1
+#> 59   0.8333333   0.1666667       0.0000000                  1
+#> 60   0.8333333   0.1666667       0.0000000                  1
+#> 61   0.8333333   0.1666667       0.0000000                  1
+#> 62   1.0000000   0.0000000       0.0000000                  1
+#>    pct_strong_barrier pct_weak_barrier pct_neutral_complete
+#> 1           0.3333333        0.0000000            0.6666667
+#> 2           0.3333333        0.0000000            0.5000000
+#> 3           0.3333333        0.0000000            0.5000000
+#> 4           0.3333333        0.0000000            0.5000000
+#> 5           0.3333333        0.0000000            0.5000000
+#> 6           0.3333333        0.0000000            0.5000000
+#> 7           0.3333333        0.0000000            0.5000000
+#> 8           1.0000000        0.0000000            0.0000000
+#> 9           1.0000000        0.0000000            0.0000000
+#> 10          1.0000000        0.0000000            0.0000000
+#> 11          0.8333333        0.0000000            0.1666667
+#> 12          0.8333333        0.0000000            0.1666667
+#> 13          0.8333333        0.0000000            0.1666667
+#> 14          0.8333333        0.0000000            0.1666667
+#> 15          0.8333333        0.0000000            0.1666667
+#> 16          0.8333333        0.0000000            0.1666667
+#> 17          0.8333333        0.0000000            0.1666667
+#> 18          0.5000000        0.0000000            0.5000000
+#> 19          0.5000000        0.0000000            0.5000000
+#> 20          0.5000000        0.0000000            0.5000000
+#> 21          0.5000000        0.0000000            0.5000000
+#> 22          0.5000000        0.0000000            0.5000000
+#> 23          0.5000000        0.0000000            0.5000000
+#> 24          0.5000000        0.0000000            0.3333333
+#> 25          0.5000000        0.0000000            0.3333333
+#> 26          0.5000000        0.0000000            0.3333333
+#> 27          0.5000000        0.0000000            0.3333333
+#> 28          0.5000000        0.0000000            0.3333333
+#> 29          0.5000000        0.0000000            0.3333333
+#> 30          0.5000000        0.0000000            0.5000000
+#> 31          0.5000000        0.0000000            0.5000000
+#> 32          0.5000000        0.0000000            0.5000000
+#> 33          0.5000000        0.0000000            0.5000000
+#> 34          0.5000000        0.0000000            0.5000000
+#> 35          0.5000000        0.0000000            0.5000000
+#> 36          0.3333333        0.0000000            0.6666667
+#> 37          0.3333333        0.0000000            0.6666667
+#> 38          0.3333333        0.0000000            0.6666667
+#> 39          0.1666667        0.8333333            0.0000000
+#> 40          1.0000000        0.0000000            0.0000000
+#> 41          1.0000000        0.0000000            0.0000000
+#> 42          1.0000000        0.0000000            0.0000000
+#> 43          1.0000000        0.0000000            0.0000000
+#> 44          1.0000000        0.0000000            0.0000000
+#> 45          1.0000000        0.0000000            0.0000000
+#> 46          1.0000000        0.0000000            0.0000000
+#> 47          1.0000000        0.0000000            0.0000000
+#> 48          1.0000000        0.0000000            0.0000000
+#> 49          1.0000000        0.0000000            0.0000000
+#> 50          1.0000000        0.0000000            0.0000000
+#> 51          1.0000000        0.0000000            0.0000000
+#> 52          1.0000000        0.0000000            0.0000000
+#> 53          1.0000000        0.0000000            0.0000000
+#> 54          1.0000000        0.0000000            0.0000000
+#> 55          1.0000000        0.0000000            0.0000000
+#> 56          0.8333333        0.0000000            0.1666667
+#> 57          0.8333333        0.0000000            0.1666667
+#> 58          0.8333333        0.0000000            0.1666667
+#> 59          0.8333333        0.0000000            0.1666667
+#> 60          0.8333333        0.0000000            0.1666667
+#> 61          0.8333333        0.0000000            0.1666667
+#> 62          0.1666667        0.8333333            0.0000000
 #>    pct_strong_facilitator pct_weak_facilitator pct_effect_missing modal_class_n
 #> 1               0.0000000                    0                  0             4
 #> 2               0.1666667                    0                  0             3

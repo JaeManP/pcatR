@@ -97,17 +97,17 @@ and timepoint.</p></dd>
 <dd><p>Respondent identifier column name.</p></dd>
 
 <dt id="arg-suppress-below">suppress_below<a class="anchor" aria-label="anchor" href="#arg-suppress-below"></a></dt>
-<dd><p>Optional positive minimum respondent count. Numerical
-summary measures below it are replaced with missing values and
-<code>suppressed</code> is set to <code>TRUE</code>.</p></dd>
+<dd><p>Optional positive minimum respondent count. Numeric
+analytic measures and the derived <code>modal_class</code> below it are replaced
+with missing values and <code>suppressed</code> is set to <code>TRUE</code>.</p></dd>
 
 <dt id="arg-agreement-threshold">agreement_threshold<a class="anchor" aria-label="anchor" href="#arg-agreement-threshold"></a></dt>
-<dd><p>Minimum dominant-side share used for a consensus
-label.</p></dd>
+<dd><p>One finite number from zero through one giving the
+minimum dominant-side share used for a consensus label.</p></dd>
 
 <dt id="arg-polarization-min">polarization_min<a class="anchor" aria-label="anchor" href="#arg-polarization-min"></a></dt>
-<dd><p>Minimum barrier and facilitator shares required to
-label an item polarized.</p></dd>
+<dd><p>One finite number from zero through one giving the
+minimum barrier and facilitator shares required to label an item polarized.</p></dd>
 
 <dt id="arg-minimum-n">minimum_n<a class="anchor" aria-label="anchor" href="#arg-minimum-n"></a></dt>
 <dd><p>Minimum number of valid direction responses.</p></dd>
@@ -122,11 +122,12 @@ label an item polarized.</p></dd>
 <dd><p>Columns identifying paired respondent-item records.</p></dd>
 
 <dt id="arg-barrier-threshold">barrier_threshold<a class="anchor" aria-label="anchor" href="#arg-barrier-threshold"></a></dt>
-<dd><p>Minimum barrier prevalence for action-plan inclusion.</p></dd>
+<dd><p>One finite number from zero through one giving the
+minimum barrier prevalence for action-plan inclusion.</p></dd>
 
 <dt id="arg-strong-barrier-threshold">strong_barrier_threshold<a class="anchor" aria-label="anchor" href="#arg-strong-barrier-threshold"></a></dt>
-<dd><p>Minimum strong-barrier prevalence for
-action-plan inclusion.</p></dd>
+<dd><p>One finite number from zero through one giving
+the minimum strong-barrier prevalence for action-plan inclusion.</p></dd>
 
 <dt id="arg-include-strategy-candidates">include_strategy_candidates<a class="anchor" aria-label="anchor" href="#arg-include-strategy-candidates"></a></dt>
 <dd><p>Logical; join source-derived candidate ERIC
@@ -140,15 +141,25 @@ to Relative Advantage approximation.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Directional percentages (<code>pct_barrier</code>, <code>pct_neutral</code>,
-<code>pct_facilitator</code>, and <code>pct_effect_missing</code>) use
-<code>n_valid_direction</code>. Five-category strength percentages use
-<code>n_complete_class</code>, because barrier and facilitator responses require a
-nonmissing effect to be fully classified. Report both denominators when they
-differ.</p>
+<code>pct_facilitator</code>, <code>pct_effect_missing</code>, and
+<code>pct_complete_class</code>) use eligible records
+with a valid direction and denominator <code>n_valid_direction</code>. Complete
+five-category percentages use only eligible records with a complete
+direction-plus-effect classification and denominator <code>n_complete_class</code>.
+The directional <code>n_neutral</code> count can therefore exceed
+<code>n_neutral_complete</code> when a neutral direction has an invalid effect.
+All five complete-category counts are derived from <code>pcat_class5</code> and
+partition <code>n_complete_class</code>. Report both denominators when they differ.
+<code>pct_complete_class</code> is the proportion of valid-direction records with a
+complete five-category classification.</p>
 <p>Means, medians, and change values based on <code>pcat_display_code</code> are
 strictly descriptive. Candidate strategies require local stakeholder review
-and are not automatic prescriptions. Small-cell suppression applies only to the
-returned summary table and does not de-identify source or classified data.</p>
+and are not automatic prescriptions. Small-cell suppression hides numeric
+analytic measures and <code>modal_class</code>; it applies only to the returned
+summary table and does not de-identify source or classified data.
+When barrier or facilitator percentages are unavailable,
+<code>pcat_consensus()</code> reports <code>polarized = NA</code>; unavailable data are not
+treated as evidence that a cell is nonpolarized.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -278,63 +289,63 @@ attributes where applicable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 54               0             6                 6                6         0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 55               0             6                 6                6         3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 56               0             6                 6                6         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    n_neutral n_facilitator n_strong_barrier n_weak_barrier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          4             1                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          6             0                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          1             0                5              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          1             0                5              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          1             0                5              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         0             0                6              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11         6             0                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12         0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13         5             1                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14         4             1                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17         5             1                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20         5             0                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21         4             0                2              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22         3             1                2              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23         3             1                2              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24         5             0                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25         5             0                0              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27         2             4                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28         2             4                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31         0             0                1              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32         0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34         4             1                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35         0             0                6              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36         0             0                6              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37         1             0                5              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38         1             0                5              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39         4             1                0              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41         0             0                6              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42         0             0                6              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45         0             0                1              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46         0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47         0             6                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48         5             1                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49         5             0                1              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50         3             0                3              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51         3             0                3              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52         4             0                2              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53         5             1                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54         1             5                0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55         2             1                3              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56         3             0                3              0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n_neutral n_facilitator n_strong_barrier n_weak_barrier n_neutral_complete</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          4             1                1              0                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          6             0                0              0                  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          1             0                5              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          1             0                5              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          1             0                5              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         0             0                6              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         6             0                0              0                  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13         5             1                0              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14         4             1                1              0                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16         0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17         5             1                0              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20         5             0                1              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21         4             0                2              0                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22         3             1                2              0                  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23         3             1                2              0                  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24         5             0                1              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25         5             0                0              1                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27         2             4                0              0                  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28         2             4                0              0                  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31         0             0                1              5                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32         0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34         4             1                1              0                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35         0             0                6              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36         0             0                6              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37         1             0                5              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38         1             0                5              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39         4             1                0              1                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41         0             0                6              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42         0             0                6              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45         0             0                1              5                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46         0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47         0             6                0              0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48         5             1                0              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49         5             0                1              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50         3             0                3              0                  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51         3             0                3              0                  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52         4             0                2              0                  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53         5             1                0              0                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54         1             5                0              0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55         2             1                3              0                  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56         3             0                3              0                  3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    n_barrier_effect_missing n_weak_facilitator n_strong_facilitator</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                         0                  5                    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                         0                  4                    2</span>
@@ -506,177 +517,177 @@ attributes where applicable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 54         1.6666667                   2   0.0000000   0.1666667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 55        -0.6666667                  -1   0.5000000   0.3333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 56        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_facilitator pct_strong_barrier pct_weak_barrier pct_neutral_complete</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        0.1666667          0.1666667        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        0.0000000          0.0000000        0.0000000            1.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8        0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9        0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       0.0000000          0.0000000        0.0000000            1.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       0.1666667          0.0000000        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14       0.1666667          0.1666667        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16       1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17       0.1666667          0.0000000        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20       0.0000000          0.1666667        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21       0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22       0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23       0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24       0.0000000          0.1666667        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25       0.0000000          0.0000000        0.1666667            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27       0.6666667          0.0000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28       0.6666667          0.0000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31       0.0000000          0.1666667        0.8333333            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32       1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34       0.1666667          0.1666667        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39       0.1666667          0.0000000        0.1666667            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45       0.0000000          0.1666667        0.8333333            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46       1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47       1.0000000          0.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48       0.1666667          0.0000000        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49       0.0000000          0.1666667        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52       0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53       0.1666667          0.0000000        0.0000000            0.8333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54       0.8333333          0.0000000        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_strong_facilitator pct_weak_facilitator pct_effect_missing modal_class_n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1               0.1666667            0.8333333                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2               0.3333333            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3               0.0000000            0.1666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4               0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5               0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6               0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7               0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8               0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9               0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              1.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13              0.1666667            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14              0.1666667            0.0000000                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15              0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16              0.3333333            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17              0.1666667            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18              0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19              0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21              0.0000000            0.0000000                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22              0.1666667            0.0000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23              0.1666667            0.0000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26              0.8333333            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27              0.6666667            0.0000000                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28              0.6666667            0.0000000                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29              0.3333333            0.5000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30              0.1666667            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32              0.3333333            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33              0.3333333            0.5000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34              0.0000000            0.1666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39              0.0000000            0.1666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40              0.8333333            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42              0.0000000            0.0000000                  0             6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43              0.3333333            0.5000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44              0.0000000            0.8333333                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46              0.3333333            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47              0.3333333            0.6666667                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48              0.1666667            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49              0.0000000            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50              0.0000000            0.0000000                  0            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51              0.0000000            0.0000000                  0            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52              0.0000000            0.0000000                  0             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53              0.0000000            0.1666667                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54              0.8333333            0.0000000                  0             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55              0.1666667            0.0000000                  0             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56              0.0000000            0.0000000                  0            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    modal_class_share             item_key</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0.8333333        patient_needs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          0.6666667       communications</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          0.6666667        data_tracking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          0.6666667     leadership_goals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          0.6666667     clinician_values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          1.0000000   clinical_processes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          0.8333333  structures_policies</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          0.8333333                space</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          0.8333333                 time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         1.0000000      other_resources</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11         1.0000000   tension_for_change</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12         1.0000000   relative_advantage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13         0.8333333 higher_level_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14         0.6666667      closest_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         0.6666667        patient_needs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         0.6666667       communications</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17         0.8333333        data_tracking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18         0.6666667     leadership_goals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19         0.6666667     clinician_values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20         0.8333333   clinical_processes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21         0.6666667  structures_policies</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22         0.5000000                space</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23         0.5000000                 time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24         0.8333333      other_resources</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25         0.8333333   tension_for_change</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26         0.8333333   relative_advantage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27         0.6666667 higher_level_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28         0.6666667      closest_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29         0.5000000        patient_needs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30         0.6666667       communications</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31         0.8333333        data_tracking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32         0.6666667     leadership_goals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33         0.5000000     clinician_values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34         0.6666667   clinical_processes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35         1.0000000  structures_policies</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36         1.0000000                space</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37         0.8333333                 time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38         0.8333333      other_resources</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39         0.6666667   tension_for_change</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40         0.8333333   relative_advantage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41         1.0000000 higher_level_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42         1.0000000      closest_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43         0.5000000        patient_needs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44         0.8333333       communications</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45         0.8333333        data_tracking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46         0.6666667     leadership_goals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47         0.6666667     clinician_values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48         0.8333333   clinical_processes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49         0.8333333  structures_policies</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50                NA                space</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51                NA                 time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52         0.6666667      other_resources</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53         0.8333333   tension_for_change</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54         0.8333333   relative_advantage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55         0.5000000 higher_level_leaders</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56                NA      closest_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_facilitator pct_complete_class pct_strong_barrier pct_weak_barrier</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        0.1666667                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        0.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        0.0000000                  1          0.8333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        0.0000000                  1          0.8333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        0.0000000                  1          0.8333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       0.0000000                  1          1.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       0.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       0.1666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14       0.1666667                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16       1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17       0.1666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20       0.0000000                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       0.0000000                  1          0.3333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       0.1666667                  1          0.3333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23       0.1666667                  1          0.3333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24       0.0000000                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       0.0000000                  1          0.0000000        0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27       0.6666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28       0.6666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31       0.0000000                  1          0.1666667        0.8333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32       1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34       0.1666667                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35       0.0000000                  1          1.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36       0.0000000                  1          1.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37       0.0000000                  1          0.8333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38       0.0000000                  1          0.8333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39       0.1666667                  1          0.0000000        0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41       0.0000000                  1          1.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42       0.0000000                  1          1.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45       0.0000000                  1          0.1666667        0.8333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46       1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47       1.0000000                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48       0.1666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49       0.0000000                  1          0.1666667        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50       0.0000000                  1          0.5000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51       0.0000000                  1          0.5000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52       0.0000000                  1          0.3333333        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53       0.1666667                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54       0.8333333                  1          0.0000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55       0.1666667                  1          0.5000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56       0.0000000                  1          0.5000000        0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_neutral_complete pct_strong_facilitator pct_weak_facilitator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1             0.0000000              0.1666667            0.8333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             0.0000000              0.3333333            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             0.6666667              0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             1.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7             0.1666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8             0.1666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9             0.1666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11            1.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12            0.0000000              1.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13            0.8333333              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14            0.6666667              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15            0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16            0.0000000              0.3333333            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17            0.8333333              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18            0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19            0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20            0.8333333              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21            0.6666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22            0.5000000              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23            0.5000000              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24            0.8333333              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25            0.8333333              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26            0.1666667              0.8333333            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27            0.3333333              0.6666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28            0.3333333              0.6666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29            0.1666667              0.3333333            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30            0.1666667              0.1666667            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32            0.0000000              0.3333333            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33            0.1666667              0.3333333            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34            0.6666667              0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37            0.1666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38            0.1666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39            0.6666667              0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40            0.1666667              0.8333333            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43            0.1666667              0.3333333            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44            0.1666667              0.0000000            0.8333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45            0.0000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46            0.0000000              0.3333333            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47            0.0000000              0.3333333            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48            0.8333333              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49            0.8333333              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50            0.5000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51            0.5000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52            0.6666667              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53            0.8333333              0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54            0.1666667              0.8333333            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55            0.3333333              0.1666667            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56            0.5000000              0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_effect_missing modal_class_n modal_class_share             item_key</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   0             5         0.8333333        patient_needs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   0             4         0.6666667       communications</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   0             4         0.6666667        data_tracking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   0             4         0.6666667     leadership_goals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   0             4         0.6666667     clinician_values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   0             6         1.0000000   clinical_processes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                   0             5         0.8333333  structures_policies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                   0             5         0.8333333                space</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                   0             5         0.8333333                 time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                  0             6         1.0000000      other_resources</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                  0             6         1.0000000   tension_for_change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                  0             6         1.0000000   relative_advantage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                  0             5         0.8333333 higher_level_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                  0             4         0.6666667      closest_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                  0             4         0.6666667        patient_needs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                  0             4         0.6666667       communications</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                  0             5         0.8333333        data_tracking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                  0             4         0.6666667     leadership_goals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                  0             4         0.6666667     clinician_values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                  0             5         0.8333333   clinical_processes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                  0             4         0.6666667  structures_policies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                  0             3         0.5000000                space</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                  0             3         0.5000000                 time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                  0             5         0.8333333      other_resources</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                  0             5         0.8333333   tension_for_change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                  0             5         0.8333333   relative_advantage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                  0             4         0.6666667 higher_level_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                  0             4         0.6666667      closest_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                  0             3         0.5000000        patient_needs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                  0             4         0.6666667       communications</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                  0             5         0.8333333        data_tracking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                  0             4         0.6666667     leadership_goals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33                  0             3         0.5000000     clinician_values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34                  0             4         0.6666667   clinical_processes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35                  0             6         1.0000000  structures_policies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36                  0             6         1.0000000                space</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                  0             5         0.8333333                 time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38                  0             5         0.8333333      other_resources</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39                  0             4         0.6666667   tension_for_change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                  0             5         0.8333333   relative_advantage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41                  0             6         1.0000000 higher_level_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                  0             6         1.0000000      closest_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43                  0             3         0.5000000        patient_needs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44                  0             5         0.8333333       communications</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45                  0             5         0.8333333        data_tracking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                  0             4         0.6666667     leadership_goals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47                  0             4         0.6666667     clinician_values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                  0             5         0.8333333   clinical_processes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49                  0             5         0.8333333  structures_policies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50                  0            NA                NA                space</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51                  0            NA                NA                 time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52                  0             4         0.6666667      other_resources</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                  0             5         0.8333333   tension_for_change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54                  0             5         0.8333333   relative_advantage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                  0             3         0.5000000 higher_level_leaders</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56                  0            NA                NA      closest_leaders</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                      item_text</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  People here regularly seek to understand the needs of patients and make changes to better meet those needs.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                                  I have open lines of communication with everyone needed to make the change.</span>
@@ -2573,258 +2584,321 @@ attributes where applicable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 60                6         5         1             0                5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 61                6         5         1             0                5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 62                6         6         0             0                1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    n_weak_barrier n_barrier_effect_missing n_weak_facilitator</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9               0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39              5                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61              0                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62              5                        0                  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    n_strong_facilitator n_facilitator_effect_missing n_invalid_or_missing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                     0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                     1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                     0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                     0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29                    1                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62                    0                            0                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       modal_class mean_display_code median_display_code pct_barrier pct_neutral</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         neutral        -0.6666667                   0   0.3333333   0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         neutral        -0.3333333                   0   0.3333333   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 strong_barrier        -0.6666667                  -1   0.5000000   0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35            tie        -1.0000000                  -1   0.5000000   0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36        neutral        -0.6666667                   0   0.3333333   0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37        neutral        -0.6666667                   0   0.3333333   0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38        neutral        -0.6666667                   0   0.3333333   0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39   weak_barrier        -1.1666667                  -1   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55 strong_barrier        -2.0000000                  -2   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61 strong_barrier        -1.6666667                  -2   0.8333333   0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62   weak_barrier        -1.1666667                  -1   1.0000000   0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_facilitator pct_strong_barrier pct_weak_barrier pct_neutral_complete</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        0.1666667          0.3333333        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8        0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9        0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29       0.1666667          0.5000000        0.0000000            0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35       0.0000000          0.5000000        0.0000000            0.5000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36       0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37       0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38       0.0000000          0.3333333        0.0000000            0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39       0.0000000          0.1666667        0.8333333            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55       0.0000000          1.0000000        0.0000000            0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61       0.0000000          0.8333333        0.0000000            0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62       0.0000000          0.1666667        0.8333333            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n_weak_barrier n_neutral_complete n_barrier_effect_missing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               0                  4                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7               0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8               0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9               0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29              0                  2                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35              0                  3                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36              0                  4                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37              0                  4                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38              0                  4                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39              5                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55              0                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61              0                  1                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62              5                  0                        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n_weak_facilitator n_strong_facilitator n_facilitator_effect_missing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                   0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                   0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                   0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                  0                    1                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62                  0                    0                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n_invalid_or_missing    modal_class mean_display_code median_display_code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                     0        neutral        -0.6666667                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                     0        neutral        -0.3333333                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                     0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                     0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                    0 strong_barrier        -0.6666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35                    0            tie        -1.0000000                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36                    0        neutral        -0.6666667                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                    0        neutral        -0.6666667                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38                    0        neutral        -0.6666667                   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39                    0   weak_barrier        -1.1666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                    0 strong_barrier        -2.0000000                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61                    0 strong_barrier        -1.6666667                  -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62                    0   weak_barrier        -1.1666667                  -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_barrier pct_neutral pct_facilitator pct_complete_class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.3333333   0.6666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    0.3333333   0.5000000       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   0.5000000   0.3333333       0.1666667                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   0.5000000   0.5000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   0.3333333   0.6666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   0.3333333   0.6666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   0.3333333   0.6666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61   0.8333333   0.1666667       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62   1.0000000   0.0000000       0.0000000                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pct_strong_barrier pct_weak_barrier pct_neutral_complete</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           0.3333333        0.0000000            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           0.3333333        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29          0.5000000        0.0000000            0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35          0.5000000        0.0000000            0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36          0.3333333        0.0000000            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37          0.3333333        0.0000000            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38          0.3333333        0.0000000            0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39          0.1666667        0.8333333            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55          1.0000000        0.0000000            0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61          0.8333333        0.0000000            0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62          0.1666667        0.8333333            0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    pct_strong_facilitator pct_weak_facilitator pct_effect_missing modal_class_n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1               0.0000000                    0                  0             4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2               0.1666667                    0                  0             3</span>

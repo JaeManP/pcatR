@@ -47,6 +47,14 @@
 <li>Added an installed HTML technical guide alongside the PDF guide.</li>
 <li>Added a dedicated R 4.1 continuous-integration check for the documented minimum R version.</li>
 <li>Updated release metadata and submission checks for an initial CRAN review.</li>
+<li>Corrected the complete five-category partition by adding <code>n_neutral_complete</code> and deriving all five category counts from <code>pcat_class5</code>, while retaining directional <code>n_neutral</code>.</li>
+<li>Extended small-cell suppression to derived modal classifications.</li>
+<li>Required valid direction and effect parsing before assigning a non-invalid strength category.</li>
+<li>Added validation of every page before failure-safe multi-page profile PDF writing, so a late page error cannot leave or replace a partial target.</li>
+<li>Enforced true finite scalar validation for consensus and action-plan probability thresholds and repaired broken links in the source archive.</li>
+<li>Added <code>pct_complete_class</code>, the share of valid-direction responses with a complete five-category classification, as an explicit completeness diagnostic.</li>
+<li>Rejected directory-valued profile PDF targets and infinite page dimensions before any output or backup operation.</li>
+<li>Represented polarization as unavailable rather than false when the required directional percentages are missing.</li>
 </ul></div>
 </div>
     <div class="section level2">
