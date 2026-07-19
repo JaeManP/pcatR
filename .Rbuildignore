@@ -26,6 +26,7 @@
 ^REFERENCES\.md$
 ^RELEASE_VALIDATION\.md$
 ^CRAN_SUBMISSION\.md$
+^Lilac Statement\.pdf$
 ^pcatR_.*\.tar\.gz$
 ^pcatR\.Rcheck$
 ^tmp$
