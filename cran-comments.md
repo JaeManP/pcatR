@@ -43,12 +43,13 @@ The notes were:
   HTML Tidy on the Ubuntu runner.
 - PR pkgdown and test-coverage checks completed successfully.
 
-Written agreement from both credited package authors is retained by the
-maintainer. Lilac Li also provided final version-specific approval of pcatR
-1.0.1, including authorship, joint software copyright ownership, Jae Man
-Park's maintainer and CRAN-submitter roles, licensing, and public GitHub and
-CRAN distribution. This approval concerns Lilac Li's own role and authority;
-it is not recorded as confirmation on behalf of the original pCAT authors.
+Jae Man Park is the package maintainer and a credited package author. The
+maintainer retains Lilac Li's written agreement, including her final
+version-specific approval of pcatR 1.0.1, her authorship and joint software
+copyright-holder role, Jae Man Park's maintainer and CRAN-submitter roles,
+licensing, and public GitHub and CRAN distribution. This approval concerns
+Lilac Li's own role and authority; it is not recorded as confirmation on behalf
+of the original pCAT authors.
 
 Candidate archives contain both authors' `cph` roles and the joint MIT
 copyright-holder statement. Win-builder R-release and R-devel checks remain

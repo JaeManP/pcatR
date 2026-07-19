@@ -55,11 +55,11 @@ reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
 Lilac Li's initial written authorization is dated July 13, 2026. She provided
 final version-specific approval of pcatR 1.0.1 on July 19, 2026. The combined
-retained evidence covers her first-package-author and joint-software-
-copyright-holder roles; Jae Man Park's second-package-author,
-joint-software-copyright-holder, maintainer, and CRAN-submitter roles; MIT
-licensing of original package code; the documented attribution and licensing
-treatment of source-derived content; and public GitHub and CRAN distribution.
+retained evidence covers her roles as first package author and joint software
+copyright holder; Jae Man Park's roles as second package author, joint software
+copyright holder, maintainer, and CRAN submitter; MIT licensing of original
+package code; the documented attribution and licensing treatment of
+source-derived content; and public GitHub and CRAN distribution.
 The final approval applies to the package candidate represented by Git commit
 `36ca2da22ab80a938509dfb7f06b59ecf1a3ca75`.
 

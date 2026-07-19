@@ -14,8 +14,6 @@ released or accepted by CRAN.
   `JaeManP/pcatR#4`, and `JaeManP/pcatR#5`
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
-- Pre-freeze local candidate SHA-256:
-  `a8ee1f3e02861eda11281e4390207335339dd4312cf17ab69bf4a925eee44377`
 - Final frozen-submission SHA-256: pending source freeze
 - Lilac Li package-author authorization: initial written approval dated July
   13, 2026, and final version-specific approval dated July 19, 2026, retained
