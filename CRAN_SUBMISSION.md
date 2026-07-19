@@ -37,24 +37,36 @@ GitHub `v1.0.0` release.
       article, citation, author, license, attribution, and release pages.
 - [x] Joint software copyright ownership is implemented consistently in
       `Authors@R`, `LICENSE`, `LICENSE.md`, and `inst/COPYRIGHTS`.
-- [x] Retain Lilac Li's written approval of her authorship and copyright-holder
-      role, Jae Man Park's maintainer role, the MIT and CC BY 4.0 licensing
-      treatment, public distribution, and submission to CRAN.
+- [x] Retain Lilac Li's final version-specific approval of pcatR 1.0.1,
+      including authorship, joint software copyright ownership, Jae Man Park's
+      maintainer and CRAN-submitter roles, MIT software licensing, documented
+      source-content treatment, and public GitHub and CRAN distribution.
 - [ ] Win-builder R-devel and R-release results reviewed.
 - [ ] Freeze one final source archive and retain its generated `.sha256` file;
       send those exact archive bytes to Win-builder and CRAN without rebuilding.
-- [ ] Maintainer obtains confirmation of the package name and source-content
-      treatment from the original instrument authors before submission.
+- [ ] Obtain and retain the original pCAT authors' package-name and
+      source-content confirmation, or formally document the final
+      license-reliance decision before submission.
 - [ ] Maintainer submits only the source archive through CRAN's submission form
       and responds to CRAN's confirmation email.
 
 Registry searches can show that a name is currently unused, but they do not
 reserve it. Recheck CRAN and Bioconductor immediately before submission.
 
-Lilac Li's written approval is dated July 13, 2026. It covers every role,
-licensing, distribution, and submission item listed above. The maintainer
-retains the original evidence privately because it contains personal contact
-details and email metadata; it is excluded from Git and package source builds.
+Lilac Li's initial written authorization is dated July 13, 2026. She provided
+final version-specific approval of pcatR 1.0.1 on July 19, 2026. The combined
+retained evidence covers her roles as first package author and joint software
+copyright holder; Jae Man Park's roles as second package author, joint software
+copyright holder, maintainer, and CRAN submitter; MIT licensing of original
+package code; the documented attribution and licensing treatment of
+source-derived content; and public GitHub and CRAN distribution.
+The final approval applies to the package candidate represented by Git commit
+`36ca2da22ab80a938509dfb7f06b59ecf1a3ca75`.
+
+This approval concerns Lilac Li's own role and authority and is not recorded as
+confirmation on behalf of the original pCAT authors. The maintainer retains the
+original evidence privately because it contains personal communication and
+metadata; it is excluded from Git and package source builds.
 
 ## Pre-freeze automated evidence
 
