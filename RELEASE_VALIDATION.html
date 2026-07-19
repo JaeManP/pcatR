@@ -41,16 +41,18 @@
 <div id="pcatr-101-submission-candidate-validation" class="section level1">
 
 <p>Prepared: July 12, 2026</p>
+<p>Last updated: July 17, 2026</p>
 <p>Status: provisional until the final source commit is frozen and Win-builder checks are complete. This record does not claim that version 1.0.1 has been released or accepted by CRAN.</p>
 <div class="section level2">
 <h2 id="candidate-identification">Candidate identification<a class="anchor" aria-label="anchor" href="#candidate-identification"></a></h2>
-<ul><li>Pull request: <code>JaeManP/pcatR#2</code>
+<ul><li>CRAN preparation pull requests: <code>JaeManP/pcatR#2</code> and <code>JaeManP/pcatR#3</code>
 </li>
 <li>Candidate package-source head: pending final source freeze</li>
 <li>Source archive: <code>pcatR_1.0.1.tar.gz</code>
 </li>
 <li>Candidate SHA-256: pending final source freeze</li>
 <li>Final frozen-submission SHA-256: pending source freeze</li>
+<li>Lilac Li authorization: written approval dated July 13, 2026, retained privately by the maintainer</li>
 <li>Editable guide source: <code>inst/guides/source/pcatR_Technical_User_Guide.Rmd</code>
 </li>
 </ul></div>
@@ -75,9 +77,12 @@
 <p>The workflow stores <code>pcatR_1.0.1.sha256</code> beside the archive and verifies that checksum before each exact-archive check. The standard matrix also checks Windows R-release, macOS R-release, Ubuntu R-release, R-devel, R-oldrel-1, and R 4.1; coverage and PR-only pkgdown builds are separate required checks. Final run IDs and the final checksum remain pending the source freeze.</p>
 </div>
 <div class="section level2">
+<h2 id="completed-external-authorization">Completed external authorization<a class="anchor" aria-label="anchor" href="#completed-external-authorization"></a></h2>
+<ul><li>Lilac Li approved her first-author and joint-copyright-holder roles, Jae Man Park’s second-author, joint-copyright-holder, and package-maintainer roles, the documented MIT and CC BY 4.0 licensing treatment, public distribution, and CRAN submission by Jae Man Park. Her written statement is dated July 13, 2026 and is retained privately because it contains personal contact details and email metadata.</li>
+</ul></div>
+<div class="section level2">
 <h2 id="outstanding-external-gates">Outstanding external gates<a class="anchor" aria-label="anchor" href="#outstanding-external-gates"></a></h2>
-<ul><li>Retain Lilac Li’s written approval of her authorship and copyright-holder role, Jae Man Park’s maintainer role, licensing, public distribution, and CRAN submission.</li>
-<li>Retain the original instrument authors’ package-name confirmation.</li>
+<ul><li>Retain the original instrument authors’ package-name confirmation.</li>
 <li>Run the exact frozen archive through Win-builder R-release and R-devel.</li>
 <li>Replace provisional entries above with the frozen commit, archive SHA-256, GitHub run IDs, and Win-builder results.</li>
 <li>Submit only the exact tested archive, confirm CRAN’s email, and create the <code>v1.0.1</code> tag only after the final release decision.</li>

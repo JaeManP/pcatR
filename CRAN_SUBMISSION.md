@@ -60,6 +60,12 @@ Registry searches can show that a name is currently unused, but they do
 not reserve it. Recheck CRAN and Bioconductor immediately before
 submission.
 
+Lilac Li’s written approval is dated July 13, 2026. It covers every
+role, licensing, distribution, and submission item listed above. The
+maintainer retains the original evidence privately because it contains
+personal contact details and email metadata; it is excluded from Git and
+package source builds.
+
 ## Pre-freeze automated evidence
 
 Candidate workflows have successfully checked exact uploaded archives
@@ -68,9 +74,9 @@ now stores a generated `.sha256` file beside each archive and verifies
 it before both checks.
 
 The final source head, run IDs, and SHA-256 are deliberately pending.
-Record them only after the external approvals are retained, the source
-is frozen, and one exact archive is selected for Win-builder and CRAN
-submission.
+Record them only after the remaining external approval is retained, the
+source is frozen, and one exact archive is selected for Win-builder and
+CRAN submission.
 
 ## Registry check recorded July 12, 2026
 
