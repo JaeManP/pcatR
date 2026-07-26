@@ -63,8 +63,8 @@
 <li><label><input type="checkbox" checked>A clean local pkgdown build was inspected for its home, reference, article, citation, author, license, attribution, and release pages.</label></li>
 <li><label><input type="checkbox" checked>Joint software copyright ownership is implemented consistently in <code>Authors@R</code>, <code>LICENSE</code>, <code>LICENSE.md</code>, and <code>inst/COPYRIGHTS</code>.</label></li>
 <li><label><input type="checkbox" checked>Retain Lilac Li’s final version-specific approval of pcatR 1.0.1, including authorship, joint software copyright ownership, Jae Man Park’s maintainer and CRAN-submitter roles, MIT software licensing, documented source-content treatment, and public GitHub and CRAN distribution.</label></li>
-<li><label><input type="checkbox">Win-builder R-devel and R-release results reviewed.</label></li>
-<li><label><input type="checkbox">Freeze one final source archive and retain its generated <code>.sha256</code> file; send those exact archive bytes to Win-builder and CRAN without rebuilding.</label></li>
+<li><label><input type="checkbox" checked>Win-builder R-devel and R-release results reviewed.</label></li>
+<li><label><input type="checkbox" checked>Freeze one final source archive and retain its generated <code>.sha256</code> file; send those exact archive bytes to Win-builder and CRAN without rebuilding.</label></li>
 <li><label><input type="checkbox" checked>Formally document the maintainer’s decision to rely on CC BY 4.0 for the identified source-derived pCAT content and to accept responsibility for the descriptive <code>pcatR</code> package name without claiming author endorsement.</label></li>
 <li><label><input type="checkbox">Maintainer submits only the source archive through CRAN’s submission form and responds to CRAN’s confirmation email.</label></li>
 </ul><p>Registry searches can show that a name is currently unused, but they do not reserve it. Recheck CRAN and Bioconductor immediately before submission.</p>
@@ -77,12 +77,13 @@
 <p>The maintainer also accepts responsibility for the descriptive package name <code>pcatR</code>. Current and archived CRAN names and the current Bioconductor software index must still be rechecked immediately before submission. This decision is not recorded as confirmation, endorsement, trademark permission, or other authorization from the original pCAT authors. It resolves the repository’s alternative package-name/source-content gate through documented maintainer reliance rather than original-author confirmation.</p>
 </div>
 <div class="section level2">
-<h2 id="pre-freeze-automated-evidence">Pre-freeze automated evidence<a class="anchor" aria-label="anchor" href="#pre-freeze-automated-evidence"></a></h2>
-<p>Candidate workflows have successfully checked exact uploaded archives under current R-release and R-devel with full PDF manuals. The workflow now stores a generated <code>.sha256</code> file beside each archive and verifies it before both checks.</p>
-<p>The final source head, run IDs, and SHA-256 are deliberately pending. Record them only after the remaining external approval is retained, the source is frozen, and one exact archive is selected for Win-builder and CRAN submission.</p>
+<h2 id="frozen-archive-evidence">Frozen archive evidence<a class="anchor" aria-label="anchor" href="#frozen-archive-evidence"></a></h2>
+<p>The package source was frozen at Git commit <code>562d45d2bc9f2d135b145e0965e7cb38a69f8bb7</code>. GitHub Actions run <code>30181084279</code> built <code>pcatR_1.0.1.tar.gz</code>; source artifact <code>8625569721</code> contains that archive and its generated checksum file. The retained archive is 772,031 bytes, has 81 entries, and has SHA-256 <code>a5e834ead4b2a5c4d5a09c0950ffcd2d08a00c3c2eaa2c1a593384cecd128cbb</code>.</p>
+<p>The same downloaded bytes passed exact-archive checks with full PDF manuals under current R-release and R-devel in run <code>30181084279</code>; their log artifacts are <code>8625631346</code> and <code>8625630473</code>. Coverage run <code>30181084286</code> and pkgdown run <code>30181084290</code> also passed. The exact retained archive was submitted to Win-builder R-release and R-devel on July 25, 2026. Both results were reviewed, and the archive has not been submitted to CRAN.</p>
+<p>The Win-builder R-release result under R 4.6.1 completed with 0 errors, 0 warnings, and 1 note. The note identified the new submission and requested spelling review of proper author names, “et al.”, and the instrument name “pCAT”; these terms are intentional. Installation succeeded and a Windows binary was produced. Win-builder R-devel, revision 90301 dated July 25, 2026, also completed with 0 errors, 0 warnings, and the same single expected note; installation succeeded and a Windows binary was produced.</p>
 </div>
 <div class="section level2">
-<h2 id="registry-check-recorded-july-12-2026">Registry check recorded July 12, 2026<a class="anchor" aria-label="anchor" href="#registry-check-recorded-july-12-2026"></a></h2>
+<h2 id="registry-check-recorded-july-25-2026">Registry check recorded July 25, 2026<a class="anchor" aria-label="anchor" href="#registry-check-recorded-july-25-2026"></a></h2>
 <ul><li>
 <code>pcatR</code> was absent from the current CRAN package index.</li>
 <li>CRAN’s exact <code>src/contrib/Archive/pcatR/</code> path returned HTTP 404, indicating no historical archive at that exact case-sensitive name.</li>
