@@ -11,7 +11,8 @@ version 1.0.1 has been released or accepted by CRAN.
 ## Candidate identification
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
-  `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, and `JaeManP/pcatR#6`
+  `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, `JaeManP/pcatR#6`, and
+  `JaeManP/pcatR#7`
 - Frozen package-source head:
   `562d45d2bc9f2d135b145e0965e7cb38a69f8bb7`
 - Source archive: `pcatR_1.0.1.tar.gz`
