@@ -44,9 +44,9 @@ GitHub `v1.0.0` release.
 - [ ] Win-builder R-devel and R-release results reviewed.
 - [ ] Freeze one final source archive and retain its generated `.sha256` file;
       send those exact archive bytes to Win-builder and CRAN without rebuilding.
-- [ ] Obtain and retain the original pCAT authors' package-name and
-      source-content confirmation, or formally document the final
-      license-reliance decision before submission.
+- [x] Formally document the maintainer's decision to rely on CC BY 4.0 for the
+      identified source-derived pCAT content and to accept responsibility for
+      the descriptive `pcatR` package name without claiming author endorsement.
 - [ ] Maintainer submits only the source archive through CRAN's submission form
       and responds to CRAN's confirmation email.
 
@@ -67,6 +67,24 @@ This approval concerns Lilac Li's own role and authority and is not recorded as
 confirmation on behalf of the original pCAT authors. The maintainer retains the
 original evidence privately because it contains personal communication and
 metadata; it is excluded from Git and package source builds.
+
+## Maintainer CC BY 4.0 license-reliance decision
+
+On July 25, 2026, Jae Man Park, the designated package maintainer and CRAN
+submitter, formally chose the license-reliance route for the source-derived
+pCAT content identified in `LICENSE.note` and `inst/COPYRIGHTS`. For CRAN
+submission purposes, the maintainer warrants that this material is used in
+accordance with the CC BY 4.0 license granted by its source publications. The
+package retains source attribution, links to the applicable license, and clear
+notices describing the machine-readable and software-derived adaptations.
+
+The maintainer also accepts responsibility for the descriptive package name
+`pcatR`. Current and archived CRAN names and the current Bioconductor software
+index must still be rechecked immediately before submission. This decision is
+not recorded as confirmation, endorsement, trademark permission, or other
+authorization from the original pCAT authors. It resolves the repository's
+alternative package-name/source-content gate through documented maintainer
+reliance rather than original-author confirmation.
 
 ## Pre-freeze automated evidence
 
