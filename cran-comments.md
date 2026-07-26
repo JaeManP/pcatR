@@ -72,4 +72,6 @@ statement. The same archive was submitted without rebuilding to Win-builder
 R-release and R-devel on July 25, 2026. Win-builder R-release completed under
 R 4.6.1 with 0 errors, 0 warnings, and 1 note for the new submission and
 spelling review of intentional proper names/terms. Installation succeeded and
-a Windows binary was produced. The R-devel result remains pending review.
+a Windows binary was produced. Win-builder R-devel revision 90301 also
+completed with 0 errors, 0 warnings, and the same single expected note;
+installation succeeded and a Windows binary was produced.

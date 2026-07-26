@@ -4,9 +4,9 @@ Prepared: July 12, 2026
 
 Last updated: July 25, 2026
 
-Status: source and archive frozen; provisional until Win-builder checks are
-reviewed and CRAN submission is confirmed. This record does not claim that
-version 1.0.1 has been released or accepted by CRAN.
+Status: source and archive frozen and Win-builder checks reviewed; provisional
+until CRAN submission is confirmed. This record does not claim that version
+1.0.1 has been released or accepted by CRAN.
 
 ## Candidate identification
 
@@ -90,7 +90,7 @@ absence of private evidence and release-control files.
 
 The same 772,031-byte archive was submitted without rebuilding to Win-builder
 R-release and R-devel on July 25, 2026. The uploads were accepted; their
-emailed results are being reviewed.
+emailed results were reviewed and retained.
 
 ## Win-builder results
 
@@ -100,7 +100,11 @@ emailed results are being reviewed.
   instrument name “pCAT”. These spellings and capitalization are intentional.
 - R-release installation completed successfully and produced the Windows
   binary package.
-- R-devel: submitted exact frozen archive; result pending.
+- R-devel, R Under development revision 90301 dated July 25, 2026, on Windows
+  Server 2022: 0 errors, 0 warnings, and 1 note.
+- The R-devel note is the same expected new-submission and spelling-review note
+  described above. Installation completed successfully and produced the
+  Windows binary package.
 
 ## Completed package-author authorization
 
@@ -139,9 +143,6 @@ emailed results are being reviewed.
 
 ## Outstanding external gates
 
-- Review and retain the emailed R-devel result from the submitted exact frozen
-  archive. The R-release result has been reviewed and retained.
-- Record the Win-builder results without rebuilding the archive.
 - Submit only the exact tested archive, confirm CRAN's email, and create the
   `v1.0.1` tag only after the final release decision.
 

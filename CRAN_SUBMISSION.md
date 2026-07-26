@@ -41,7 +41,7 @@ GitHub `v1.0.0` release.
       including authorship, joint software copyright ownership, Jae Man Park's
       maintainer and CRAN-submitter roles, MIT software licensing, documented
       source-content treatment, and public GitHub and CRAN distribution.
-- [ ] Win-builder R-devel and R-release results reviewed.
+- [x] Win-builder R-devel and R-release results reviewed.
 - [x] Freeze one final source archive and retain its generated `.sha256` file;
       send those exact archive bytes to Win-builder and CRAN without rebuilding.
 - [x] Formally document the maintainer's decision to rely on CC BY 4.0 for the
@@ -99,14 +99,16 @@ The same downloaded bytes passed exact-archive checks with full PDF manuals
 under current R-release and R-devel in run `30181084279`; their log artifacts
 are `8625631346` and `8625630473`. Coverage run `30181084286` and pkgdown run
 `30181084290` also passed. The exact retained archive was submitted to
-Win-builder R-release and R-devel on July 25, 2026. Results are being reviewed,
+Win-builder R-release and R-devel on July 25, 2026. Both results were reviewed,
 and the archive has not been submitted to CRAN.
 
 The Win-builder R-release result under R 4.6.1 completed with 0 errors, 0
 warnings, and 1 note. The note identified the new submission and requested
 spelling review of proper author names, “et al.”, and the instrument name
 “pCAT”; these terms are intentional. Installation succeeded and a Windows
-binary was produced. The R-devel result remains pending.
+binary was produced. Win-builder R-devel, revision 90301 dated July 25, 2026,
+also completed with 0 errors, 0 warnings, and the same single expected note;
+installation succeeded and a Windows binary was produced.
 
 ## Registry check recorded July 25, 2026
 
