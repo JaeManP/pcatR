@@ -69,4 +69,7 @@ The package source was frozen at Git commit
 `a5e834ead4b2a5c4d5a09c0950ffcd2d08a00c3c2eaa2c1a593384cecd128cbb`.
 It contains both authors' `cph` roles and the joint MIT copyright-holder
 statement. The same archive was submitted without rebuilding to Win-builder
-R-release and R-devel on July 25, 2026; their results remain pending review.
+R-release and R-devel on July 25, 2026. Win-builder R-release completed under
+R 4.6.1 with 0 errors, 0 warnings, and 1 note for the new submission and
+spelling review of intentional proper names/terms. Installation succeeded and
+a Windows binary was produced. The R-devel result remains pending review.

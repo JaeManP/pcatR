@@ -99,8 +99,14 @@ The same downloaded bytes passed exact-archive checks with full PDF manuals
 under current R-release and R-devel in run `30181084279`; their log artifacts
 are `8625631346` and `8625630473`. Coverage run `30181084286` and pkgdown run
 `30181084290` also passed. The exact retained archive was submitted to
-Win-builder R-release and R-devel on July 25, 2026. Results are pending and the
-archive has not been submitted to CRAN.
+Win-builder R-release and R-devel on July 25, 2026. Results are being reviewed,
+and the archive has not been submitted to CRAN.
+
+The Win-builder R-release result under R 4.6.1 completed with 0 errors, 0
+warnings, and 1 note. The note identified the new submission and requested
+spelling review of proper author names, “et al.”, and the instrument name
+“pCAT”; these terms are intentional. Installation succeeded and a Windows
+binary was produced. The R-devel result remains pending.
 
 ## Registry check recorded July 25, 2026
 

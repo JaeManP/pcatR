@@ -90,7 +90,17 @@ absence of private evidence and release-control files.
 
 The same 772,031-byte archive was submitted without rebuilding to Win-builder
 R-release and R-devel on July 25, 2026. The uploads were accepted; their
-emailed results remain pending review.
+emailed results are being reviewed.
+
+## Win-builder results
+
+- R-release, R 4.6.1 on Windows Server 2022: 0 errors, 0 warnings, and 1 note.
+- The R-release note records the new submission and requests spelling review
+  of the proper author names Damschroder and Domlyn, “et al.”, and the
+  instrument name “pCAT”. These spellings and capitalization are intentional.
+- R-release installation completed successfully and produced the Windows
+  binary package.
+- R-devel: submitted exact frozen archive; result pending.
 
 ## Completed package-author authorization
 
@@ -129,8 +139,8 @@ emailed results remain pending review.
 
 ## Outstanding external gates
 
-- Review and retain the emailed results from the submitted exact frozen archive
-  under Win-builder R-release and R-devel.
+- Review and retain the emailed R-devel result from the submitted exact frozen
+  archive. The R-release result has been reviewed and retained.
 - Record the Win-builder results without rebuilding the archive.
 - Submit only the exact tested archive, confirm CRAN's email, and create the
   `v1.0.1` tag only after the final release decision.
