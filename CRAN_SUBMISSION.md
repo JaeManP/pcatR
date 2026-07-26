@@ -42,7 +42,7 @@ GitHub `v1.0.0` release.
       maintainer and CRAN-submitter roles, MIT software licensing, documented
       source-content treatment, and public GitHub and CRAN distribution.
 - [ ] Win-builder R-devel and R-release results reviewed.
-- [ ] Freeze one final source archive and retain its generated `.sha256` file;
+- [x] Freeze one final source archive and retain its generated `.sha256` file;
       send those exact archive bytes to Win-builder and CRAN without rebuilding.
 - [x] Formally document the maintainer's decision to rely on CC BY 4.0 for the
       identified source-derived pCAT content and to accept responsibility for
@@ -86,17 +86,23 @@ authorization from the original pCAT authors. It resolves the repository's
 alternative package-name/source-content gate through documented maintainer
 reliance rather than original-author confirmation.
 
-## Pre-freeze automated evidence
+## Frozen archive evidence
 
-Candidate workflows have successfully checked exact uploaded archives under
-current R-release and R-devel with full PDF manuals. The workflow now stores a
-generated `.sha256` file beside each archive and verifies it before both checks.
+The package source was frozen at Git commit
+`562d45d2bc9f2d135b145e0965e7cb38a69f8bb7`. GitHub Actions run
+`30181084279` built `pcatR_1.0.1.tar.gz`; source artifact `8625569721`
+contains that archive and its generated checksum file. The retained archive is
+772,031 bytes, has 81 entries, and has SHA-256
+`a5e834ead4b2a5c4d5a09c0950ffcd2d08a00c3c2eaa2c1a593384cecd128cbb`.
 
-The final source head, run IDs, and SHA-256 are deliberately pending. Record
-them only after the remaining external approval is retained, the source is
-frozen, and one exact archive is selected for Win-builder and CRAN submission.
+The same downloaded bytes passed exact-archive checks with full PDF manuals
+under current R-release and R-devel in run `30181084279`; their log artifacts
+are `8625631346` and `8625630473`. Coverage run `30181084286` and pkgdown run
+`30181084290` also passed. The exact retained archive was submitted to
+Win-builder R-release and R-devel on July 25, 2026. Results are pending and the
+archive has not been submitted to CRAN.
 
-## Registry check recorded July 12, 2026
+## Registry check recorded July 25, 2026
 
 - `pcatR` was absent from the current CRAN package index.
 - CRAN's exact `src/contrib/Archive/pcatR/` path returned HTTP 404, indicating
