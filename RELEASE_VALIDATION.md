@@ -2,7 +2,7 @@
 
 Prepared: July 12, 2026
 
-Last updated: July 19, 2026
+Last updated: July 25, 2026
 
 Status: provisional until the final source commit is frozen and
 Win-builder checks are complete. This record does not claim that version
@@ -11,7 +11,7 @@ Win-builder checks are complete. This record does not claim that version
 ## Candidate identification
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
-  `JaeManP/pcatR#4`, and `JaeManP/pcatR#5`
+  `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, and `JaeManP/pcatR#6`
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Final frozen-submission SHA-256: pending source freeze
@@ -105,11 +105,26 @@ source freeze.
 - This authorization concerns Lilac Li’s own role and authority and is
   not treated as authorization from the original pCAT authors.
 
+## Completed maintainer license-reliance decision
+
+- On July 25, 2026, Jae Man Park, the designated maintainer and CRAN
+  submitter, formally selected the CC BY 4.0 license-reliance route for
+  the source-derived pCAT content identified in `LICENSE.note` and
+  `inst/COPYRIGHTS`.
+- For CRAN submission purposes, the maintainer warrants that this
+  material is used in accordance with the CC BY 4.0 license granted by
+  its source publications.
+- The package preserves source attribution, license links, adaptation
+  notices, and the independent-software/no-endorsement boundary.
+- The maintainer accepts responsibility for the descriptive package name
+  `pcatR`, subject to a final current and historical repository-name
+  recheck.
+- This is a documented maintainer reliance decision. It is not
+  represented as original-pCAT-author confirmation, endorsement,
+  trademark permission, or other authorization.
+
 ## Outstanding external gates
 
-- Obtain and retain the original pCAT authors’ package-name and
-  source-content confirmation, or formally resolve and document the
-  license-reliance approach.
 - Run the exact frozen archive through Win-builder R-release and
   R-devel.
 - Replace provisional entries above with the frozen commit, archive
