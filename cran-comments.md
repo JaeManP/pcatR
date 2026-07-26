@@ -51,6 +51,14 @@ licensing, and public GitHub and CRAN distribution. This approval concerns
 Lilac Li's own role and authority; it is not recorded as confirmation on behalf
 of the original pCAT authors.
 
+For the source-derived pCAT content identified in `LICENSE.note` and
+`inst/COPYRIGHTS`, the maintainer relies on the source publications' CC BY 4.0
+license and warrants that the material is used in accordance with that license.
+The package preserves attribution, license links, adaptation notices, and an
+independent-software/no-endorsement statement. This is a maintainer
+license-reliance decision, not original-pCAT-author authorization or
+endorsement.
+
 Candidate archives contain both authors' `cph` roles and the joint MIT
 copyright-holder statement. Win-builder R-release and R-devel checks remain
 pending. Final run IDs and the final hash will be recorded only after the
