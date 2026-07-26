@@ -11,7 +11,7 @@ released or accepted by CRAN.
 ## Candidate identification
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
-  `JaeManP/pcatR#4`, and `JaeManP/pcatR#5`
+  `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, and `JaeManP/pcatR#6`
 - Candidate package-source head: pending final source freeze
 - Source archive: `pcatR_1.0.1.tar.gz`
 - Final frozen-submission SHA-256: pending source freeze
