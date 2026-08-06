@@ -13,7 +13,7 @@ CRAN.
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
   `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, `JaeManP/pcatR#6`, and
-  `JaeManP/pcatR#7`; correction pull request pending
+  `JaeManP/pcatR#7`; CRAN correction pull request: `JaeManP/pcatR#8`
 - Correction branch: `codex/address-cran-review-examples-filespace`
 - Correction starting head and merge base:
   `474db8e2f11f910c6e119c027d5e1d9023dfbb3c`
