@@ -18,7 +18,12 @@
 ^codemeta\.json$
 ^docs$
 ^data-raw$
+^data-private$
+^private-data$
+^local-data$
 ^confidential-data$
+^analysis-outputs$
+^scratch$
 ^dev$
 ^tools$
 ^\.lintr$

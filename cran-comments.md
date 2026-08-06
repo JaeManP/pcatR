@@ -71,12 +71,6 @@ The notes were:
   pages of its regenerated PDF were rendered and visually inspected without
   clipping, overlap, malformed tables, missing glyphs, broken footers, or
   orphaned headings.
-- Frozen-source GitHub workflows checked the same downloaded source
-  archive under R 4.6.1 and R-devel with full PDF manuals. Both checks
-  completed with 0 errors, 0 warnings, and 2 notes: new submission and missing
-  HTML Tidy on the Ubuntu runner.
-- PR pkgdown and test-coverage checks completed successfully.
-
 Jae Man Park is the package maintainer and a credited package author. The
 maintainer retains Lilac Li's written agreement, including her final
 version-specific approval of pcatR 1.0.1, her authorship and joint software
