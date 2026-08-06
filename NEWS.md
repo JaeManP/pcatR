@@ -27,6 +27,10 @@
   before any output or backup operation.
 - Represented polarization as unavailable rather than false when the required
   directional percentages are missing.
+- Revised examples following CRAN review: short executable examples now run
+  normally, interactive Shiny use is guarded, optional dependencies are
+  checked, and demonstrated file output uses temporary locations with cleanup.
+- Corrected DESCRIPTION quotation so the pCAT and CFIR acronyms are unquoted.
 
 # pcatR 1.0.0
 
