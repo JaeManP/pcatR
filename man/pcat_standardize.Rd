@@ -87,8 +87,18 @@ long <- pcat_template("long", n_respondents = 2)
 wide <- pcat_long_to_wide(long, id_cols = c("respondent_id", "timepoint"))
 pcat_wide_to_long(wide)
 
-\dontrun{
-pcat_write_template("pcat_template.csv", overwrite = TRUE)
-imported <- pcat_read_csv("pcat_template.csv")
+template_path <- tempfile("pcat_template_", fileext = ".csv")
+
+pcat_write_template(
+  template_path,
+  format = "long",
+  n_respondents = 2
+)
+
+imported <- pcat_read_csv(template_path)
+head(imported)
+
+\dontshow{
+unlink(template_path, force = TRUE)
 }
 }

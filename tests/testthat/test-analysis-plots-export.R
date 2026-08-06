@@ -22,6 +22,7 @@ test_that("analysis export writes reproducible component files", {
     require_complete = TRUE
   )
   path <- tempfile("pcat_export_")
+  on.exit(unlink(path, recursive = TRUE, force = TRUE), add = TRUE)
   output <- pcat_write_analysis(
     result,
     path,
@@ -47,6 +48,7 @@ test_that("export can omit classified data and cleans stale generated files", {
     require_complete = TRUE
   )
   path <- tempfile("pcat_export_cleanup_")
+  on.exit(unlink(path, recursive = TRUE, force = TRUE), add = TRUE)
   pcat_write_analysis(
     result,
     path,
@@ -120,6 +122,7 @@ test_that("heatmap and change plot return ggplot objects", {
 test_that("profile PDF exporter creates a non-empty PDF", {
   classified <- pcat_classify(pcat_example_data())
   path <- tempfile(fileext = ".pdf")
+  on.exit(unlink(path, force = TRUE), add = TRUE)
   output <- pcat_save_profile_pdf(
     classified,
     path,
@@ -263,6 +266,7 @@ test_that("profile export warns when tabular suppression is active", {
     suppress_below = 10
   )
   path <- tempfile("pcat_suppressed_export_")
+  on.exit(unlink(path, recursive = TRUE, force = TRUE), add = TRUE)
 
   expect_warning(
     pcat_write_analysis(
@@ -274,6 +278,12 @@ test_that("profile export warns when tabular suppression is active", {
     class = "pcat_profile_suppression_warning"
   )
   expect_true(file.exists(file.path(path, "06_profile.pdf")))
+})
+
+test_that("writer functions require explicit output paths", {
+  expect_true(identical(formals(pcat_write_template)$path, quote(expr = )))
+  expect_true(identical(formals(pcat_write_analysis)$path, quote(expr = )))
+  expect_true(identical(formals(pcat_save_profile_pdf)$path, quote(expr = )))
 })
 
 test_that("packaged technical guide can be located", {

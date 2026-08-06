@@ -18,6 +18,7 @@
 ^codemeta\.json$
 ^docs$
 ^data-raw$
+^confidential-data$
 ^dev$
 ^tools$
 ^\.lintr$
