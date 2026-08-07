@@ -5,23 +5,35 @@ Prepared: July 12, 2026
 Last updated: August 6, 2026
 
 Status: the first-submission archive is superseded following CRAN technical
-feedback. Corrected source is under review and is not frozen or resubmitted.
-This record does not claim that version 1.0.1 has been released or accepted by
-CRAN.
+feedback. The corrected source and one exact corrected archive are frozen and
+have passed GitHub Actions and Win-builder R-release and R-devel. CRAN
+resubmission and confirmation remain pending. This record does not claim that
+version 1.0.1 has been released or accepted by CRAN.
 
 ## Corrected candidate identification
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
   `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, `JaeManP/pcatR#6`, and
-  `JaeManP/pcatR#7`; CRAN correction pull request: `JaeManP/pcatR#8`
+  `JaeManP/pcatR#7`; CRAN correction pull request: `JaeManP/pcatR#8`;
+  corrected-freeze provenance pull request: `JaeManP/pcatR#9`
 - Correction branch: `codex/address-cran-review-examples-filespace`
 - Correction starting head and merge base:
   `474db8e2f11f910c6e119c027d5e1d9023dfbb3c`
-- Corrected frozen-source head: pending correction review and merge
-- Corrected archive SHA-256: pending corrected source freeze
-- Corrected GitHub runs and artifacts: pending correction pull request checks
-- Corrected Win-builder R-release and R-devel results: pending corrected freeze
-- CRAN resubmission: pending corrected freeze and exact-archive checks
+- Corrected frozen-source head:
+  `4115207173266c26141fa87ba1a7bd90c892024d`
+- Corrected frozen archive: `pcatR_1.0.1.tar.gz`; 775,499 bytes; 81 entries
+- Corrected frozen-archive SHA-256:
+  `9ab7aa0ed5d3d58421216b30cbcb8057191f214b667ce09af9bdcc7b7b9d9161`
+- Corrected GitHub runs: R-CMD-check `31135069391`; coverage `31135069405`;
+  pkgdown `31135069415`
+- Corrected GitHub artifacts: source `8977657746`; R-release logs
+  `8977718726`; R-devel logs `8978019306`; pkgdown site `8977658964`
+- Corrected exact-archive job IDs: R-release `92733027800`; R-devel
+  `92733027747`; source build `92732491138`
+- Corrected Win-builder R-release and R-devel: completed with 0 errors, 0
+  warnings, and 1 reviewed note each
+- CRAN resubmission: pending submission of the exact frozen bytes and email
+  confirmation
 - Editable guide source:
   `inst/guides/source/pcatR_Technical_User_Guide.Rmd`
 
@@ -84,6 +96,55 @@ documentation output paths, and DESCRIPTION formatting. The corrected source:
   entries. It contained the revised DESCRIPTION, Rd examples, vignette, and
   guide, and excluded private evidence, local confidential-data directories,
   and release-control files. Its checksum is not a frozen-submission checksum.
+
+## Corrected frozen-archive validation
+
+- CRAN correction pull request `JaeManP/pcatR#8` was squash-merged as
+  `4115207173266c26141fa87ba1a7bd90c892024d`.
+- Post-merge R-CMD-check run `31135069391`, coverage run `31135069405`, and
+  pkgdown run `31135069415` all completed successfully at that exact source
+  SHA.
+- The complete matrix passed on Windows R-release, macOS R-release, Ubuntu
+  R-release, R-devel, R-oldrel-1, and R 4.1. Exact downloaded-archive checks
+  with the full PDF manual passed under R-release and R-devel.
+- Source artifact `8977657746` contains the frozen archive and its generated
+  checksum file. The independently calculated checksum matches the internal
+  checksum: SHA-256
+  `9ab7aa0ed5d3d58421216b30cbcb8057191f214b667ce09af9bdcc7b7b9d9161`.
+- The frozen archive is 775,499 bytes and has 81 entries. It contains the
+  corrected DESCRIPTION, all four revised Rd example files, the revised
+  getting-started vignette, and version 1.5 technical-guide source, HTML, and
+  PDF. It contains no `\dontrun{}` or `\donttest{}` blocks.
+- Independent inspection confirmed that private approval evidence,
+  confidential and local data directories, submission records, and other
+  development-only files are absent from the archive.
+- The R-release and R-devel exact check logs, retained in artifacts
+  `8977718726` and `8978019306`, each report 0 errors, 0 warnings, and 2
+  reviewed notes: new submission and HTML validation skipped because HTML
+  Tidy was unavailable. Examples, 239 tests, vignettes, rebuilt vignettes,
+  PDF manuals, and detritus checks passed.
+- Clean installation of the exact archive produced package version 1.0.1 and
+  the 336-row synthetic data set. All 25 package self-tests passed.
+- Coverage run `31135069405` reported 84.86% line coverage. Pkgdown run
+  `31135069415` built the site and deployed GitHub Pages successfully; site
+  artifact `8977658964` is attached to the exact source SHA.
+- The exact frozen bytes were uploaded without rebuilding to Win-builder
+  R-release and R-devel on August 6, 2026. Both installations completed and
+  produced Windows binary packages.
+- Win-builder R-release under R 4.6.1 completed with 0 errors, 0 warnings, and
+  1 note. Win-builder R-devel revision 90366 dated August 6, 2026 completed
+  with 0 errors, 0 warnings, and the same single note.
+- The Win-builder note records a new submission and spelling review of CFIR,
+  Damschroder, Domlyn, “et al.”, and pCAT. These names, acronyms, and
+  capitalization are intentional. Both runs passed examples, 239 tests,
+  vignettes, rebuilt vignettes, and PDF and HTML manuals.
+- The retained frozen archive will be resubmitted to CRAN byte-for-byte. The
+  provenance-only record update is excluded from package builds and does not
+  require or authorize rebuilding the archive.
+- Immediately before resubmission on August 6, 2026, the exact `pcatR` name
+  remained absent from the current CRAN package index and Bioconductor release
+  software page, and CRAN's exact case-sensitive archive path returned HTTP
+  404. These observations are point-in-time checks, not a reservation.
 
 ## Historical first-submission local checks
 
@@ -199,11 +260,8 @@ emailed results were reviewed and retained.
 
 ## Outstanding external gates
 
-- Complete review and merge of the correction pull request.
-- Freeze the corrected package source and select one new exact archive.
-- Validate and inspect that archive under current GitHub R-release and R-devel.
-- Submit those same corrected bytes to Win-builder R-release and R-devel.
-- Resubmit the same corrected bytes to CRAN and confirm the submission email.
+- Resubmit the same corrected frozen bytes to CRAN and confirm the submission
+  email.
 - Create `v1.0.1` only after CRAN acceptance and the final release decision.
 
 ## Methodological release boundary
