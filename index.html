@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Analyze and Visualize Pragmatic Context Assessment Tool Data">
-<meta name="description" content="Provides a reproducible workflow for importing, validating, classifying, summarizing, visualizing, and reporting responses to the 14-item Pragmatic Context Assessment Tool (pCAT). The package preserves the instruments two-part response structure, supports original and updated Consolidated Framework for Implementation Research (CFIR) mappings, describes team agreement and disagreement, compares repeated assessments, and creates implementation action-planning outputs. It does not calculate or claim a validated total pCAT scale score. The instrument is described by Robinson and Damschroder (2023) &lt;doi:10.1186/s43058-022-00380-5&gt;; updated CFIR' mappings are from Domlyn et al. (2026) &lt;doi:10.1186/s43058-026-00956-5&gt;.">
-<meta property="og:description" content="Provides a reproducible workflow for importing, validating, classifying, summarizing, visualizing, and reporting responses to the 14-item Pragmatic Context Assessment Tool (pCAT). The package preserves the instruments two-part response structure, supports original and updated Consolidated Framework for Implementation Research (CFIR) mappings, describes team agreement and disagreement, compares repeated assessments, and creates implementation action-planning outputs. It does not calculate or claim a validated total pCAT scale score. The instrument is described by Robinson and Damschroder (2023) &lt;doi:10.1186/s43058-022-00380-5&gt;; updated CFIR' mappings are from Domlyn et al. (2026) &lt;doi:10.1186/s43058-026-00956-5&gt;.">
+<meta name="description" content="Provides a reproducible workflow for importing, validating, classifying, summarizing, visualizing, and reporting responses to the 14-item Pragmatic Context Assessment Tool (pCAT). The package preserves the instrument's two-part response structure, supports original and updated Consolidated Framework for Implementation Research (CFIR) mappings, describes team agreement and disagreement, compares repeated assessments, and creates implementation action-planning outputs. It does not calculate or claim a validated total pCAT scale score. The instrument is described by Robinson and Damschroder (2023) &lt;doi:10.1186/s43058-022-00380-5&gt;; updated CFIR mappings are from Domlyn et al. (2026) &lt;doi:10.1186/s43058-026-00956-5&gt;.">
+<meta property="og:description" content="Provides a reproducible workflow for importing, validating, classifying, summarizing, visualizing, and reporting responses to the 14-item Pragmatic Context Assessment Tool (pCAT). The package preserves the instrument's two-part response structure, supports original and updated Consolidated Framework for Implementation Research (CFIR) mappings, describes team agreement and disagreement, compares repeated assessments, and creates implementation action-planning outputs. It does not calculate or claim a validated total pCAT scale score. The instrument is described by Robinson and Damschroder (2023) &lt;doi:10.1186/s43058-022-00380-5&gt;; updated CFIR mappings are from Domlyn et al. (2026) &lt;doi:10.1186/s43058-026-00956-5&gt;.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -125,12 +125,17 @@
 <span>  label <span class="op">=</span> <span class="st">"cfir_original_construct"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">example_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"pcat_analysis_"</span>, tmpdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="reference/pcat_write_analysis.html">pcat_write_analysis</a></span><span class="op">(</span></span>
 <span>  <span class="va">analysis</span>,</span>
-<span>  path <span class="op">=</span> <span class="st">"pcat_analysis_outputs"</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  path <span class="op">=</span> <span class="va">example_output</span>,</span>
+<span>  include_classified <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">example_output</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The export directory contains a manifest, validation findings, classified responses, item summaries, consensus diagnostics, an action-plan worksheet, and an optional multi-page profile PDF. Set <code>include_classified = FALSE</code> when a respondent-level export is not required.</p>
+<p>The temporary path keeps this documentation example out of the current working directory. For real analyses, choose an explicit, approved project output directory.</p>
 </div>
 <div class="section level2">
 <h2 id="response-coding">Response coding<a class="anchor" aria-label="anchor" href="#response-coding"></a>
@@ -219,12 +224,16 @@
 </h2>
 <p>Required columns are <code>respondent_id</code>, <code>item_id</code>, <code>direction</code>, and <code>effect</code>. Recommended metadata columns include <code>project_id</code>, <code>site_id</code>, <code>team_id</code>, <code>role</code>, <code>timepoint</code>, <code>assessment_date</code>, and <code>comment</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/pcat_standardize.html">pcat_write_template</a></span><span class="op">(</span></span>
-<span>  <span class="st">"pcat_long_template.csv"</span>,</span>
+<code class="sourceCode R"><span><span class="va">template_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"pcat_long_template_"</span>, fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/pcat_standardize.html">pcat_write_template</a></span><span class="op">(</span></span>
+<span>  <span class="va">template_path</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"long"</span>,</span>
 <span>  n_respondents <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  include_item_text <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">template_path</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>For non-standard source data, map columns explicitly:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">standard</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcat_standardize.html">pcat_standardize</a></span><span class="op">(</span></span>

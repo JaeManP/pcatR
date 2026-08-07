@@ -114,19 +114,27 @@ analysis <- pcat_analyse(
   validation_action = "none"
 )
 
-if (FALSE) { # \dontrun{
+analysis_dir <- tempfile("pcat_analysis_")
+
 pcat_write_analysis(
   analysis,
-  path = "pcat_analysis_outputs",
-  overwrite = TRUE,
+  path = analysis_dir,
+  include_profile_pdf = FALSE,
   include_classified = FALSE
 )
 
+list.files(analysis_dir)
+#> [1] "00_manifest.csv"              "01_validation_issues.csv"    
+#> [3] "03_item_summary.csv"          "04_consensus_diagnostics.csv"
+#> [5] "05_action_plan.csv"           "07_analysis_settings.csv"    
+#> [7] "08_session_info.txt"          "README.txt"                  
+
+profile_path <- tempfile("pcat_profiles_", fileext = ".pdf")
+
 pcat_save_profile_pdf(
   analysis$classified,
-  path = "pcat_profiles.pdf",
+  path = profile_path,
   group_vars = c("site_id", "timepoint"),
-  overwrite = TRUE
+  label = "item_id"
 )
-} # }
 ```

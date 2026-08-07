@@ -623,11 +623,15 @@ head(change)
 
 ``` r
 
+output_dir <- tempfile("pcat_analysis_", tmpdir = tempdir())
+
 pcat_write_analysis(
   analysis,
-  path = "pcat_analysis_outputs",
+  path = output_dir,
   overwrite = TRUE
 )
+
+unlink(output_dir, recursive = TRUE, force = TRUE)
 ```
 
 The export includes an analysis manifest, validation findings,
@@ -636,3 +640,7 @@ action-plan worksheet, and an optional multi-page profile PDF. The
 profile exporter validates every page before writing a temporary PDF and
 replaces the requested path only after the complete temporary file is
 nonempty.
+
+The temporary path keeps this documentation example out of the current
+working directory. For real analyses, choose an explicit, approved
+project output directory.

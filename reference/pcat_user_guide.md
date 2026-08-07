@@ -29,11 +29,11 @@ The normalized guide path, invisibly.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-pcat_user_guide()
-} # }
-
 path <- pcat_user_guide("html", open = FALSE)
 path
 #> [1] "/home/runner/work/_temp/Library/pcatR/guides/pcatR_Technical_User_Guide.html"
+
+if (interactive()) {
+  pcat_user_guide("html", open = TRUE)
+}
 ```

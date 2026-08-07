@@ -24,7 +24,9 @@ The value returned by
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-pcat_app()
-} # }
+if (interactive()) {
+  if (requireNamespace("shiny", quietly = TRUE)) {
+    pcat_app()
+  }
+}
 ```

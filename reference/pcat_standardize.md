@@ -154,8 +154,42 @@ pcat_wide_to_long(wide)
 #> 27          R002  planning      13        NA     NA
 #> 28          R002  planning      14        NA     NA
 
-if (FALSE) { # \dontrun{
-pcat_write_template("pcat_template.csv", overwrite = TRUE)
-imported <- pcat_read_csv("pcat_template.csv")
-} # }
+template_path <- tempfile("pcat_template_", fileext = ".csv")
+
+pcat_write_template(
+  template_path,
+  format = "long",
+  n_respondents = 2
+)
+
+imported <- pcat_read_csv(template_path)
+head(imported)
+#>   project_id respondent_id site_id team_id role timepoint assessment_date
+#> 1 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#> 2 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#> 3 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#> 4 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#> 5 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#> 6 PROJECT_01          R001 SITE_01      NA   NA  planning              NA
+#>   item_id
+#> 1       1
+#> 2       2
+#> 3       3
+#> 4       4
+#> 5       5
+#> 6       6
+#>                                                                                                     item_text
+#> 1 People here regularly seek to understand the needs of patients and make changes to better meet those needs.
+#> 2                                 I have open lines of communication with everyone needed to make the change.
+#> 3                                                    I have access to data to help track changes in outcomes.
+#> 4                                                                The change is aligned with leadership goals.
+#> 5                                                                The change is aligned with clinician values.
+#> 6                                                  The change is compatible with existing clinical processes.
+#>   direction effect comment
+#> 1        NA     NA      NA
+#> 2        NA     NA      NA
+#> 3        NA     NA      NA
+#> 4        NA     NA      NA
+#> 5        NA     NA      NA
+#> 6        NA     NA      NA
 ```
