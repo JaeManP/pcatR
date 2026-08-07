@@ -88,10 +88,11 @@ reliance rather than original-author confirmation.
 
 The corrected package source was frozen at Git commit
 `4115207173266c26141fa87ba1a7bd90c892024d` after CRAN correction pull request
-`JaeManP/pcatR#8` was squash-merged. GitHub Actions run `31135069391` built the
-exact corrected `pcatR_1.0.1.tar.gz`; source artifact `8977657746` contains the
-archive and generated checksum file. The frozen archive is 775,499 bytes, has
-81 entries, and has SHA-256
+`JaeManP/pcatR#8` was squash-merged. Corrected-freeze provenance is recorded in
+`JaeManP/pcatR#9`. GitHub Actions run `31135069391` built the exact corrected
+`pcatR_1.0.1.tar.gz`; source artifact `8977657746` contains the archive and
+generated checksum file. The frozen archive is 775,499 bytes, has 81 entries,
+and has SHA-256
 `9ab7aa0ed5d3d58421216b30cbcb8057191f214b667ce09af9bdcc7b7b9d9161`.
 
 The same downloaded bytes passed the exact-archive checks with full PDF

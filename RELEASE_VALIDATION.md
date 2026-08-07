@@ -14,7 +14,8 @@ version 1.0.1 has been released or accepted by CRAN.
 
 - CRAN preparation pull requests: `JaeManP/pcatR#2`, `JaeManP/pcatR#3`,
   `JaeManP/pcatR#4`, `JaeManP/pcatR#5`, `JaeManP/pcatR#6`, and
-  `JaeManP/pcatR#7`; CRAN correction pull request: `JaeManP/pcatR#8`
+  `JaeManP/pcatR#7`; CRAN correction pull request: `JaeManP/pcatR#8`;
+  corrected-freeze provenance pull request: `JaeManP/pcatR#9`
 - Correction branch: `codex/address-cran-review-examples-filespace`
 - Correction starting head and merge base:
   `474db8e2f11f910c6e119c027d5e1d9023dfbb3c`
