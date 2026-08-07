@@ -50,7 +50,7 @@ endorsement.
 
 Review and merge the CRAN correction pull request.
 
-Freeze the corrected package source and build one new exact archive.
+Freeze the corrected package source and select one new exact archive.
 
 Validate the new exact archive locally and in GitHub Actions, then
 inspect its checksum, contents, and exact-check logs.
@@ -101,6 +101,39 @@ authors. It resolves the repository’s alternative
 package-name/source-content gate through documented maintainer reliance
 rather than original-author confirmation.
 
+## Corrected frozen archive
+
+The corrected package source was frozen at Git commit
+`4115207173266c26141fa87ba1a7bd90c892024d` after CRAN correction pull
+request `JaeManP/pcatR#8` was squash-merged. Corrected-freeze provenance
+is recorded in `JaeManP/pcatR#9`. GitHub Actions run `31135069391` built
+the exact corrected `pcatR_1.0.1.tar.gz`; source artifact `8977657746`
+contains the archive and generated checksum file. The frozen archive is
+775,499 bytes, has 81 entries, and has SHA-256
+`9ab7aa0ed5d3d58421216b30cbcb8057191f214b667ce09af9bdcc7b7b9d9161`.
+
+The same downloaded bytes passed the exact-archive checks with full PDF
+manuals under R-release and R-devel in run `31135069391`; their log
+artifacts are `8977718726` and `8978019306`. Coverage run `31135069405`
+passed with 84.86% line coverage, and pkgdown run `31135069415` built
+and deployed the site successfully. Independent inspection confirmed the
+checksum, the 81-entry archive contents, successful clean installation,
+239 passing `testthat` expectations, 25 passing self-tests, and the
+absence of private evidence and release-control files.
+
+Those exact frozen bytes were submitted without rebuilding to
+Win-builder R-release and R-devel on August 6, 2026. R-release under R
+4.6.1 and R-devel revision 90366 each completed with 0 errors, 0
+warnings, and 1 expected note. The note records the new submission and
+requests spelling review of CFIR, Damschroder, Domlyn, “et al.”, and
+pCAT; these names, acronyms, and capitalization are intentional. Both
+installations, examples, 239 tests, vignettes, and PDF and HTML manuals
+completed successfully, and both Windows binary packages were produced.
+
+This archive is the corrected frozen submission archive for
+resubmission. It must be resubmitted to CRAN byte-for-byte and must not
+be rebuilt or replaced during the provenance-only record update.
+
 ## Superseded first-submission archive
 
 The first-submission package source was frozen at Git commit
@@ -128,7 +161,7 @@ revision 90301 dated July 25, 2026, also completed with 0 errors, 0
 warnings, and the same single expected note; installation succeeded and
 a Windows binary was produced.
 
-## Registry check recorded July 25, 2026
+## Registry check recorded August 6, 2026
 
 - `pcatR` was absent from the current CRAN package index.
 - CRAN’s exact `src/contrib/Archive/pcatR/` path returned HTTP 404,
