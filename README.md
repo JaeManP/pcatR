@@ -83,17 +83,25 @@ plot_pcat_profile(
   label = "cfir_original_construct"
 )
 
+example_output <- tempfile("pcat_analysis_", tmpdir = tempdir())
+
 pcat_write_analysis(
   analysis,
-  path = "pcat_analysis_outputs",
-  overwrite = TRUE
+  path = example_output,
+  include_classified = FALSE
 )
+
+unlink(example_output, recursive = TRUE, force = TRUE)
 ```
 
 The export directory contains a manifest, validation findings, classified
 responses, item summaries, consensus diagnostics, an action-plan worksheet, and
 an optional multi-page profile PDF. Set `include_classified = FALSE` when a
 respondent-level export is not required.
+
+The temporary path keeps this documentation example out of the current working
+directory. For real analyses, choose an explicit, approved project output
+directory.
 
 ## Response coding
 
@@ -130,12 +138,16 @@ Recommended metadata columns include `project_id`, `site_id`, `team_id`, `role`,
 `timepoint`, `assessment_date`, and `comment`.
 
 ```r
+template_path <- tempfile("pcat_long_template_", fileext = ".csv")
+
 pcat_write_template(
-  "pcat_long_template.csv",
+  template_path,
   format = "long",
   n_respondents = 10,
   include_item_text = TRUE
 )
+
+unlink(template_path, force = TRUE)
 ```
 
 For non-standard source data, map columns explicitly:

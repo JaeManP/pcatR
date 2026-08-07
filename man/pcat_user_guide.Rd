@@ -16,10 +16,10 @@ classification logic, privacy cautions, and reporting expectations.
 }
 \value{The normalized guide path, invisibly.}
 \examples{
-\dontrun{
-pcat_user_guide()
-}
-
 path <- pcat_user_guide("html", open = FALSE)
 path
+
+if (interactive()) {
+  pcat_user_guide("html", open = TRUE)
+}
 }

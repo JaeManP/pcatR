@@ -16,7 +16,9 @@ identifiers.
 }
 \value{The value returned by \code{shiny::runApp()}.}
 \examples{
-\dontrun{
-pcat_app()
+if (interactive()) {
+  if (requireNamespace("shiny", quietly = TRUE)) {
+    pcat_app()
+  }
 }
 }

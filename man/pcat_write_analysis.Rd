@@ -72,19 +72,28 @@ analysis <- pcat_analyse(
   validation_action = "none"
 )
 
-\dontrun{
+analysis_dir <- tempfile("pcat_analysis_")
+
 pcat_write_analysis(
   analysis,
-  path = "pcat_analysis_outputs",
-  overwrite = TRUE,
+  path = analysis_dir,
+  include_profile_pdf = FALSE,
   include_classified = FALSE
 )
 
+list.files(analysis_dir)
+
+profile_path <- tempfile("pcat_profiles_", fileext = ".pdf")
+
 pcat_save_profile_pdf(
   analysis$classified,
-  path = "pcat_profiles.pdf",
+  path = profile_path,
   group_vars = c("site_id", "timepoint"),
-  overwrite = TRUE
+  label = "item_id"
 )
+
+\dontshow{
+unlink(analysis_dir, recursive = TRUE, force = TRUE)
+unlink(profile_path, force = TRUE)
 }
 }

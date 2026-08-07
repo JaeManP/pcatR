@@ -44,6 +44,7 @@ test_that("CSV reader detects standard wide and long layouts", {
     effect = 1
   )
   long_path <- tempfile(fileext = ".csv")
+  on.exit(unlink(long_path, force = TRUE), add = TRUE)
   utils::write.csv(long, long_path, row.names = FALSE)
   expect_equal(nrow(pcat_read_csv(long_path)), 1L)
 
@@ -53,6 +54,7 @@ test_that("CSV reader detects standard wide and long layouts", {
     item01_effect = 1
   )
   wide_path <- tempfile(fileext = ".csv")
+  on.exit(unlink(wide_path, force = TRUE), add = TRUE)
   utils::write.csv(wide, wide_path, row.names = FALSE)
   imported <- pcat_read_csv(wide_path)
   expect_equal(imported$item_id, 1L)

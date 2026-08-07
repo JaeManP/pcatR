@@ -24,14 +24,14 @@ Authors@R: c(
   )
 Description: Provides a reproducible workflow for importing, validating,
     classifying, summarizing, visualizing, and reporting responses to the
-    14-item Pragmatic Context Assessment Tool ('pCAT'). The package preserves
+    14-item Pragmatic Context Assessment Tool (pCAT). The package preserves
     the instrument's two-part response structure, supports original and
-    updated Consolidated Framework for Implementation Research ('CFIR')
+    updated Consolidated Framework for Implementation Research (CFIR)
     mappings, describes team agreement and disagreement, compares repeated
     assessments, and creates implementation action-planning outputs. It does
     not calculate or claim a validated total pCAT scale score. The instrument
     is described by Robinson and Damschroder (2023)
-    <doi:10.1186/s43058-022-00380-5>; updated 'CFIR' mappings are from Domlyn
+    <doi:10.1186/s43058-022-00380-5>; updated CFIR mappings are from Domlyn
     et al. (2026) <doi:10.1186/s43058-026-00956-5>.
 License: MIT + file LICENSE
 Encoding: UTF-8
